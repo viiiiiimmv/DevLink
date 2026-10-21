@@ -21,6 +21,35 @@ const config: Config = {
         sm: 'calc(var(--radius) - 4px)',
       },
       colors: {
+        devlink: {
+          canvas: '#090D16',
+          panel: '#0F172A',
+          elevated: '#1E293B',
+          hover: '#283548',
+          border: {
+            subtle: '#1E293B',
+            strong: '#334155',
+            focus: '#6366F1',
+          },
+          primary: {
+            DEFAULT: '#6366F1',
+            hover: '#4F46E5',
+            active: '#4338CA',
+          },
+          cyan: '#06B6D4',
+          text: {
+            primary: '#F8FAFC',
+            secondary: '#CBD5E1',
+            muted: '#94A3B8',
+            disabled: '#475569',
+          },
+          status: {
+            success: '#10B981',
+            warning: '#F59E0B',
+            danger: '#EF4444',
+            info: '#3B82F6',
+          },
+        },
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
@@ -61,6 +90,10 @@ const config: Config = {
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))',
         },
+      },
+      fontFamily: {
+        sans: ['var(--font-geist-sans)', 'Inter', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'sans-serif'],
+        mono: ['var(--font-geist-mono)', 'JetBrains Mono', 'Fira Code', 'monospace'],
       },
       keyframes: {
         'accordion-down': {

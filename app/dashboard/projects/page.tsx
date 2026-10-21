@@ -140,9 +140,9 @@ export default function ProjectsPage() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">Projects</h1>
-            <p className="text-muted-foreground">
-              Showcase your work and technical skills
+            <h1 className="text-2xl font-semibold leading-8 text-[#F8FAFC]">Projects</h1>
+            <p className="text-xs text-[#94A3B8] mt-1">
+              Showcase featured project work, case studies, and technologies
             </p>
           </div>
           <Button onClick={handleAddProject} className="flex items-center gap-2">
@@ -155,11 +155,11 @@ export default function ProjectsPage() {
         {projects.length === 0 ? (
           <Card>
             <CardContent className="flex flex-col items-center justify-center py-12">
-              <div className="w-24 h-24 bg-muted rounded-full flex items-center justify-center mb-4">
-                <Plus className="h-12 w-12 text-muted-foreground" />
+              <div className="w-20 h-20 bg-[#1E293B] border border-[#334155] rounded-full flex items-center justify-center mb-4">
+                <Plus className="h-10 w-10 text-[#6366F1]" />
               </div>
-              <h3 className="text-lg font-semibold text-foreground mb-2">No projects yet</h3>
-              <p className="text-muted-foreground text-center mb-6 max-w-sm">
+              <h3 className="text-lg font-medium text-[#F8FAFC] mb-1">No projects yet</h3>
+              <p className="text-xs text-[#94A3B8] text-center mb-6 max-w-sm">
                 Start building your portfolio by adding your first project. Showcase your skills and experience.
               </p>
               <Button onClick={handleAddProject} className="flex items-center gap-2">
@@ -178,7 +178,7 @@ export default function ProjectsPage() {
                 transition={{ delay: index * 0.1 }}
               >
                 <Card
-                  className={`h-full hover:shadow-lg transition-shadow ${savingOrder && draggedProjectId ? 'opacity-80' : ''}`}
+                  className={`h-full hover:border-[#334155] transition-all ${savingOrder && draggedProjectId ? 'opacity-80' : ''}`}
                   onDragOver={(event) => {
                     event.preventDefault()
                   }}
@@ -188,17 +188,17 @@ export default function ProjectsPage() {
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <CardTitle className="text-lg">{project.title}</CardTitle>
-                        <CardDescription className="mt-2">
+                        <CardDescription className="mt-1">
                           {project.description}
                         </CardDescription>
                       </div>
                       <div className="flex items-center gap-2">
                         {project.featured && (
-                          <Badge variant="secondary" className="ml-2">Featured</Badge>
+                          <Badge variant="tech" className="ml-2">Featured</Badge>
                         )}
                         <button
                           type="button"
-                          className="p-1 text-muted-foreground hover:text-foreground cursor-grab active:cursor-grabbing"
+                          className="p-1 text-[#94A3B8] hover:text-[#F8FAFC] cursor-grab active:cursor-grabbing"
                           draggable
                           onDragStart={() => setDraggedProjectId(project.id)}
                           onDragEnd={() => setDraggedProjectId(null)}
@@ -213,12 +213,12 @@ export default function ProjectsPage() {
                     {/* Technologies */}
                     <div className="flex flex-wrap gap-2 mb-4">
                       {project.technologies.slice(0, 3).map((tech) => (
-                        <Badge key={tech} variant="outline" className="text-xs">
+                        <Badge key={tech} variant="tech" className="text-xs">
                           {tech}
                         </Badge>
                       ))}
                       {project.technologies.length > 3 && (
-                        <Badge variant="outline" className="text-xs">
+                        <Badge variant="tech" className="text-xs">
                           +{project.technologies.length - 3} more
                         </Badge>
                       )}
@@ -229,14 +229,14 @@ export default function ProjectsPage() {
                       {project.githubUrl && (
                         <Button variant="ghost" size="sm" asChild>
                           <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                            <Github className="h-4 w-4" />
+                            <Github className="h-4 w-4 text-[#CBD5E1]" />
                           </a>
                         </Button>
                       )}
                       {project.liveUrl && (
                         <Button variant="ghost" size="sm" asChild>
                           <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                            <ExternalLink className="h-4 w-4" />
+                            <ExternalLink className="h-4 w-4 text-[#06B6D4]" />
                           </a>
                         </Button>
                       )}
@@ -245,18 +245,19 @@ export default function ProjectsPage() {
                     {/* Actions */}
                     <div className="flex items-center gap-2">
                       <Button 
-                        variant="outline" 
+                        variant="secondary" 
                         size="sm" 
                         className="flex-1"
                         onClick={() => handleEditProject(project)}
                       >
-                        <Edit className="h-4 w-4 mr-2" />
+                        <Edit className="h-4 w-4 mr-2 text-[#06B6D4]" />
                         Edit
                       </Button>
                       <Button 
-                        variant="ghost" 
+                        variant="destructive" 
                         size="sm"
                         onClick={() => handleDeleteProject(project.id)}
+                        title="Delete Project"
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>

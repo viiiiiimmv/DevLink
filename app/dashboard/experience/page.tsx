@@ -164,9 +164,9 @@ export default function ExperiencePage() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">Experience</h1>
-            <p className="text-muted-foreground">
-              Showcase your professional journey and achievements
+            <h1 className="text-2xl font-semibold leading-8 text-[#F8FAFC]">Experience</h1>
+            <p className="text-xs text-[#94A3B8] mt-1">
+              Maintain your work timeline and career achievements
             </p>
           </div>
           <Button onClick={handleAddExperience} className="flex items-center gap-2">
@@ -179,11 +179,11 @@ export default function ExperiencePage() {
         {experiences.length === 0 ? (
           <Card>
             <CardContent className="flex flex-col items-center justify-center py-12">
-              <div className="w-24 h-24 bg-muted rounded-full flex items-center justify-center mb-4">
-                <Briefcase className="h-12 w-12 text-muted-foreground" />
+              <div className="w-20 h-20 bg-[#1E293B] border border-[#334155] rounded-full flex items-center justify-center mb-4">
+                <Briefcase className="h-10 w-10 text-[#6366F1]" />
               </div>
-              <h3 className="text-lg font-semibold text-foreground mb-2">No experience added yet</h3>
-              <p className="text-muted-foreground text-center mb-6 max-w-sm">
+              <h3 className="text-lg font-medium text-[#F8FAFC] mb-1">No experience added yet</h3>
+              <p className="text-xs text-[#94A3B8] text-center mb-6 max-w-sm">
                 Add your work experience to showcase your professional journey and skills.
               </p>
               <Button onClick={handleAddExperience} className="flex items-center gap-2">
@@ -202,7 +202,7 @@ export default function ExperiencePage() {
                 transition={{ delay: index * 0.1 }}
               >
                 <Card
-                  className={`hover:shadow-md transition-shadow ${savingOrder && draggedExperienceId ? 'opacity-80' : ''}`}
+                  className={`hover:border-[#334155] transition-all ${savingOrder && draggedExperienceId ? 'opacity-80' : ''}`}
                   onDragOver={(event) => {
                     event.preventDefault()
                   }}
@@ -211,16 +211,16 @@ export default function ExperiencePage() {
                   <CardHeader>
                     <div className="flex items-start justify-between">
                       <div className="flex items-start gap-4">
-                        <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <Briefcase className="h-6 w-6 text-blue-600 dark:text-blue-300" />
+                        <div className="w-11 h-11 bg-[#6366F1]/10 border border-[#6366F1]/20 rounded-xl flex items-center justify-center flex-shrink-0 text-[#6366F1]">
+                          <Briefcase className="h-5 w-5" />
                         </div>
                         <div className="flex-1">
-                          <CardTitle className="text-xl">{experience.position}</CardTitle>
-                          <CardDescription className="text-lg font-medium text-foreground/80 mt-1">
+                          <CardTitle className="text-lg">{experience.position}</CardTitle>
+                          <p className="text-sm font-medium text-[#CBD5E1] mt-0.5">
                             {experience.company}
-                          </CardDescription>
-                          <div className="flex items-center gap-1 mt-2 text-sm text-muted-foreground">
-                            <Calendar className="h-4 w-4" />
+                          </p>
+                          <div className="flex items-center gap-1.5 mt-2 text-xs text-[#94A3B8]">
+                            <Calendar className="h-3.5 w-3.5 text-[#06B6D4]" />
                             {formatExperienceDuration(experience.startDate, experience.endDate, experience.isCurrentlyWorking)}
                           </div>
                         </div>
@@ -228,7 +228,7 @@ export default function ExperiencePage() {
                       <div className="flex items-center gap-2">
                         <button
                           type="button"
-                          className="p-1 text-muted-foreground hover:text-foreground cursor-grab active:cursor-grabbing"
+                          className="p-1 text-[#94A3B8] hover:text-[#F8FAFC] cursor-grab active:cursor-grabbing"
                           draggable
                           onDragStart={() => setDraggedExperienceId(experience.id)}
                           onDragEnd={() => setDraggedExperienceId(null)}
@@ -237,16 +237,17 @@ export default function ExperiencePage() {
                           <GripVertical className="h-4 w-4" />
                         </button>
                         <Button 
-                          variant="ghost" 
+                          variant="secondary" 
                           size="sm"
                           onClick={() => handleEditExperience(experience)}
                         >
-                          <Edit className="h-4 w-4" />
+                          <Edit className="h-4 w-4 text-[#06B6D4]" />
                         </Button>
                         <Button 
-                          variant="ghost" 
+                          variant="destructive" 
                           size="sm"
                           onClick={() => handleDeleteExperience(experience.id)}
+                          title="Remove Entry"
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -254,21 +255,21 @@ export default function ExperiencePage() {
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-foreground/90 mb-4">
+                    <p className="text-sm text-[#CBD5E1] mb-4">
                       {experience.description}
                     </p>
 
                     {/* LinkedIn Post Link */}
                     {experience.linkedinPostUrl && (
                       <div className="mb-4">
-                        <Button variant="ghost" size="sm" asChild className="p-0 h-auto">
+                        <Button variant="link" size="sm" asChild className="p-0 h-auto">
                           <a 
                             href={experience.linkedinPostUrl} 
                             target="_blank" 
                             rel="noopener noreferrer"
-                            className="flex items-center gap-2 text-blue-600 hover:text-blue-800"
+                            className="flex items-center gap-2 text-[#06B6D4] hover:text-[#06B6D4]/80 text-xs font-mono"
                           >
-                            <Linkedin className="h-4 w-4" />
+                            <Linkedin className="h-3.5 w-3.5" />
                             View LinkedIn Post
                           </a>
                         </Button>
@@ -279,7 +280,7 @@ export default function ExperiencePage() {
                     {experience.technologies.length > 0 && (
                       <div className="flex flex-wrap gap-2">
                         {experience.technologies.map((tech) => (
-                          <Badge key={tech} variant="outline" className="text-xs">
+                          <Badge key={tech} variant="tech" className="text-xs">
                             {tech}
                           </Badge>
                         ))}

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import type { Profile } from '@/components/public-profile/profile'
 import { ArrowDown, ArrowUp, Eye, EyeOff, Globe2, GripVertical, LayoutGrid, Palette, Save } from 'lucide-react'
 import PortfolioLivePreview from '@/components/PortfolioLivePreview'
+import LivePreviewWrapper from '@/components/LivePreviewWrapper'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -396,8 +397,8 @@ export default function CustomisePage() {
       <div className="space-y-6">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">Customise</h1>
-            <p className="text-muted-foreground">
+            <h1 className="text-2xl font-semibold leading-8 text-[#F8FAFC]">Customise</h1>
+            <p className="text-xs text-[#94A3B8] mt-1">
               Choose your profile template and theme, then preview changes live
             </p>
           </div>
@@ -411,7 +412,7 @@ export default function CustomisePage() {
             ) : (
               <Save className="h-4 w-4" />
             )}
-            Save Customisation
+            Save Changes
           </Button>
         </div>
 
@@ -420,7 +421,7 @@ export default function CustomisePage() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <LayoutGrid className="h-6 w-6 text-blue-600" />
+                  <LayoutGrid className="h-5 w-5 text-[#6366F1]" />
                   Profile Templates
                 </CardTitle>
                 <CardDescription>
@@ -443,8 +444,8 @@ export default function CustomisePage() {
                       htmlFor={`template-${template.id}`}
                       className={`cursor-pointer group rounded-xl border-2 p-4 transition-all duration-150 ${
                         selectedTemplate === template.id
-                          ? 'border-blue-500 shadow-lg'
-                          : 'border-border hover:border-blue-300'
+                          ? 'border-[#6366F1] bg-[#6366F1]/5 shadow-lg'
+                          : 'border-[#1E293B] bg-[#0F172A] hover:border-[#334155]'
                       }`}
                     >
                       <div className="w-full h-20 rounded-lg mb-3">
@@ -792,46 +793,41 @@ export default function CustomisePage() {
           </div>
 
           <div className="self-start lg:sticky lg:top-6">
-            <Card className="w-full">
-              <CardHeader>
-                <CardTitle>Live Preview</CardTitle>
-                <CardDescription>
-                  Preview your selected template and theme in real-time
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div
-                  ref={previewContainerRef}
-                  className="w-full h-[70vh] overflow-auto bg-muted/40 rounded-lg border border-border"
-                >
-                  <div className="relative w-full" style={{ height: previewHeight || '70vh' }}>
-                    <div
-                      ref={previewContentRef}
-                      className="absolute top-0 left-0"
-                      style={{
-                        width: DESKTOP_PREVIEW_WIDTH,
-                        transform: `scale(${previewScale})`,
-                        transformOrigin: 'top left',
+            <LivePreviewWrapper
+              urlSlug={`devlink.run/${profileData?.username || 'developer'}`}
+              className="w-full"
+            >
+              <div
+                ref={previewContainerRef}
+                className="w-full h-[72vh] overflow-auto bg-[#0B0F19]"
+              >
+                <div className="relative w-full" style={{ height: previewHeight || '72vh' }}>
+                  <div
+                    ref={previewContentRef}
+                    className="absolute top-0 left-0"
+                    style={{
+                      width: DESKTOP_PREVIEW_WIDTH,
+                      transform: `scale(${previewScale})`,
+                      transformOrigin: 'top left',
+                    }}
+                  >
+                    <PortfolioLivePreview
+                      key={`${selectedTemplate}-${selectedTheme}-${isPublished ? 'published' : 'draft'}-${customTheme.enabled ? `${customTheme.primary}-${customTheme.secondary}` : 'preset'}-${sectionSettings
+                        .map((section) => `${section.id}:${section.visible ? 1 : 0}`)
+                        .join('|')}`}
+                      profile={{
+                        ...(profileData ?? emptyProfile),
+                        isPublished,
+                        customTheme,
+                        sectionSettings,
                       }}
-                    >
-                      <PortfolioLivePreview
-                        key={`${selectedTemplate}-${selectedTheme}-${isPublished ? 'published' : 'draft'}-${customTheme.enabled ? `${customTheme.primary}-${customTheme.secondary}` : 'preset'}-${sectionSettings
-                          .map((section) => `${section.id}:${section.visible ? 1 : 0}`)
-                          .join('|')}`}
-                        profile={{
-                          ...(profileData ?? emptyProfile),
-                          isPublished,
-                          customTheme,
-                          sectionSettings,
-                        }}
-                        themeId={selectedTheme}
-                        templateId={selectedTemplate}
-                      />
-                    </div>
+                      themeId={selectedTheme}
+                      templateId={selectedTemplate}
+                    />
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </LivePreviewWrapper>
           </div>
         </div>
       </div>

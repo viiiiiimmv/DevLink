@@ -426,26 +426,26 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
     return (
       <Link key={item.name} href={item.href}>
-        <div className={`relative flex items-center rounded-lg text-sm font-medium transition-colors ${
-          options.collapsed ? 'px-0 py-2 justify-center' : 'px-3 py-2 justify-start'
+        <div className={`relative flex items-center text-sm font-medium transition-all duration-150 ${
+          options.collapsed ? 'px-0 py-2.5 justify-center' : 'px-3 py-2 justify-start'
         } ${
           isActive
-            ? 'bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300'
-            : 'text-muted-foreground hover:bg-muted hover:text-foreground'
-        }`}>
-          <item.icon className={`h-5 w-5 shrink-0 ${options.collapsed ? '' : 'mr-3'}`} />
+            ? 'bg-[#6366F1]/10 border-l-2 border-[#6366F1] text-[#F8FAFC]'
+            : 'bg-transparent border-l-2 border-transparent text-[#94A3B8] hover:text-[#E2E8F0] hover:bg-white/[0.03]'
+        } rounded-r-md`}>
+          <item.icon className={`h-4.5 w-4.5 shrink-0 ${options.collapsed ? '' : 'mr-3'} ${isActive ? 'text-[#6366F1]' : 'text-[#94A3B8]'}`} />
           {!options.collapsed ? (
             <span className="flex items-center gap-2 whitespace-nowrap">
               <span>{item.name}</span>
               {showUnread ? (
-                <span className="inline-flex min-w-[1.25rem] items-center justify-center rounded-full bg-blue-600 px-1.5 py-0.5 text-[11px] font-semibold text-white">
+                <span className="inline-flex min-w-[1.25rem] items-center justify-center rounded-full bg-[#6366F1] px-1.5 py-0.5 text-[11px] font-semibold text-white">
                   {formatUnreadCount(unreadPulseCount)}
                 </span>
               ) : null}
             </span>
           ) : null}
           {options.collapsed && showUnread ? (
-            <span className="absolute right-2 top-1.5 h-2.5 w-2.5 rounded-full bg-blue-600" />
+            <span className="absolute right-2 top-1.5 h-2 w-2 rounded-full bg-[#6366F1]" />
           ) : null}
         </div>
       </Link>
@@ -609,11 +609,11 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   }, [currentUserId, notificationSocketConnected, pollNotificationFallback])
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#090D16] text-[#F8FAFC]">
       {/* Mobile sidebar */}
       <div className={`lg:hidden fixed inset-0 z-50 ${sidebarOpen ? '' : 'pointer-events-none'}`}>
         <div 
-          className={`fixed inset-0 bg-black/60 transition-opacity ${
+          className={`fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity ${
             sidebarOpen ? 'opacity-100' : 'opacity-0'
           }`}
           onClick={() => setSidebarOpen(false)}
@@ -622,21 +622,26 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         <div className={`fixed inset-y-0 left-0 flex w-full max-w-xs transition-transform ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}>
-          <div className="flex flex-col w-full bg-card shadow-xl">
-            <div className="flex items-center justify-between h-16 px-6 border-b border-border">
+          <div className="flex flex-col w-full bg-[#0F172A] border-r border-[#1E293B] shadow-2xl">
+            <div className="flex items-center justify-between h-16 px-6 border-b border-[#1E293B]">
               <div className="flex items-center">
-                <Code className="h-8 w-8 text-blue-600" />
-                <span className="ml-2 text-xl font-bold text-foreground">DevLink</span>
+                <div className="flex items-center justify-center h-9 w-9 rounded-lg bg-[#6366F1]/10 border border-[#6366F1]/20">
+                  <Code className="h-5 w-5 text-[#6366F1]" />
+                </div>
+                <span className="ml-3 text-lg font-semibold tracking-tight text-[#F8FAFC]">DevLink</span>
               </div>
-              <button onClick={() => setSidebarOpen(false)}>
-                <X className="h-6 w-6 text-muted-foreground" />
+              <button 
+                onClick={() => setSidebarOpen(false)}
+                className="p-1 rounded-md text-[#94A3B8] hover:text-[#F8FAFC] hover:bg-[#1E293B]"
+              >
+                <X className="h-5 w-5" />
               </button>
             </div>
             
             <nav className="flex-1 space-y-5 overflow-y-auto px-4 py-5">
               {navigationGroups.map((group) => (
                 <section key={group.label} className="space-y-1.5">
-                  <p className="px-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                  <p className="px-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#94A3B8]">
                     {group.label}
                   </p>
                   <div className="space-y-1">
@@ -669,19 +674,21 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           if (isDesktopCollapsed) setIsDesktopHovering(false)
         }}
       >
-        <div className="flex flex-col flex-grow bg-card shadow-sm border-r border-border overflow-hidden">
+        <div className="flex flex-col flex-grow bg-[#0F172A] border-r border-[#1E293B] shadow-sm overflow-hidden">
           <button
             type="button"
             onClick={handleDesktopLogoClick}
-            className={`flex items-center h-16 border-b border-border transition-[padding] duration-200 hover:bg-muted/40 ${
+            className={`flex items-center h-16 border-b border-[#1E293B] transition-[padding] duration-200 hover:bg-[#1E293B]/40 ${
               isDesktopExpanded ? 'px-6 justify-start' : 'px-0 justify-center'
             }`}
             aria-label={isDesktopCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
             title={isDesktopCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
-            <Code className="h-8 w-8 text-blue-600 shrink-0" />
+            <div className="flex items-center justify-center h-9 w-9 rounded-lg bg-[#6366F1]/10 border border-[#6366F1]/20 shrink-0">
+              <Code className="h-5 w-5 text-[#6366F1]" />
+            </div>
             {isDesktopExpanded ? (
-              <span className="ml-2 text-xl font-bold text-foreground whitespace-nowrap">DevLink</span>
+              <span className="ml-3 text-lg font-semibold tracking-tight text-[#F8FAFC] whitespace-nowrap">DevLink</span>
             ) : null}
           </button>
           <div className="sr-only" aria-live="polite">
@@ -693,11 +700,11 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               {navigationGroups.map((group, groupIndex) => (
                 <section key={group.label} className="space-y-1.5">
                   {isDesktopExpanded ? (
-                    <p className="px-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                    <p className="px-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#94A3B8]">
                       {group.label}
                     </p>
                   ) : groupIndex > 0 ? (
-                    <div className="mx-2 border-t border-border/70" />
+                    <div className="mx-2 border-t border-[#1E293B]" />
                   ) : null}
                   <div className="space-y-1">
                     {group.items.map((item) => renderNavItem(item, { collapsed: !isDesktopExpanded }))}
@@ -712,10 +719,10 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       {/* Main content */}
       <div className={`transition-[padding] duration-200 ${isDesktopCollapsed ? 'lg:pl-16' : 'lg:pl-64'}`}>
         {/* Top bar */}
-        <div className="sticky top-0 z-10 flex h-16 bg-card shadow-sm border-b border-border">
+        <div className="sticky top-0 z-10 flex h-16 bg-[#0F172A] border-b border-[#1E293B]">
           <button
             type="button"
-            className="px-4 border-r border-border text-muted-foreground focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 lg:hidden"
+            className="px-4 border-r border-[#1E293B] text-[#94A3B8] hover:text-[#F8FAFC] focus:outline-none lg:hidden"
             onClick={() => setSidebarOpen(true)}
           >
             <Menu className="h-6 w-6" />
@@ -724,42 +731,42 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           <div className="flex flex-1 justify-between px-4 lg:px-6">
             <div className="flex items-center">
               <div className="sm:hidden">
-                <p className="text-sm font-semibold text-foreground">
+                <p className="text-sm font-semibold text-[#F8FAFC]">
                   {activeNavigationContext.item.name}
                 </p>
               </div>
               <div className="hidden sm:flex sm:flex-col sm:py-2">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#94A3B8]">
                   {activeNavigationContext.groupLabel}
                 </p>
-                <p className="text-sm font-semibold text-foreground">
+                <p className="text-sm font-semibold text-[#F8FAFC]">
                   {activeNavigationContext.item.name}
                 </p>
               </div>
             </div>
             
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               <SimpleThemeToggle />
               {notificationsSupported && notificationPermission !== 'granted' ? (
-                <Button variant="outline" size="sm" className="flex items-center gap-2" onClick={handleEnableBrowserAlerts}>
+                <Button variant="secondary" size="sm" className="flex items-center gap-2" onClick={handleEnableBrowserAlerts}>
                   <Bell className="h-4 w-4" />
                   <span className="hidden sm:inline">Enable Alerts</span>
                 </Button>
               ) : null}
               <Link href={`/${username ?? ''}`} target="_blank">
-                <Button variant="ghost" size="sm" className="flex items-center gap-2">
-                  <Eye className="h-4 w-4" />
+                <Button variant="secondary" size="sm" className="flex items-center gap-2">
+                  <Eye className="h-4 w-4 text-[#06B6D4]" />
                   <span className="hidden sm:inline">View Portfolio</span>
-                  <ExternalLink className="h-3 w-3" />
+                  <ExternalLink className="h-3 w-3 text-[#94A3B8]" />
                 </Button>
               </Link>
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                  <Button variant="ghost" className="relative h-9 w-9 rounded-full p-0 border border-[#334155]">
                     <Avatar className="h-8 w-8">
                       <AvatarImage src={userImage} />
-                      <AvatarFallback>
+                      <AvatarFallback className="bg-[#1E293B] text-[#F8FAFC] text-xs font-semibold">
                         {session?.user?.name?.charAt(0)?.toUpperCase() || 'U'}
                       </AvatarFallback>
                     </Avatar>
@@ -768,8 +775,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 <DropdownMenuContent className="w-56" align="end">
                   <div className="flex items-center justify-start gap-2 p-2">
                     <div className="flex flex-col space-y-1 leading-none">
-                      <p className="font-medium">{session?.user?.name}</p>
-                      <p className="w-[200px] truncate text-sm text-muted-foreground">
+                      <p className="font-medium text-sm text-[#F8FAFC]">{session?.user?.name}</p>
+                      <p className="w-[200px] truncate text-xs text-[#94A3B8]">
                         {session?.user?.email}
                       </p>
                     </div>
@@ -777,24 +784,24 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
                     <Link href="/dashboard/profile">
-                      <User className="mr-2 h-4 w-4" />
+                      <User className="mr-2 h-4 w-4 text-[#94A3B8]" />
                       Profile
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link href="/dashboard/customise">
-                      <Palette className="mr-2 h-4 w-4" />
+                      <Palette className="mr-2 h-4 w-4 text-[#94A3B8]" />
                       Customise
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link href="/dashboard/settings">
-                      <Settings className="mr-2 h-4 w-4" />
+                      <Settings className="mr-2 h-4 w-4 text-[#94A3B8]" />
                       Settings
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleSignOut}>
+                  <DropdownMenuItem onClick={handleSignOut} className="text-[#EF4444] hover:text-[#EF4444] focus:text-[#EF4444]">
                     <LogOut className="mr-2 h-4 w-4" />
                     Sign out
                   </DropdownMenuItem>

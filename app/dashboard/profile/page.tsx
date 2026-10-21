@@ -216,9 +216,9 @@ export default function ProfilePage() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">Profile Settings</h1>
-            <p className="text-muted-foreground">
-              Update your profile information and social links
+            <h1 className="text-2xl font-semibold leading-8 text-[#F8FAFC]">Profile Settings</h1>
+            <p className="text-xs text-[#94A3B8] mt-1">
+              Update your profile information, media, and social links
             </p>
           </div>
           <Button 

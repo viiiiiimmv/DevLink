@@ -137,9 +137,9 @@ export default function CertificationsPage() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">Certifications</h1>
-            <p className="text-muted-foreground">
-              Showcase your professional achievements and credentials
+            <h1 className="text-2xl font-semibold leading-8 text-[#F8FAFC]">Certifications</h1>
+            <p className="text-xs text-[#94A3B8] mt-1">
+              Add credentials, professional licenses, and verified achievements
             </p>
           </div>
           <Button onClick={handleAddCertification} className="flex items-center gap-2">
@@ -152,11 +152,11 @@ export default function CertificationsPage() {
         {certifications.length === 0 ? (
           <Card>
             <CardContent className="flex flex-col items-center justify-center py-12">
-              <div className="w-24 h-24 bg-muted rounded-full flex items-center justify-center mb-4">
-                <Award className="h-12 w-12 text-muted-foreground" />
+              <div className="w-20 h-20 bg-[#1E293B] border border-[#334155] rounded-full flex items-center justify-center mb-4">
+                <Award className="h-10 w-10 text-[#06B6D4]" />
               </div>
-              <h3 className="text-lg font-semibold text-foreground mb-2">No certifications added yet</h3>
-              <p className="text-muted-foreground text-center mb-6 max-w-sm">
+              <h3 className="text-lg font-medium text-[#F8FAFC] mb-1">No certifications added yet</h3>
+              <p className="text-xs text-[#94A3B8] text-center mb-6 max-w-sm">
                 Add your professional certifications to showcase your expertise and achievements.
               </p>
               <Button onClick={handleAddCertification} className="flex items-center gap-2">
@@ -175,7 +175,7 @@ export default function CertificationsPage() {
                 transition={{ delay: index * 0.1 }}
               >
                 <Card
-                  className={`h-full hover:shadow-lg transition-shadow ${savingOrder && draggedCertificationId ? 'opacity-80' : ''}`}
+                  className={`h-full hover:border-[#334155] transition-all ${savingOrder && draggedCertificationId ? 'opacity-80' : ''}`}
                   onDragOver={(event) => {
                     event.preventDefault()
                   }}
@@ -184,22 +184,22 @@ export default function CertificationsPage() {
                   <CardHeader>
                     <div className="flex items-start justify-between">
                       <div className="flex items-start gap-3">
-                        <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <Award className="h-6 w-6 text-purple-600 dark:text-purple-300" />
+                        <div className="w-11 h-11 bg-[#06B6D4]/10 border border-[#06B6D4]/20 rounded-xl flex items-center justify-center flex-shrink-0 text-[#06B6D4]">
+                          <Award className="h-5 w-5" />
                         </div>
                         <div className="flex-1">
                           <CardTitle className="text-lg leading-tight">
                             {certification.name}
                           </CardTitle>
-                          <CardDescription className="mt-1 font-medium">
+                          <p className="text-xs text-[#94A3B8] mt-0.5">
                             {certification.issuer}
-                          </CardDescription>
+                          </p>
                         </div>
                       </div>
                       <div className="flex items-center gap-1">
                         <button
                           type="button"
-                          className="p-1 text-muted-foreground hover:text-foreground cursor-grab active:cursor-grabbing"
+                          className="p-1 text-[#94A3B8] hover:text-[#F8FAFC] cursor-grab active:cursor-grabbing"
                           draggable
                           onDragStart={() => setDraggedCertificationId(certification.id)}
                           onDragEnd={() => setDraggedCertificationId(null)}
@@ -208,16 +208,17 @@ export default function CertificationsPage() {
                           <GripVertical className="h-4 w-4" />
                         </button>
                         <Button 
-                          variant="ghost" 
+                          variant="secondary" 
                           size="sm"
                           onClick={() => handleEditCertification(certification)}
                         >
-                          <Edit className="h-4 w-4" />
+                          <Edit className="h-4 w-4 text-[#06B6D4]" />
                         </Button>
                         <Button 
-                          variant="ghost" 
+                          variant="destructive" 
                           size="sm"
                           onClick={() => handleDeleteCertification(certification.id)}
+                          title="Remove Entry"
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -226,15 +227,15 @@ export default function CertificationsPage() {
                   </CardHeader>
                   <CardContent>
                     {/* Date */}
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-                      <Calendar className="h-4 w-4" />
+                    <div className="flex items-center gap-2 text-xs text-[#94A3B8] mb-4">
+                      <Calendar className="h-3.5 w-3.5 text-[#06B6D4]" />
                       {certification.date}
                     </div>
 
                     {/* Credential Info */}
                     {certification.credentialId && (
                       <div className="mb-4">
-                        <Badge variant="outline" className="text-xs">
+                        <Badge variant="tech" className="text-xs">
                           ID: {certification.credentialId}
                         </Badge>
                       </div>
@@ -243,18 +244,18 @@ export default function CertificationsPage() {
                     {/* Actions */}
                     <div className="flex items-center gap-2">
                       {certification.credentialUrl ? (
-                        <Button variant="outline" size="sm" className="flex-1" asChild>
+                        <Button variant="secondary" size="sm" className="flex-1" asChild>
                           <a 
                             href={certification.credentialUrl} 
                             target="_blank" 
                             rel="noopener noreferrer"
                           >
-                            <ExternalLink className="h-4 w-4 mr-2" />
+                            <ExternalLink className="h-4 w-4 mr-2 text-[#06B6D4]" />
                             View Credential
                           </a>
                         </Button>
                       ) : (
-                        <Button variant="outline" size="sm" className="flex-1" disabled>
+                        <Button variant="secondary" size="sm" className="flex-1 opacity-50" disabled>
                           No Link Available
                         </Button>
                       )}

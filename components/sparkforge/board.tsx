@@ -134,14 +134,14 @@ const getInitials = (value: string): string => {
 
 const toStatusClassName = (status: IdeaStatus): string => {
   if (status === 'open') {
-    return 'border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-300'
+    return 'border-emerald-500/20 bg-emerald-500/10 text-emerald-400 font-mono text-xs'
   }
 
   if (status === 'in_progress') {
-    return 'border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-900 dark:bg-blue-950/40 dark:text-blue-300'
+    return 'border-[#06B6D4]/30 bg-[#06B6D4]/10 text-[#06B6D4] font-mono text-xs'
   }
 
-  return 'border-zinc-200 bg-zinc-100 text-zinc-700 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300'
+  return 'border-[#334155] bg-[#1E293B] text-[#94A3B8] font-mono text-xs'
 }
 
 export default function SparkForgeBoard() {
@@ -628,43 +628,43 @@ export default function SparkForgeBoard() {
 
   return (
     <div className="space-y-6">
-      <Card className="border-blue-200/70 bg-card/85 dark:border-blue-900/40">
+      <Card className="border-[#1E293B] bg-gradient-to-br from-[#0F172A] via-[#0F172A] to-[#1E293B]/60 shadow-xl">
         <CardContent className="space-y-4 p-6 sm:p-7">
           <div className="flex flex-wrap items-center gap-2">
-            <Badge className="bg-blue-600 text-white hover:bg-blue-600">
+            <Badge className="bg-[#6366F1] text-white hover:bg-[#4F46E5] font-mono text-xs">
               <Lightbulb className="mr-1 h-3.5 w-3.5" />
               SparkForge
             </Badge>
-            <Badge variant="secondary" className="border-blue-200/60 bg-blue-50 text-blue-700 dark:border-blue-900/60 dark:bg-blue-950/40 dark:text-blue-300">
+            <Badge variant="secondary" className="border-[#334155] bg-[#1E293B] text-[#06B6D4] font-mono text-xs">
               {totalIdeas} ideas live
             </Badge>
           </div>
 
           <div className="space-y-2">
-            <h1 className="text-3xl font-black tracking-tight sm:text-4xl">Find people to build your next project with.</h1>
-            <p className="max-w-3xl text-sm text-muted-foreground sm:text-base">
+            <h1 className="text-3xl font-semibold tracking-tight text-[#F8FAFC] sm:text-4xl">Find people to build your next project with.</h1>
+            <p className="max-w-3xl text-sm text-[#94A3B8] sm:text-base">
               Post your concept, discover what others are building, send sparks, and move to chat or direct contact.
             </p>
           </div>
 
           <div className="flex flex-wrap gap-3">
-            <Button onClick={openCreateForm} className="bg-blue-600 text-white hover:bg-blue-700">
+            <Button onClick={openCreateForm} className="bg-[#6366F1] text-white hover:bg-[#4F46E5]">
               <Plus className="mr-2 h-4 w-4" />
               Post an idea
             </Button>
             <Link href="/discover">
-              <Button variant="outline">Explore profiles</Button>
+              <Button variant="secondary">Explore profiles</Button>
             </Link>
           </div>
         </CardContent>
       </Card>
 
       {sparkNotice ? (
-        <div className="fixed bottom-6 right-6 z-50 w-[280px] rounded-xl border border-emerald-200/80 bg-emerald-50/95 p-3 shadow-lg backdrop-blur dark:border-emerald-900 dark:bg-emerald-950/80">
-          <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-300">
+        <div className="fixed bottom-6 right-6 z-50 w-[280px] rounded-xl border border-[#334155] bg-[#0F172A]/95 p-3 shadow-2xl backdrop-blur">
+          <p className="text-sm font-semibold text-emerald-400">
             {sparkNotice.state === 'connected' ? 'Code Circle established' : 'Spark sent'}
           </p>
-          <p className="mt-1 text-xs text-muted-foreground">
+          <p className="mt-1 text-xs text-[#94A3B8]">
             {sparkNotice.username ? `${sparkNotice.name} (@${sparkNotice.username})` : sparkNotice.name}
           </p>
         </div>
@@ -869,10 +869,10 @@ export default function SparkForgeBoard() {
                   key={tag}
                   type="button"
                   onClick={() => setActiveTag((previous) => previous === tag ? '' : tag)}
-                  className={`rounded-full border px-2.5 py-1 text-xs transition-colors ${
+                  className={`rounded-full border px-2.5 py-1 font-mono text-xs transition-colors ${
                     activeTag === tag
-                      ? 'border-blue-500 bg-blue-500 text-white'
-                      : 'border-border bg-muted/40 text-muted-foreground hover:border-blue-300 hover:text-foreground'
+                      ? 'border-[#6366F1] bg-[#6366F1]/20 text-[#6366F1]'
+                      : 'border-[#334155] bg-[#1E293B] text-[#94A3B8] hover:border-[#06B6D4] hover:text-[#F8FAFC]'
                   }`}
                 >
                   #{tag}
@@ -948,7 +948,7 @@ export default function SparkForgeBoard() {
                         key={`${idea.id}-tag-${tag}`}
                         type="button"
                         onClick={() => setActiveTag(tag)}
-                        className="rounded-full border border-border bg-muted/35 px-2 py-0.5 text-xs text-muted-foreground hover:border-blue-300 hover:text-foreground"
+                        className="rounded-full border border-[#334155] bg-[#1E293B] px-2 py-0.5 font-mono text-xs text-[#94A3B8] hover:border-[#06B6D4] hover:text-[#F8FAFC]"
                       >
                         #{tag}
                       </button>
@@ -960,7 +960,7 @@ export default function SparkForgeBoard() {
                   {idea.skills.length > 0 ? (
                     <div className="flex flex-wrap gap-1.5">
                       {idea.skills.map((skill) => (
-                        <Badge key={`${idea.id}-skill-${skill}`} variant="secondary" className="text-xs">
+                        <Badge key={`${idea.id}-skill-${skill}`} variant="tech" className="text-xs">
                           {skill}
                         </Badge>
                       ))}

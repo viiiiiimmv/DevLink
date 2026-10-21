@@ -579,11 +579,11 @@ export default function Dashboard() {
   }
 
   const stats = profile ? [
-    { label: 'Projects', value: profile.projects.length, color: 'bg-blue-500' },
-    { label: 'Experiences', value: profile.experiences.length, color: 'bg-green-500' },
-    { label: 'Certifications', value: profile.certifications.length, color: 'bg-purple-500' },
-    { label: 'Research Papers', value: profile.researches.length, color: 'bg-orange-500' },
-    { label: 'Testimonials', value: profile.testimonials?.length ?? 0, color: 'bg-rose-500' },
+    { label: 'Projects', value: profile.projects.length, color: 'bg-[#6366F1]/10 text-[#6366F1] border border-[#6366F1]/20' },
+    { label: 'Experiences', value: profile.experiences.length, color: 'bg-[#10B981]/10 text-[#10B981] border border-[#10B981]/20' },
+    { label: 'Certifications', value: profile.certifications.length, color: 'bg-[#06B6D4]/10 text-[#06B6D4] border border-[#06B6D4]/20' },
+    { label: 'Research Papers', value: profile.researches.length, color: 'bg-[#F59E0B]/10 text-[#F59E0B] border border-[#F59E0B]/20' },
+    { label: 'Testimonials', value: profile.testimonials?.length ?? 0, color: 'bg-[#3B82F6]/10 text-[#3B82F6] border border-[#3B82F6]/20' },
   ] : []
 
   const completion = profile ? calculateProfileCompletion(profile) : null
@@ -707,21 +707,21 @@ export default function Dashboard() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
-            <p className="text-muted-foreground">
+            <h1 className="text-2xl font-semibold leading-8 text-[#F8FAFC]">Dashboard</h1>
+            <p className="text-xs text-[#94A3B8] mt-1">
               Welcome back, {profile?.name || 'Developer'}! 👋
             </p>
           </div>
           <div className="flex items-center gap-3">
             <Link href={`/${profile?.username}`} target="_blank">
-              <Button variant="outline" className="flex items-center gap-2">
-                <Eye className="h-4 w-4" />
+              <Button variant="secondary" className="flex items-center gap-2">
+                <Eye className="h-4 w-4 text-[#06B6D4]" />
                 View Portfolio
-                <ExternalLink className="h-3 w-3" />
+                <ExternalLink className="h-3 w-3 text-[#94A3B8]" />
               </Button>
             </Link>
             <Link href="/dashboard/profile">
-              <Button>
+              <Button className="flex items-center gap-2">
                 <Settings className="h-4 w-4 mr-2" />
                 Edit Profile
               </Button>
@@ -730,7 +730,7 @@ export default function Dashboard() {
         </div>
 
         {/* Quick Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           {stats.map((stat, index) => (
             <motion.div
               key={stat.label}
@@ -738,15 +738,15 @@ export default function Dashboard() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
             >
-              <Card>
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-4">
-                    <div className={`w-12 h-12 rounded-lg ${stat.color} flex items-center justify-center`}>
-                      <BarChart3 className="h-6 w-6 text-white" />
+              <Card className="hover:border-[#334155] transition-colors">
+                <CardContent className="p-5">
+                  <div className="flex items-center gap-3.5">
+                    <div className={`w-11 h-11 rounded-xl ${stat.color} flex items-center justify-center shrink-0`}>
+                      <BarChart3 className="h-5 w-5" />
                     </div>
                     <div>
-                      <p className="text-2xl font-bold text-foreground">{stat.value}</p>
-                      <p className="text-sm text-muted-foreground">{stat.label}</p>
+                      <p className="text-xl font-semibold text-[#F8FAFC]">{stat.value}</p>
+                      <p className="text-xs text-[#94A3B8]">{stat.label}</p>
                     </div>
                   </div>
                 </CardContent>

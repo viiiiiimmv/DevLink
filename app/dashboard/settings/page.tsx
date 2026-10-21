@@ -352,9 +352,9 @@ export default function SettingsPage() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">Settings</h1>
-            <p className="text-muted-foreground">
-              Manage your account settings and critical portfolio actions
+            <h1 className="text-2xl font-semibold leading-8 text-[#F8FAFC]">Settings</h1>
+            <p className="text-xs text-[#94A3B8] mt-1">
+              Manage your account credentials, security controls, and portfolio configurations
             </p>
           </div>
         </div>
@@ -364,30 +364,30 @@ export default function SettingsPage() {
             <CardHeader>
               <CardTitle>Portfolio URL</CardTitle>
               <CardDescription>
-                Your unique portfolio URL that visitors will use
+                Your unique developer slug that visitors and recruiters will use
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <div className="flex items-center space-x-2">
-                  <span className="text-muted-foreground">{siteUrl}/</span>
+                  <span className="font-mono text-xs text-[#94A3B8]">{siteUrl}/</span>
                   <div className="flex-1 relative">
                     <Input
                       value={username}
                       onChange={(e) => handleUsernameChange(e.target.value)}
-                      className="pr-10"
+                      className="pr-10 font-mono"
                       placeholder="yourusername"
                     />
                     {checkingUsername && (
                       <div className="absolute right-3 top-3">
-                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600" />
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#6366F1]" />
                       </div>
                     )}
                     {!checkingUsername && usernameAvailable === true && (
-                      <Check className="absolute right-3 top-3 h-4 w-4 text-green-600" />
+                      <Check className="absolute right-3 top-3 h-4 w-4 text-[#10B981]" />
                     )}
                     {!checkingUsername && usernameAvailable === false && (
-                      <X className="absolute right-3 top-3 h-4 w-4 text-red-600" />
+                      <X className="absolute right-3 top-3 h-4 w-4 text-[#EF4444]" />
                     )}
                   </div>
                   <Button
@@ -403,22 +403,22 @@ export default function SettingsPage() {
                   </Button>
                 </div>
                 <div className="text-sm">
-                  <p className="text-muted-foreground mb-2">
+                  <p className="text-xs text-[#94A3B8] mb-2">
                     Choose a unique username for your portfolio. Username must start with a letter and contain only lowercase letters and numbers.
                   </p>
                   {username && username !== profileData?.username && (
                     <div className="space-y-2">
-                      <p className="text-muted-foreground">
+                      <p className="text-xs text-[#94A3B8]">
                         New portfolio URL will be:
                       </p>
-                      <p className="font-mono text-blue-600 dark:text-blue-300 bg-blue-50 dark:bg-blue-950/40 px-2 py-1 rounded">
+                      <p className="font-mono text-xs font-medium text-[#06B6D4] bg-[#06B6D4]/10 border border-[#06B6D4]/25 px-2.5 py-1 rounded-md inline-block">
                         {siteUrl}/{username}
                       </p>
                       {usernameAvailable === true && (
-                        <p className="text-green-600">✓ Username is available!</p>
+                        <p className="text-xs text-[#10B981] font-mono">✓ Username is available!</p>
                       )}
                       {usernameAvailable === false && (
-                        <p className="text-red-600">✗ Username is already taken</p>
+                        <p className="text-xs text-[#EF4444] font-mono">✗ Username is already taken</p>
                       )}
                     </div>
                   )}

@@ -554,65 +554,79 @@ function ChatsPageContent() {
     
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Pulse Chat</h1>
-          <p className="text-sm text-muted-foreground">
-            Real-time messaging for your Code Circle powered by secure websockets.
+          <h1 className="text-2xl font-semibold leading-8 text-[#F8FAFC]">Pulse Chat</h1>
+          <p className="text-xs text-[#94A3B8] mt-1">
+            Real-time messaging for your Code Circle powered by secure websockets
           </p>
         </div>
 
         <Card>
-          <CardHeader className="pb-4">
-            <CardTitle className="flex items-center gap-2 text-lg">
-              <MessageCircle className="h-5 w-5" />
-              Conversations
-            </CardTitle>
-            <CardDescription>
-              {socketConnected ? 'Realtime is connected' : 'Realtime is reconnecting'}
-            </CardDescription>
+          <CardHeader className="pb-4 border-b border-[#1E293B]">
+            <div className="flex items-center justify-between">
+              <CardTitle className="flex items-center gap-2 text-lg">
+                <MessageCircle className="h-5 w-5 text-[#6366F1]" />
+                Conversations
+              </CardTitle>
+              <div>
+                {socketConnected ? (
+                  <span className="inline-flex items-center gap-1.5 font-mono text-xs text-[#10B981] bg-[#10B981]/10 border border-[#10B981]/25 px-2 py-0.5 rounded-full">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#10B981]" />
+                    REALTIME SYNC ACTIVE
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1.5 font-mono text-xs text-[#F59E0B] bg-[#F59E0B]/10 border border-[#F59E0B]/25 px-2 py-0.5 rounded-full">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#F59E0B] animate-pulse" />
+                    RECONNECTING
+                  </span>
+                )}
+              </div>
+            </div>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-4">
             <div className="grid gap-4 lg:grid-cols-[320px_1fr]">
-              <div className="rounded-lg border border-border">
+              <div className="rounded-xl border border-[#334155] bg-[#0F172A] overflow-hidden">
                 {loadingConversations ? (
-                  <div className="flex h-80 items-center justify-center text-sm text-muted-foreground">
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <div className="flex h-80 items-center justify-center text-sm text-[#94A3B8]">
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin text-[#6366F1]" />
                     Loading chats...
                   </div>
                 ) : conversations.length === 0 ? (
-                  <div className="flex h-80 flex-col items-center justify-center gap-2 text-center text-sm text-muted-foreground">
-                    <Users className="h-6 w-6" />
-                    <p>No chats yet.</p>
-                    <p>Start from the Talent Network and connect first.</p>
+                  <div className="flex h-80 flex-col items-center justify-center gap-2 text-center text-sm text-[#94A3B8] p-6">
+                    <Users className="h-8 w-8 opacity-40 text-[#6366F1]" />
+                    <p className="font-medium text-[#F8FAFC]">No active chats yet</p>
+                    <p className="text-xs text-[#94A3B8]">Connect with developers in Talent Network to spark a conversation.</p>
                   </div>
                 ) : (
-                  <div className="max-h-[65vh] overflow-y-auto">
+                  <div className="max-h-[65vh] overflow-y-auto divide-y divide-[#1E293B]">
                     {conversations.map((conversation) => {
                       const isSelected = conversation.id === selectedConversationId
                       return (
                         <button
                           key={conversation.id}
                           type="button"
-                          className={`w-full border-b border-border p-3 text-left transition-colors ${
-                            isSelected ? 'bg-muted/70' : 'hover:bg-muted/40'
+                          className={`w-full p-3.5 text-left transition-colors duration-150 ${
+                            isSelected
+                              ? 'bg-[#6366F1]/10 border-l-2 border-[#6366F1] text-[#F8FAFC]'
+                              : 'bg-transparent border-l-2 border-transparent text-[#CBD5E1] hover:bg-[#1E293B]/60 hover:text-[#F8FAFC]'
                           }`}
                           onClick={() => selectConversation(conversation.id)}
                         >
                           <div className="flex items-start gap-3">
-                            <Avatar className="h-9 w-9">
+                            <Avatar className="h-9 w-9 border border-[#334155]">
                               <AvatarImage src={conversation.peer?.image} />
-                              <AvatarFallback>{getInitials(conversation.peer?.name || 'User')}</AvatarFallback>
+                              <AvatarFallback className="bg-[#1E293B] text-xs font-semibold text-[#F8FAFC]">{getInitials(conversation.peer?.name || 'User')}</AvatarFallback>
                             </Avatar>
                             <div className="min-w-0 flex-1">
                               <div className="flex items-center justify-between gap-2">
-                                <p className="truncate text-sm font-medium">{conversation.peer?.name || 'Conversation'}</p>
+                                <p className="truncate text-sm font-medium text-[#F8FAFC]">{conversation.peer?.name || 'Conversation'}</p>
                                 {conversation.unreadCount > 0 ? (
-                                  <Badge variant="default" className="h-5 rounded-full px-2 text-xs">
+                                  <span className="inline-flex items-center justify-center rounded-full bg-[#6366F1] px-1.5 py-0.5 text-[11px] font-semibold text-white">
                                     {conversation.unreadCount}
-                                  </Badge>
+                                  </span>
                                 ) : null}
                               </div>
-                              <p className="truncate text-xs text-muted-foreground">@{conversation.peer?.username || 'team'}</p>
-                              <p className="mt-1 line-clamp-1 text-xs text-muted-foreground">
+                              <p className="truncate font-mono text-xs text-[#06B6D4]">@{conversation.peer?.username || 'team'}</p>
+                              <p className="mt-1 line-clamp-1 text-xs text-[#94A3B8]">
                                 {conversation.lastMessageText || 'No messages yet'}
                               </p>
                             </div>
@@ -624,35 +638,35 @@ function ChatsPageContent() {
                 )}
               </div>
 
-              <div className="rounded-lg border border-border">
+              <div className="rounded-xl border border-[#334155] bg-[#0F172A] overflow-hidden">
                 {!selectedConversation ? (
-                  <div className="flex h-80 items-center justify-center text-sm text-muted-foreground">
+                  <div className="flex h-80 items-center justify-center text-sm text-[#94A3B8]">
                     Choose a conversation to start chatting.
                   </div>
                 ) : (
                   <div className="flex h-[65vh] flex-col">
-                    <div className="flex items-center justify-between border-b border-border px-4 py-3">
+                    <div className="flex items-center justify-between border-b border-[#1E293B] bg-[#0F172A] px-4 py-3">
                       <div className="flex items-center gap-3">
-                        <Avatar className="h-9 w-9">
+                        <Avatar className="h-9 w-9 border border-[#334155]">
                           <AvatarImage src={selectedConversation.peer?.image} />
-                          <AvatarFallback>{getInitials(selectedConversation.peer?.name || 'User')}</AvatarFallback>
+                          <AvatarFallback className="bg-[#1E293B] text-xs font-semibold text-[#F8FAFC]">{getInitials(selectedConversation.peer?.name || 'User')}</AvatarFallback>
                         </Avatar>
                         <div>
-                          <p className="text-sm font-medium">{selectedConversation.peer?.name || 'Conversation'}</p>
-                          <p className="text-xs text-muted-foreground">@{selectedConversation.peer?.username || 'team'}</p>
+                          <p className="text-sm font-medium text-[#F8FAFC]">{selectedConversation.peer?.name || 'Conversation'}</p>
+                          <p className="font-mono text-xs text-[#06B6D4]">@{selectedConversation.peer?.username || 'team'}</p>
                         </div>
                       </div>
-                      <Badge variant="secondary">Pulse Chat</Badge>
+                      <Badge variant="tech">Pulse Chat</Badge>
                     </div>
 
-                    <div className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
+                    <div className="flex-1 space-y-3 overflow-y-auto px-4 py-4 bg-[#090D16]/50">
                       {loadingMessages ? (
-                        <div className="flex items-center justify-center py-8 text-sm text-muted-foreground">
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        <div className="flex items-center justify-center py-8 text-sm text-[#94A3B8]">
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin text-[#6366F1]" />
                           Loading messages...
                         </div>
                       ) : selectedMessages.length === 0 ? (
-                        <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
+                        <div className="flex h-full items-center justify-center text-sm text-[#94A3B8]">
                           Send the first message.
                         </div>
                       ) : (
@@ -661,16 +675,16 @@ function ChatsPageContent() {
 
                           return (
                             <div key={message.id} className={`flex ${isOwn ? 'justify-end' : 'justify-start'}`}>
-                              <div className={`max-w-[80%] rounded-2xl px-3 py-2 text-sm ${
+                              <div className={`max-w-[80%] rounded-xl px-3.5 py-2.5 text-sm shadow-sm ${
                                 isOwn
-                                  ? 'bg-blue-600 text-white'
-                                  : 'bg-muted text-foreground'
+                                  ? 'bg-[#6366F1] text-white'
+                                  : 'bg-[#1E293B] text-[#F8FAFC] border border-[#334155]'
                               }`}>
                                 {!isOwn ? (
-                                  <p className="mb-1 text-xs font-medium opacity-80">{message.senderName}</p>
+                                  <p className="mb-1 text-xs font-medium text-[#06B6D4]">{message.senderName}</p>
                                 ) : null}
                                 <p className="whitespace-pre-wrap break-words">{message.body}</p>
-                                <p className={`mt-1 text-[11px] ${isOwn ? 'text-blue-100' : 'text-muted-foreground'}`}>
+                                <p className={`mt-1 text-[10px] ${isOwn ? 'text-white/80' : 'text-[#94A3B8]'}`}>
                                   {new Date(message.createdAt).toLocaleTimeString([], {
                                     hour: '2-digit',
                                     minute: '2-digit',

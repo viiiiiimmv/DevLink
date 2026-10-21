@@ -100,9 +100,9 @@ export default function ResearchesPage() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">Research Papers</h1>
-            <p className="text-muted-foreground">
-              Share your thoughts, tutorials, and technical articles
+            <h1 className="text-2xl font-semibold leading-8 text-[#F8FAFC]">Research Papers</h1>
+            <p className="text-xs text-[#94A3B8] mt-1">
+              Publish technical writing, peer-reviewed papers, and research articles
             </p>
           </div>
           <Button onClick={handleAddResearch} className="flex items-center gap-2">
@@ -114,11 +114,11 @@ export default function ResearchesPage() {
         {researches.length === 0 ? (
           <Card>
             <CardContent className="flex flex-col items-center justify-center py-12">
-              <div className="w-24 h-24 bg-muted rounded-full flex items-center justify-center mb-4">
-                <BookOpen className="h-12 w-12 text-muted-foreground" />
+              <div className="w-20 h-20 bg-[#1E293B] border border-[#334155] rounded-full flex items-center justify-center mb-4">
+                <BookOpen className="h-10 w-10 text-[#F59E0B]" />
               </div>
-              <h3 className="text-lg font-semibold text-foreground mb-2">No research papers yet</h3>
-              <p className="text-muted-foreground text-center mb-6 max-w-sm">
+              <h3 className="text-lg font-medium text-[#F8FAFC] mb-1">No research papers yet</h3>
+              <p className="text-xs text-[#94A3B8] text-center mb-6 max-w-sm">
                 Start sharing your knowledge by adding links to your research articles.
               </p>
               <Button onClick={handleAddResearch} className="flex items-center gap-2">
@@ -136,43 +136,46 @@ export default function ResearchesPage() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.1 }}
               >
-                <Card className="hover:shadow-md transition-shadow">
+                <Card className="hover:border-[#334155] transition-all">
                   <CardHeader>
                     <div className="flex items-start justify-between">
                       <div className="flex items-start gap-4 flex-1">
-                        <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <BookOpen className="h-6 w-6 text-orange-600 dark:text-orange-300" />
+                        <div className="w-11 h-11 bg-[#F59E0B]/10 border border-[#F59E0B]/20 rounded-xl flex items-center justify-center flex-shrink-0 text-[#F59E0B]">
+                          <BookOpen className="h-5 w-5" />
                         </div>
                         <div className="flex-1">
-                          <CardTitle className="text-xl leading-tight">
+                          <CardTitle className="text-lg leading-tight">
                             {research.title}
                           </CardTitle>
-                          <CardDescription className="mt-2">
+                          <p className="text-sm text-[#CBD5E1] mt-1">
                             {research.description}
-                          </CardDescription>
-                          <div className="flex items-center gap-2 mt-3 text-sm text-muted-foreground">
-                            <Calendar className="h-4 w-4" />
+                          </p>
+                          <div className="flex items-center gap-1.5 mt-2.5 text-xs text-[#94A3B8]">
+                            <Calendar className="h-3.5 w-3.5 text-[#06B6D4]" />
                             {new Date(research.publishedAt).toLocaleDateString()}
                           </div>
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Button variant="ghost" size="sm" asChild>
-                          <a href={research.url} target="_blank" rel="noopener noreferrer">
-                            <ExternalLink className="h-4 w-4" />
-                          </a>
-                        </Button>
+                        {research.url && (
+                          <Button variant="secondary" size="sm" asChild>
+                            <a href={research.url} target="_blank" rel="noopener noreferrer">
+                              <ExternalLink className="h-4 w-4 text-[#06B6D4]" />
+                            </a>
+                          </Button>
+                        )}
                         <Button 
-                          variant="ghost" 
+                          variant="secondary" 
                           size="sm"
                           onClick={() => handleEditResearch(research)}
                         >
-                          <Edit className="h-4 w-4" />
+                          <Edit className="h-4 w-4 text-[#06B6D4]" />
                         </Button>
                         <Button 
-                          variant="ghost" 
+                          variant="destructive" 
                           size="sm"
                           onClick={() => handleDeleteResearch(research.id)}
+                          title="Remove Entry"
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>

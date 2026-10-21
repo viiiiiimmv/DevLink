@@ -13,6 +13,7 @@ interface PhotoUploadProps {
 export default function PhotoUpload({ currentPhoto, onPhotoChange, className = '' }: PhotoUploadProps) {
   const [preview, setPreview] = useState<string | null>(currentPhoto || null)
   const [uploading, setUploading] = useState(false)
+  const [uploadProgress, setUploadProgress] = useState(0)
   const [dragOver, setDragOver] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -32,8 +33,13 @@ export default function PhotoUpload({ currentPhoto, onPhotoChange, className = '
 
   const uploadPhoto = async (file: File) => {
     setUploading(true)
+    setUploadProgress(20)
 
     try {
+      const progressTimer = setInterval(() => {
+        setUploadProgress((prev) => (prev >= 90 ? prev : prev + 15))
+      }, 150)
+
       const formData = new FormData()
       formData.append('photo', file)
 
@@ -41,6 +47,9 @@ export default function PhotoUpload({ currentPhoto, onPhotoChange, className = '
         method: 'POST',
         body: formData,
       })
+
+      clearInterval(progressTimer)
+      setUploadProgress(100)
 
       if (!response.ok) {
         throw new Error('Failed to upload photo')
@@ -53,16 +62,14 @@ export default function PhotoUpload({ currentPhoto, onPhotoChange, className = '
       console.error('Upload error:', error)
       alert('Failed to upload photo. Please try again.')
     } finally {
-      setUploading(false)
+      setTimeout(() => {
+        setUploading(false)
+        setUploadProgress(0)
+      }, 300)
     }
   }
 
   const removePhoto = async () => {
-    if (preview && preview !== currentPhoto) {
-      // If it's a new upload, we should delete it from Cloudinary
-      // For simplicity, we'll just clear the preview
-    }
-
     setPreview(null)
     onPhotoChange(null)
 
@@ -103,7 +110,7 @@ export default function PhotoUpload({ currentPhoto, onPhotoChange, className = '
       <div className="flex items-center justify-center">
         <div className="relative">
           {/* Photo Preview */}
-          <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-border bg-muted">
+          <div className="relative w-32 h-32 rounded-full overflow-hidden border-2 border-[#334155] bg-[#1E293B] shadow-inner">
             {preview ? (
               <Image
                 src={preview}
@@ -112,15 +119,21 @@ export default function PhotoUpload({ currentPhoto, onPhotoChange, className = '
                 className="object-cover"
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-muted-foreground">
+              <div className="w-full h-full flex items-center justify-center text-[#94A3B8]">
                 <User size={48} />
               </div>
             )}
 
             {/* Loading Overlay */}
             {uploading && (
-              <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                <div className="text-white text-sm">Uploading...</div>
+              <div className="absolute inset-0 bg-[#090D16]/80 backdrop-blur-xs flex flex-col items-center justify-center p-3">
+                <div className="text-[#F8FAFC] text-xs font-medium mb-1">Uploading...</div>
+                <div className="w-full h-1.5 bg-[#1E293B] rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-[#6366F1] transition-all duration-200"
+                    style={{ width: `${uploadProgress}%` }}
+                  />
+                </div>
               </div>
             )}
           </div>
@@ -129,7 +142,7 @@ export default function PhotoUpload({ currentPhoto, onPhotoChange, className = '
           {preview && !uploading && (
             <button
               onClick={removePhoto}
-              className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors"
+              className="absolute -top-1 -right-1 w-6 h-6 bg-[#EF4444] text-white rounded-full flex items-center justify-center hover:bg-[#EF4444]/90 transition-colors shadow-md"
               title="Remove photo"
             >
               <X size={14} />
@@ -140,32 +153,49 @@ export default function PhotoUpload({ currentPhoto, onPhotoChange, className = '
           <button
             onClick={() => fileInputRef.current?.click()}
             disabled={uploading}
-            className="absolute bottom-0 right-0 w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="absolute bottom-0 right-0 w-9 h-9 bg-[#6366F1] text-white rounded-full flex items-center justify-center hover:bg-[#4F46E5] active:bg-[#4338CA] transition-colors shadow-md disabled:opacity-50 disabled:cursor-not-allowed border-2 border-[#0F172A]"
             title="Upload photo"
           >
-            <Camera size={20} />
+            <Camera size={16} />
           </button>
         </div>
       </div>
 
-      {/* Upload Area */}
+      {/* Cloudinary Media Dropzone per Section 4.B */}
       <div
         onDrop={handleDrop}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
-        className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors cursor-pointer ${dragOver
-            ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30'
-            : 'border-border hover:border-blue-400'
-          }`}
+        className={`border-[1.5px] border-dashed rounded-[12px] p-6 text-center transition-all duration-150 cursor-pointer ${
+          dragOver
+            ? 'border-[#6366F1] bg-[#6366F1]/5'
+            : 'border-[#475569] bg-[#0F172A] hover:border-[#6366F1] hover:bg-[#6366F1]/5'
+        }`}
         onClick={() => fileInputRef.current?.click()}
       >
-        <Upload className="mx-auto h-8 w-8 text-muted-foreground mb-2" />
-        <p className="text-sm text-muted-foreground">
+        <Upload className="mx-auto h-7 w-7 text-[#94A3B8] mb-2" />
+        <p className="text-sm font-medium text-[#F8FAFC]">
           {dragOver ? 'Drop your photo here' : 'Click to upload or drag and drop'}
         </p>
-        <p className="text-xs text-muted-foreground mt-1">
+        <p className="text-xs text-[#94A3B8] mt-1">
           PNG, JPG, GIF up to 5MB
         </p>
+
+        {/* Upload Status Bar */}
+        {uploading && (
+          <div className="mt-4 w-full">
+            <div className="flex justify-between text-xs text-[#94A3B8] mb-1">
+              <span>Uploading to Cloudinary...</span>
+              <span className="font-mono text-[#06B6D4]">{uploadProgress}%</span>
+            </div>
+            <div className="w-full h-1.5 bg-[#1E293B] rounded-full overflow-hidden">
+              <div
+                className="h-full bg-[#6366F1] transition-all duration-200"
+                style={{ width: `${uploadProgress}%` }}
+              />
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Hidden File Input */}
