@@ -16,7 +16,9 @@ export const metadata: Metadata = {
     canonical: absoluteUrl('/'),
   },
   icons: {
-    icon: 'https://res.cloudinary.com/ddyc6aljm/image/upload/v1770660658/Group_14_wvsc34.png',
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+    apple: '/logo.svg',
   },
   openGraph: {
     title: `${SITE_NAME} - Developer Portfolio Builder`,

@@ -6,7 +6,66 @@
 
 @layer base {
   :root {
-    /* DevLink Design System Specification Tokens */
+    /* DevLink Light Mode Tokens */
+    --dl-canvas: #F8FAFC;
+    --dl-bg-canvas: #F8FAFC;
+    --dl-panel: #FFFFFF;
+    --dl-bg-panel: #FFFFFF;
+    --dl-elevated: #F1F5F9;
+    --dl-bg-elevated: #F1F5F9;
+    --dl-hover: #E2E8F0;
+    --dl-bg-hover: #E2E8F0;
+
+    --dl-border-subtle: #E2E8F0;
+    --dl-border-strong: #CBD5E1;
+    --dl-border-focus: #6366F1;
+
+    --dl-primary: #6366F1;
+    --dl-accent-primary: #6366F1;
+    --dl-primary-hover: #4F46E5;
+    --dl-accent-hover: #4F46E5;
+    --dl-accent-active: #4338CA;
+    --dl-cyan: #0891B2;
+    --dl-accent-cyan: #0891B2;
+
+    --dl-text-primary: #0F172A;
+    --dl-text-secondary: #334155;
+    --dl-text-muted: #64748B;
+    --dl-text-disabled: #94A3B8;
+
+    --dl-status-success: #059669;
+    --dl-status-warning: #D97706;
+    --dl-status-danger: #DC2626;
+    --dl-status-info: #2563EB;
+
+    --font-geist-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-geist-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+    /* Shadcn HSL variables for Light mode */
+    --background: 210 40% 98%;    /* #F8FAFC */
+    --foreground: 222.2 84% 4.9%;  /* #020817 */
+    --card: 0 0% 100%;             /* #FFFFFF */
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 238.7 83.5% 66.7%;  /* #6366F1 */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 40% 96.1%;    /* #F1F5F9 */
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%; /* #64748B */
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;  /* #EF4444 */
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;   /* #E2E8F0 */
+    --input: 214.3 31.8% 91.4%;
+    --ring: 238.7 83.5% 66.7%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* DevLink Dark Canvas Tokens */
     --dl-canvas: #090D16;
     --dl-bg-canvas: #090D16;
     --dl-panel: #0F172A;
@@ -38,10 +97,7 @@
     --dl-status-danger: #EF4444;
     --dl-status-info: #3B82F6;
 
-    --font-geist-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    --font-geist-mono: 'JetBrains Mono', 'Fira Code', monospace;
-
-    /* Shadcn HSL variables aligned with dark-first DevLink developer aesthetic */
+    /* Shadcn HSL variables for Dark mode */
     --background: 221.5 42% 6.1%; /* #090D16 */
     --foreground: 210 40% 98%;   /* #F8FAFC */
     --card: 222.2 47.4% 11.2%;   /* #0F172A */
@@ -59,29 +115,6 @@
     --destructive: 0 84.2% 60.2%; /* #EF4444 */
     --destructive-foreground: 210 40% 98%;
     --border: 215.3 25% 26.7%; /* #334155 */
-    --input: 215.3 25% 26.7%;
-    --ring: 238.7 83.5% 66.7%;
-    --radius: 0.5rem;
-  }
-
-  .dark {
-    --background: 221.5 42% 6.1%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 47.4% 11.2%;
-    --card-foreground: 210 40% 98%;
-    --popover: 217.2 32.6% 17.5%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 238.7 83.5% 66.7%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215.4 16.3% 65.1%;
-    --accent: 215.6 28.6% 22%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 215.3 25% 26.7%;
     --input: 215.3 25% 26.7%;
     --ring: 238.7 83.5% 66.7%;
   }
@@ -102,35 +135,35 @@
     font-size: 1.5rem; /* 24px */
     font-weight: 600;
     line-height: 2rem; /* 32px */
-    color: #F8FAFC;
+    color: var(--dl-text-primary);
   }
 
   .dl-section-header {
     font-size: 1.125rem; /* 18px */
     font-weight: 500;
     line-height: 1.5rem; /* 24px */
-    color: #F8FAFC;
+    color: var(--dl-text-primary);
   }
 
   .dl-input-label {
     font-size: 0.875rem; /* 14px */
     font-weight: 500;
     line-height: 1.25rem; /* 20px */
-    color: #E2E8F0;
+    color: var(--dl-text-secondary);
   }
 
   .dl-body-text {
     font-size: 0.875rem; /* 14px */
     font-weight: 400;
     line-height: 1.25rem; /* 20px */
-    color: #CBD5E1;
+    color: var(--dl-text-secondary);
   }
 
   .dl-helper-text {
     font-size: 0.75rem; /* 12px */
     font-weight: 400;
     line-height: 1rem; /* 16px */
-    color: #94A3B8;
+    color: var(--dl-text-muted);
   }
 
   .dl-tech-slug {
@@ -138,7 +171,7 @@
     font-size: 0.75rem; /* 12px */
     font-weight: 500;
     line-height: 1rem; /* 16px */
-    color: #06B6D4;
+    color: var(--dl-cyan);
   }
 
   .animate-fade-in {

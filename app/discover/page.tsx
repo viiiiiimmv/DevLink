@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { ArrowRight, Code, Search, Sparkles } from 'lucide-react'
+import { ArrowRight, Search, Sparkles } from 'lucide-react'
+import { Logo } from '@/components/Logo'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -106,15 +107,7 @@ export default async function DiscoverPage({ searchParams }: DiscoverPageProps) 
 
       <header className="sticky top-0 z-50 border-b border-border/70 bg-background/80 backdrop-blur-xl">
         <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <Link href="/" className="flex items-center gap-2">
-            <Code className="h-7 w-7 text-cyan-600" />
-            <span
-              className="text-xl font-extrabold tracking-tight"
-              style={{ fontFamily: '"Space Grotesk", "Avenir Next", "Segoe UI", sans-serif' }}
-            >
-              DevLink
-            </span>
-          </Link>
+          <Logo href="/" />
 
           <div className="flex items-center gap-2 sm:gap-3">
             <SimpleThemeToggle />

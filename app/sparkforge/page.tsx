@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Code2, Lightbulb } from 'lucide-react'
+import { Lightbulb } from 'lucide-react'
+import { Logo } from '@/components/Logo'
 import SparkForgeBoard from '@/components/sparkforge/board'
 import { Button } from '@/components/ui/button'
 import { SimpleThemeToggle } from '@/components/ui/theme-toggle'
@@ -34,15 +35,7 @@ export default function SparkForgePage() {
 
       <header className="sticky top-0 z-50 border-b border-border/70 bg-background/80 backdrop-blur-xl">
         <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <Link href="/" className="flex items-center gap-2">
-            <Code2 className="h-6 w-6 text-blue-600" />
-            <span
-              className="text-lg font-extrabold tracking-tight"
-              style={{ fontFamily: '"Space Grotesk", "Avenir Next", "Segoe UI", sans-serif' }}
-            >
-              DevLink
-            </span>
-          </Link>
+          <Logo href="/" />
 
           <div className="flex items-center gap-2 sm:gap-3">
             <SimpleThemeToggle />

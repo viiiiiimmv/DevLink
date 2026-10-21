@@ -163,15 +163,15 @@ export default function ProjectImageUpload({
         className={`border-[1.5px] border-dashed rounded-[12px] p-5 text-center transition-all duration-150 cursor-pointer ${
           dragOver
             ? 'border-[#6366F1] bg-[#6366F1]/5'
-            : 'border-[#475569] bg-[#0F172A] hover:border-[#6366F1] hover:bg-[#6366F1]/5'
+            : 'border-slate-300 dark:border-[#475569] bg-slate-50/70 dark:bg-[#0F172A] hover:border-[#6366F1] hover:bg-[#6366F1]/5'
         }`}
         onClick={() => fileInputRef.current?.click()}
       >
-        <Upload className="mx-auto h-6 w-6 text-[#94A3B8] mb-2" />
-        <p className="text-sm font-medium text-[#F8FAFC]">
+        <Upload className="mx-auto h-6 w-6 text-slate-400 dark:text-[#94A3B8] mb-2" />
+        <p className="text-sm font-medium text-slate-800 dark:text-[#F8FAFC]">
           {dragOver ? 'Drop your image here' : 'Click to upload or drag and drop'}
         </p>
-        <p className="text-xs text-[#94A3B8] mt-1">
+        <p className="text-xs text-slate-500 dark:text-[#94A3B8] mt-1">
           PNG, JPG, GIF up to 5MB
         </p>
 

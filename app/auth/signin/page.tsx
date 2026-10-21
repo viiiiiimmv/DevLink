@@ -5,7 +5,8 @@ import { signIn, getProviders } from 'next-auth/react'
 import type { ClientSafeProvider } from 'next-auth/react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { Github, Chrome, Code, ArrowLeft } from 'lucide-react'
+import { Github, Chrome, ArrowLeft } from 'lucide-react'
+import { LogoIcon } from '@/components/Logo'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import Link from 'next/link'
@@ -130,7 +131,7 @@ function SignInContent() {
         <Card className="w-full max-w-md">
           <CardHeader className="text-center space-y-1">
             <div className="flex items-center justify-center mb-4">
-              <Code className="h-10 w-10 text-blue-600" />
+              <LogoIcon size={44} variant="glow" />
             </div>
             <CardTitle className="text-2xl font-bold">Welcome to DevLink</CardTitle>
             <CardDescription>
