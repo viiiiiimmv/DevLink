@@ -1,76 +1,63 @@
 import React from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
-interface LogoIconProps extends React.SVGProps<SVGSVGElement> {
+export interface LogoIconProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: number | string
-  variant?: 'gradient' | 'monochrome' | 'glow' | 'white'
-  idPrefix?: string
+  variant?: 'gradient' | 'monochrome' | 'glow' | 'white' | 'dark' | 'auto'
+  className?: string
 }
 
 export function LogoIcon({
   size = 28,
-  variant = 'gradient',
-  idPrefix = 'dl-logo',
+  variant = 'auto',
   className,
   ...props
 }: LogoIconProps) {
-  const gradientId = `${idPrefix}-grad`
-  const glowId = `${idPrefix}-glow`
-
-  const getStroke = () => {
-    switch (variant) {
-      case 'monochrome':
-        return 'currentColor'
-      case 'white':
-        return '#FFFFFF'
-      case 'gradient':
-      case 'glow':
-      default:
-        return `url(#${gradientId})`
-    }
-  }
+  // Numeric size calculation (aspect ratio is 313 / 210 ≈ 1.49)
+  const numHeight = typeof size === 'number' ? size : parseInt(size as string, 10) || 28
+  const numWidth = Math.round(numHeight * (313 / 210))
 
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 100 102"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={cn('shrink-0 transition-transform duration-300', className)}
-      aria-hidden="true"
+    <div
+      style={{ width: numWidth, height: numHeight }}
+      className={cn('relative inline-flex items-center justify-center shrink-0 select-none', className)}
+      aria-label="DevLink Logo"
       {...props}
     >
-      <defs>
-        <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#6366F1" />
-          <stop offset="45%" stopColor="#818CF8" />
-          <stop offset="100%" stopColor="#06B6D4" />
-        </linearGradient>
-        {variant === 'glow' && (
-          <filter id={glowId} x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="3.5" result="blur" />
-            <feComposite in="SourceGraphic" in2="blur" operator="over" />
-          </filter>
+      {/* Light mode: dark ink logo */}
+      <Image
+        src="/logo-dark.png"
+        alt="DevLink Logo"
+        width={numWidth * 2}
+        height={numHeight * 2}
+        className={cn(
+          'w-full h-full object-contain',
+          variant === 'white' ? 'hidden' : 'block dark:hidden'
         )}
-      </defs>
-      <path
-        d="M 18 14 H 58 A 11 11 0 0 1 58 36 H 38 A 11 11 0 0 0 38 58 H 64 L 82 76 L 64 94"
-        stroke={getStroke()}
-        strokeWidth="11"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        filter={variant === 'glow' ? `url(#${glowId})` : undefined}
+        priority
       />
-    </svg>
+      {/* Dark mode: crisp white logo */}
+      <Image
+        src="/logo.png"
+        alt="DevLink Logo"
+        width={numWidth * 2}
+        height={numHeight * 2}
+        className={cn(
+          'w-full h-full object-contain',
+          variant === 'white' ? 'block' : 'hidden dark:block'
+        )}
+        priority
+      />
+    </div>
   )
 }
 
-interface LogoProps {
+export interface LogoProps {
   size?: number | string
   iconSize?: number | string
-  variant?: 'gradient' | 'monochrome' | 'glow' | 'white'
+  variant?: 'gradient' | 'monochrome' | 'glow' | 'white' | 'dark' | 'auto'
   showText?: boolean
   href?: string
   className?: string
@@ -78,8 +65,8 @@ interface LogoProps {
 }
 
 export function Logo({
-  iconSize = 28,
-  variant = 'gradient',
+  iconSize = 24,
+  variant = 'auto',
   showText = true,
   href = '/',
   className,
@@ -87,19 +74,15 @@ export function Logo({
 }: LogoProps) {
   const content = (
     <div className={cn('inline-flex items-center gap-2.5 group select-none', className)}>
-      <div className="relative flex items-center justify-center">
-        {/* Subtle ambient halo on hover */}
-        <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-[#6366F1]/20 to-[#06B6D4]/20 opacity-0 blur-sm transition-opacity duration-300 group-hover:opacity-100" />
-        <LogoIcon size={iconSize} variant={variant} className="relative transition-transform duration-300 group-hover:scale-105" />
-      </div>
+      <LogoIcon size={iconSize} variant={variant} className="transition-transform duration-200 group-hover:scale-[1.03]" />
       {showText && (
         <span
           className={cn(
-            'text-lg font-bold tracking-tight text-foreground transition-colors group-hover:text-primary',
+            'text-[15px] font-semibold tracking-[-0.02em] text-foreground transition-colors',
             textClassName
           )}
         >
-          Dev<span className="text-[#6366F1] dark:text-[#818CF8]">Link</span>
+          DevLink
         </span>
       )}
     </div>
@@ -107,7 +90,10 @@ export function Logo({
 
   if (href) {
     return (
-      <Link href={href} className="focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg">
+      <Link
+        href={href}
+        className="focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/40 rounded-[4px]"
+      >
         {content}
       </Link>
     )

@@ -21,6 +21,18 @@ const config: Config = {
         sm: 'calc(var(--radius) - 4px)',
       },
       colors: {
+        editorial: {
+          bg: '#0C0D0E',
+          surface: '#131417',
+          elevated: '#191B1F',
+          border: '#22252A',
+          rule: '#2D3139',
+          text: '#F4F4F6',
+          muted: '#8B909A',
+          subtle: '#555B66',
+          accent: '#F59E0B',
+          accentMuted: 'rgba(245, 158, 11, 0.12)',
+        },
         devlink: {
           canvas: '#090D16',
           panel: '#0F172A',
