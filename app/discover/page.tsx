@@ -105,7 +105,7 @@ export default async function DiscoverPage({ searchParams }: DiscoverPageProps) 
         <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-amber-500/10 blur-3xl" />
       </div>
 
-      <header className="sticky top-0 z-50 border-b border-border/70 bg-background/80 backdrop-blur-xl">
+      <header className="sticky top-0 z-50 border-b border-border bg-background">
         <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <Logo href="/" />
 
@@ -122,7 +122,7 @@ export default async function DiscoverPage({ searchParams }: DiscoverPageProps) 
               </Button>
             </Link>
             <Link href="/auth/signin">
-              <Button className="bg-cyan-600 text-white hover:bg-cyan-700">Start Free</Button>
+              <Button className="bg-foreground text-background hover:bg-foreground/90">Start Free</Button>
             </Link>
           </div>
         </div>
@@ -131,7 +131,7 @@ export default async function DiscoverPage({ searchParams }: DiscoverPageProps) 
       <main className="relative z-10 px-4 pb-16 pt-10 sm:px-6 lg:px-8">
         <div className="mx-auto w-full max-w-7xl space-y-8">
           <section className="space-y-4">
-            <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-700 dark:text-cyan-300">
+            <div className="inline-flex items-center gap-2 rounded-[3px] border border-border bg-muted px-3 py-1 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
               <Sparkles className="h-3.5 w-3.5" />
               Discover Talent
             </div>

@@ -6,32 +6,32 @@
 
 @layer base {
   :root {
-    /* DevLink Light Mode Tokens */
-    --dl-canvas: #F8FAFC;
-    --dl-bg-canvas: #F8FAFC;
+    /* DevLink Warm Paper & Deep Ink (Light Mode) */
+    --dl-canvas: #FBFBFA;
+    --dl-bg-canvas: #FBFBFA;
     --dl-panel: #FFFFFF;
     --dl-bg-panel: #FFFFFF;
-    --dl-elevated: #F1F5F9;
-    --dl-bg-elevated: #F1F5F9;
-    --dl-hover: #E2E8F0;
-    --dl-bg-hover: #E2E8F0;
+    --dl-elevated: #F4F4F2;
+    --dl-bg-elevated: #F4F4F2;
+    --dl-hover: #ECECEB;
+    --dl-bg-hover: #ECECEB;
 
-    --dl-border-subtle: #E2E8F0;
-    --dl-border-strong: #CBD5E1;
-    --dl-border-focus: #6366F1;
+    --dl-border-subtle: #E5E5E3;
+    --dl-border-strong: #D4D4D1;
+    --dl-border-focus: #111113;
 
-    --dl-primary: #6366F1;
-    --dl-accent-primary: #6366F1;
-    --dl-primary-hover: #4F46E5;
-    --dl-accent-hover: #4F46E5;
-    --dl-accent-active: #4338CA;
-    --dl-cyan: #0891B2;
-    --dl-accent-cyan: #0891B2;
+    --dl-primary: #111113;
+    --dl-accent-primary: #D97706;
+    --dl-primary-hover: #27272A;
+    --dl-accent-hover: #B45309;
+    --dl-accent-active: #92400E;
+    --dl-cyan: #0D9488;
+    --dl-accent-cyan: #0D9488;
 
-    --dl-text-primary: #0F172A;
-    --dl-text-secondary: #334155;
-    --dl-text-muted: #64748B;
-    --dl-text-disabled: #94A3B8;
+    --dl-text-primary: #111113;
+    --dl-text-secondary: #525866;
+    --dl-text-muted: #8A8F98;
+    --dl-text-disabled: #A0A5AF;
 
     --dl-status-success: #059669;
     --dl-status-warning: #D97706;
@@ -42,55 +42,55 @@
     --font-geist-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
     /* Shadcn HSL variables for Light mode */
-    --background: 210 40% 98%;    /* #F8FAFC */
-    --foreground: 222.2 84% 4.9%;  /* #020817 */
+    --background: 60 4.8% 98%;     /* #FBFBFA */
+    --foreground: 240 5.9% 10%;    /* #111113 */
     --card: 0 0% 100%;             /* #FFFFFF */
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 240 5.9% 10%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 238.7 83.5% 66.7%;  /* #6366F1 */
+    --popover-foreground: 240 5.9% 10%;
+    --primary: 240 5.9% 10%;       /* #111113 */
     --primary-foreground: 0 0% 100%;
-    --secondary: 210 40% 96.1%;    /* #F1F5F9 */
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%; /* #64748B */
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;  /* #EF4444 */
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;   /* #E2E8F0 */
-    --input: 214.3 31.8% 91.4%;
-    --ring: 238.7 83.5% 66.7%;
-    --radius: 0.5rem;
+    --secondary: 60 4.8% 94%;      /* #F4F4F2 */
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 60 4.8% 94%;
+    --muted-foreground: 240 3.8% 46.1%; /* #8A8F98 */
+    --accent: 37.7 92.1% 50.2%;    /* #F59E0B */
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;  /* #DC2626 */
+    --destructive-foreground: 0 0% 100%;
+    --border: 60 4.8% 90%;         /* #E5E5E3 */
+    --input: 60 4.8% 90%;
+    --ring: 240 5.9% 10%;
+    --radius: 0.25rem;
   }
 
   .dark {
-    /* DevLink Dark Canvas Tokens */
-    --dl-canvas: #090D16;
-    --dl-bg-canvas: #090D16;
-    --dl-panel: #0F172A;
-    --dl-bg-panel: #0F172A;
-    --dl-elevated: #1E293B;
-    --dl-bg-elevated: #1E293B;
-    --dl-hover: #283548;
-    --dl-bg-hover: #283548;
+    /* DevLink Obsidian Carbon Tokens (Dark Mode) */
+    --dl-canvas: #0C0D0E;
+    --dl-bg-canvas: #0C0D0E;
+    --dl-panel: #131417;
+    --dl-bg-panel: #131417;
+    --dl-elevated: #191B1F;
+    --dl-bg-elevated: #191B1F;
+    --dl-hover: #22252A;
+    --dl-bg-hover: #22252A;
 
-    --dl-border-subtle: #1E293B;
-    --dl-border-strong: #334155;
-    --dl-border-focus: #6366F1;
+    --dl-border-subtle: #22252A;
+    --dl-border-strong: #2D3139;
+    --dl-border-focus: #F4F4F6;
 
-    --dl-primary: #6366F1;
-    --dl-accent-primary: #6366F1;
-    --dl-primary-hover: #4F46E5;
-    --dl-accent-hover: #4F46E5;
-    --dl-accent-active: #4338CA;
+    --dl-primary: #F4F4F6;
+    --dl-accent-primary: #F59E0B;
+    --dl-primary-hover: #FFFFFF;
+    --dl-accent-hover: #D97706;
+    --dl-accent-active: #B45309;
     --dl-cyan: #06B6D4;
     --dl-accent-cyan: #06B6D4;
 
-    --dl-text-primary: #F8FAFC;
-    --dl-text-secondary: #CBD5E1;
-    --dl-text-muted: #94A3B8;
-    --dl-text-disabled: #475569;
+    --dl-text-primary: #F4F4F6;
+    --dl-text-secondary: #8B909A;
+    --dl-text-muted: #555B66;
+    --dl-text-disabled: #3E434D;
 
     --dl-status-success: #10B981;
     --dl-status-warning: #F59E0B;
@@ -98,25 +98,26 @@
     --dl-status-info: #3B82F6;
 
     /* Shadcn HSL variables for Dark mode */
-    --background: 221.5 42% 6.1%; /* #090D16 */
-    --foreground: 210 40% 98%;   /* #F8FAFC */
-    --card: 222.2 47.4% 11.2%;   /* #0F172A */
-    --card-foreground: 210 40% 98%;
-    --popover: 217.2 32.6% 17.5%; /* #1E293B */
-    --popover-foreground: 210 40% 98%;
-    --primary: 238.7 83.5% 66.7%; /* #6366F1 */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 217.2 32.6% 17.5%; /* #1E293B */
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215.4 16.3% 65.1%; /* #94A3B8 */
-    --accent: 215.6 28.6% 22%; /* #283548 */
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 84.2% 60.2%; /* #EF4444 */
-    --destructive-foreground: 210 40% 98%;
-    --border: 215.3 25% 26.7%; /* #334155 */
-    --input: 215.3 25% 26.7%;
-    --ring: 238.7 83.5% 66.7%;
+    --background: 220 7% 5%;       /* #0C0D0E */
+    --foreground: 240 5% 96%;      /* #F4F4F6 */
+    --card: 225 7% 8%;             /* #131417 */
+    --card-foreground: 240 5% 96%;
+    --popover: 225 6% 11%;         /* #191B1F */
+    --popover-foreground: 240 5% 96%;
+    --primary: 240 5% 96%;         /* #F4F4F6 */
+    --primary-foreground: 220 7% 5%;
+    --secondary: 225 6% 11%;       /* #191B1F */
+    --secondary-foreground: 240 5% 96%;
+    --muted: 225 6% 11%;
+    --muted-foreground: 225 6% 57%;/* #8B909A */
+    --accent: 38 92% 50%;          /* #F59E0B */
+    --accent-foreground: 240 5% 96%;
+    --destructive: 0 84.2% 60.2%;  /* #EF4444 */
+    --destructive-foreground: 240 5% 96%;
+    --border: 220 9% 15%;          /* #22252A */
+    --input: 220 9% 15%;           /* #22252A */
+    --ring: 38 92% 50%;            /* #F59E0B */
+    --radius: 0.25rem;
   }
 
   * {
@@ -136,6 +137,7 @@
     font-weight: 600;
     line-height: 2rem; /* 32px */
     color: var(--dl-text-primary);
+    letter-spacing: -0.025em;
   }
 
   .dl-section-header {
@@ -143,6 +145,7 @@
     font-weight: 500;
     line-height: 1.5rem; /* 24px */
     color: var(--dl-text-primary);
+    letter-spacing: -0.015em;
   }
 
   .dl-input-label {
@@ -175,15 +178,15 @@
   }
 
   .animate-fade-in {
-    animation: fadeIn 0.5s ease-in-out;
+    animation: fadeIn 0.3s ease-out;
   }
   
   .animate-slide-up {
-    animation: slideUp 0.6s ease-out;
+    animation: slideUp 0.35s ease-out;
   }
   
   .animate-bounce-in {
-    animation: bounceIn 0.8s ease-out;
+    animation: bounceIn 0.5s ease-out;
   }
 }
 
@@ -195,7 +198,7 @@
 @keyframes slideUp {
   from { 
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(12px);
   }
   to { 
     opacity: 1;
@@ -206,14 +209,7 @@
 @keyframes bounceIn {
   0% {
     opacity: 0;
-    transform: scale(0.3);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.05);
-  }
-  70% {
-    transform: scale(0.9);
+    transform: scale(0.96);
   }
   100% {
     opacity: 1;
@@ -221,21 +217,21 @@
   }
 }
 
-/* Custom scrollbar matching dark canvas */
+/* Custom scrollbar matching canvas tokens */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #090D16;
+  background: var(--dl-canvas);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1E293B;
-  border-radius: 4px;
+  background: var(--dl-border-strong);
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: var(--dl-text-muted);
 }

@@ -122,7 +122,7 @@ function SignInContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-background to-indigo-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-background text-foreground flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -131,7 +131,7 @@ function SignInContent() {
         <Card className="w-full max-w-md">
           <CardHeader className="text-center space-y-1">
             <div className="flex items-center justify-center mb-4">
-              <LogoIcon size={44} variant="glow" />
+              <LogoIcon size={36} />
             </div>
             <CardTitle className="text-2xl font-bold">Welcome to DevLink</CardTitle>
             <CardDescription>

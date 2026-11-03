@@ -4,24 +4,24 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const badgeVariants = cva(
-  'inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-[#6366F1] focus:ring-offset-2',
+  'inline-flex items-center rounded-[3px] border px-2 py-0.5 text-[11px] font-mono font-medium transition-colors focus:outline-none focus:ring-1 focus:ring-ring',
   {
     variants: {
       variant: {
         default:
-          'border-transparent bg-[#6366F1] text-white hover:bg-[#4F46E5]',
+          'border-transparent bg-foreground text-background',
         secondary:
-          'border-[#334155] bg-[#1E293B] text-[#CBD5E1] hover:bg-[#283548]',
+          'border-border bg-secondary text-secondary-foreground',
         destructive:
-          'border-transparent bg-[#EF4444]/15 text-[#EF4444] border-[#EF4444]/30',
+          'border-destructive/30 bg-destructive/10 text-destructive',
         outline:
-          'border-[#334155] text-[#CBD5E1] bg-transparent',
+          'border-border text-foreground bg-transparent',
         tech:
-          'font-mono text-xs font-medium text-[#06B6D4] bg-[#06B6D4]/10 border-[#06B6D4]/25',
+          'font-mono text-[10px] font-medium text-foreground bg-muted border-border',
         success:
-          'font-mono text-xs font-medium text-[#10B981] bg-[#10B981]/12 border-[#10B981]/25',
+          'font-mono text-[10px] font-medium text-emerald-500 bg-emerald-500/10 border-emerald-500/20',
         warning:
-          'font-mono text-xs font-medium text-[#F59E0B] bg-[#F59E0B]/12 border-[#F59E0B]/25',
+          'font-mono text-[10px] font-medium text-amber-500 bg-amber-500/10 border-amber-500/20',
       },
     },
     defaultVariants: {

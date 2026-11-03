@@ -431,22 +431,22 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           options.collapsed ? 'px-0 py-2.5 justify-center' : 'px-3 py-2 justify-start'
         } ${
           isActive
-            ? 'bg-[#6366F1]/10 border-l-2 border-[#6366F1] text-indigo-900 dark:text-[#F8FAFC]'
+            ? 'bg-foreground/5 border-l-2 border-foreground text-foreground font-medium'
             : 'bg-transparent border-l-2 border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-[#94A3B8] dark:hover:text-[#E2E8F0] dark:hover:bg-white/[0.03]'
         } rounded-r-md`}>
-          <item.icon className={`h-4.5 w-4.5 shrink-0 ${options.collapsed ? '' : 'mr-3'} ${isActive ? 'text-[#6366F1]' : 'text-slate-500 dark:text-[#94A3B8]'}`} />
+          <item.icon className={`h-4.5 w-4.5 shrink-0 ${options.collapsed ? '' : 'mr-3'} ${isActive ? 'text-foreground' : 'text-muted-foreground'}`} />
           {!options.collapsed ? (
             <span className="flex items-center gap-2 whitespace-nowrap">
               <span>{item.name}</span>
               {showUnread ? (
-                <span className="inline-flex min-w-[1.25rem] items-center justify-center rounded-full bg-[#6366F1] px-1.5 py-0.5 text-[11px] font-semibold text-white">
+                <span className="inline-flex min-w-[1.25rem] items-center justify-center rounded-[2px] bg-editorial-accent px-1.5 py-0.5 text-[10px] font-mono font-bold text-editorial-bg">
                   {formatUnreadCount(unreadPulseCount)}
                 </span>
               ) : null}
             </span>
           ) : null}
           {options.collapsed && showUnread ? (
-            <span className="absolute right-2 top-1.5 h-2 w-2 rounded-full bg-[#6366F1]" />
+            <span className="absolute right-2 top-1.5 h-1.5 w-1.5 rounded-full bg-editorial-accent" />
           ) : null}
         </div>
       </Link>
@@ -623,14 +623,14 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         <div className={`fixed inset-y-0 left-0 flex w-full max-w-xs transition-transform ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}>
-          <div className="flex flex-col w-full bg-white dark:bg-[#0F172A] border-r border-slate-200 dark:border-[#1E293B] shadow-2xl">
+          <div className="flex flex-col w-full bg-card border-r border-border shadow-none">
             <div className="flex items-center justify-between h-16 px-6 border-b border-slate-200 dark:border-[#1E293B]">
               <div className="flex items-center">
-                <div className="flex items-center justify-center h-9 w-9 rounded-lg bg-[#6366F1]/10 border border-[#6366F1]/20">
+                <div className="flex items-center justify-center h-8 w-8 rounded-[4px] bg-foreground/5 border border-border">
                   <LogoIcon size={22} variant="gradient" />
                 </div>
                 <span className="ml-3 text-lg font-bold tracking-tight text-slate-900 dark:text-[#F8FAFC]">
-                  Dev<span className="text-[#6366F1] dark:text-[#818CF8]">Link</span>
+                  DevLink
                 </span>
               </div>
               <button 
@@ -677,7 +677,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           if (isDesktopCollapsed) setIsDesktopHovering(false)
         }}
       >
-        <div className="flex flex-col flex-grow bg-white dark:bg-[#0F172A] border-r border-slate-200 dark:border-[#1E293B] shadow-sm overflow-hidden">
+        <div className="flex flex-col flex-grow bg-card border-r border-border shadow-none overflow-hidden">
           <button
             type="button"
             onClick={handleDesktopLogoClick}
@@ -687,12 +687,12 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             aria-label={isDesktopCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
             title={isDesktopCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
-            <div className="flex items-center justify-center h-9 w-9 rounded-lg bg-[#6366F1]/10 border border-[#6366F1]/20 shrink-0">
+            <div className="flex items-center justify-center h-8 w-8 rounded-[4px] bg-foreground/5 border border-border shrink-0">
               <LogoIcon size={22} variant="gradient" />
             </div>
             {isDesktopExpanded ? (
               <span className="ml-3 text-lg font-bold tracking-tight text-slate-900 dark:text-[#F8FAFC] whitespace-nowrap">
-                Dev<span className="text-[#6366F1] dark:text-[#818CF8]">Link</span>
+                DevLink
               </span>
             ) : null}
           </button>
@@ -724,7 +724,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       {/* Main content */}
       <div className={`transition-[padding] duration-200 ${isDesktopCollapsed ? 'lg:pl-16' : 'lg:pl-64'}`}>
         {/* Top bar */}
-        <div className="sticky top-0 z-10 flex h-16 bg-white/95 dark:bg-[#0F172A]/95 backdrop-blur border-b border-slate-200 dark:border-[#1E293B]">
+        <div className="sticky top-0 z-10 flex h-16 bg-background border-b border-border">
           <button
             type="button"
             className="px-4 border-r border-slate-200 dark:border-[#1E293B] text-slate-500 hover:text-slate-900 dark:text-[#94A3B8] dark:hover:text-[#F8FAFC] focus:outline-none lg:hidden"

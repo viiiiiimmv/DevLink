@@ -33,7 +33,7 @@ export default function SparkForgePage() {
         <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-sky-500/10 blur-3xl" />
       </div>
 
-      <header className="sticky top-0 z-50 border-b border-border/70 bg-background/80 backdrop-blur-xl">
+      <header className="sticky top-0 z-50 border-b border-border bg-background">
         <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <Logo href="/" />
 
@@ -46,7 +46,7 @@ export default function SparkForgePage() {
               <Button variant="ghost">Sign in</Button>
             </Link>
             <Link href="/dashboard/sparkforge">
-              <Button className="bg-blue-600 text-white hover:bg-blue-700">
+              <Button className="bg-foreground text-background hover:bg-foreground/90">
                 <Lightbulb className="mr-1.5 h-4 w-4" />
                 Open in Dashboard
               </Button>
