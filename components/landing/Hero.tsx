@@ -3,102 +3,130 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { BuilderPreview } from '@/components/landing/BuilderPreview'
+import { motion, useReducedMotion } from 'framer-motion'
+import { heroContainerVariants, heroItemVariants, buttonInteraction } from '@/lib/animations'
+import { InteractiveDemo } from '@/components/landing/InteractiveDemo'
 
 export function Hero() {
   const router = useRouter()
   const [handle, setHandle] = useState('')
+  const shouldReduceMotion = useReducedMotion()
 
   const handleClaim = (e: React.FormEvent) => {
     e.preventDefault()
     const clean = handle.trim().replace(/^@/, '')
     if (clean) {
-      router.push(`/auth/signin?handle=${encodeURIComponent(clean)}`)
+      router.push(`/auth/signin?from=${encodeURIComponent(`/${clean}`)}`)
     } else {
       router.push('/auth/signin')
     }
   }
 
   return (
-    <section className="relative w-full border-b border-editorial-border bg-editorial-bg text-editorial-text pt-12 pb-16 sm:pt-16 sm:pb-20 lg:pt-20 lg:pb-24">
+    <section className="relative w-full border-b border-border bg-background text-foreground pt-12 pb-16 sm:pt-16 sm:pb-20 lg:pt-20 lg:pb-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Top Metadata Line */}
-        <div className="mb-6 flex flex-wrap items-center gap-3 font-mono text-[11px] text-editorial-muted tracking-tight">
-          <span className="inline-flex items-center gap-1.5 border border-editorial-border bg-editorial-surface px-2.5 py-1 rounded-[3px] text-editorial-text">
-            <span className="h-1.5 w-1.5 rounded-full bg-editorial-accent" />
-            DEVLINK ENGINE v3.2
-          </span>
-          <span className="hidden sm:inline-block text-editorial-border">/</span>
-          <span className="hidden sm:inline-block">GITHUB REPOSITORY SYNC</span>
-          <span className="hidden sm:inline-block text-editorial-border">/</span>
-          <span className="hidden sm:inline-block">ZERO MAINTENANCE OVERHEAD</span>
-        </div>
+        <motion.div
+          variants={shouldReduceMotion ? undefined : heroContainerVariants}
+          initial="hidden"
+          animate="visible"
+          className="space-y-12"
+        >
+          {/* Top Label */}
+          <motion.div variants={heroItemVariants} className="flex items-center gap-2">
+            <span className="font-mono text-xs text-muted-foreground uppercase tracking-wider">
+              Developer Portfolio Builder and Collaboration Platform
+            </span>
+          </motion.div>
 
-        {/* Headline + Subhead on Asymmetric 12-Column Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end mb-12 sm:mb-16">
-          <div className="lg:col-span-8">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-[-0.035em] text-editorial-text leading-[1.08] text-left">
-              A portfolio that updates itself when you ship code.
-            </h1>
-          </div>
+          {/* Asymmetric 12-Column Grid: Headline & Action on Left (7 cols), Centerpiece on Right (5 cols) or Stacked */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+            <div className="lg:col-span-6 space-y-6">
+              <motion.h1
+                variants={heroItemVariants}
+                className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-foreground leading-[1.12]"
+              >
+                Create a public developer portfolio from your GitHub repositories.
+              </motion.h1>
 
-          <div className="lg:col-span-4 space-y-6">
-            <p className="text-sm sm:text-base text-editorial-muted leading-relaxed text-left">
-              Connect your GitHub, arrange your project and writing blocks, and publish to a custom domain in seconds.
-            </p>
+              <motion.p
+                variants={heroItemVariants}
+                className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-xl"
+              >
+                DevLink imports your projects, formats your tech stack and experience into a clean portfolio at your custom link, and connects you with other developers.
+              </motion.p>
 
-            {/* CTAs and quick handle claim */}
-            <div className="space-y-3">
-              <form onSubmit={handleClaim} className="flex items-center gap-1.5">
-                <div className="relative flex items-center flex-1 border border-editorial-border rounded-[4px] bg-editorial-surface px-3 py-1.5 focus-within:border-editorial-text transition-colors">
-                  <span className="font-mono text-xs text-editorial-muted select-none">
-                    devlink.me/
-                  </span>
-                  <input
-                    type="text"
-                    value={handle}
-                    onChange={(e) => setHandle(e.target.value)}
-                    placeholder="yourhandle"
-                    aria-label="Your desired DevLink username"
-                    className="w-full bg-transparent font-mono text-xs text-editorial-text placeholder:text-editorial-subtle focus:outline-none ml-0.5"
-                  />
+              {/* CTAs and Handle Claim */}
+              <motion.div variants={heroItemVariants} className="space-y-4 pt-2">
+                <form onSubmit={handleClaim} className="flex max-w-md items-center gap-2">
+                  <div className="relative flex items-center flex-1 border border-border rounded-[4px] bg-card px-3 py-2 focus-within:border-foreground transition-colors">
+                    <span className="font-mono text-xs text-muted-foreground select-none">
+                      devlink.me/
+                    </span>
+                    <input
+                      type="text"
+                      value={handle}
+                      onChange={(e) => setHandle(e.target.value)}
+                      placeholder="username"
+                      aria-label="Choose your DevLink portfolio username"
+                      className="w-full bg-transparent font-mono text-xs text-foreground placeholder:text-muted-foreground/60 focus:outline-none ml-0.5"
+                    />
+                  </div>
+
+                  <motion.div {...(shouldReduceMotion ? {} : buttonInteraction)}>
+                    <button
+                      type="submit"
+                      className="inline-flex h-9 items-center justify-center rounded-[4px] bg-foreground px-4 text-xs font-semibold text-background transition-colors hover:opacity-90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                    >
+                      Claim URL
+                    </button>
+                  </motion.div>
+                </form>
+
+                <div className="flex flex-wrap items-center gap-4 text-xs font-mono text-muted-foreground pt-1">
+                  <Link
+                    href="/auth/signin"
+                    className="text-foreground hover:underline font-semibold"
+                  >
+                    Create your portfolio →
+                  </Link>
+                  <span className="text-border">/</span>
+                  <Link
+                    href="/discover"
+                    className="hover:text-foreground transition-colors"
+                  >
+                    Browse developer portfolios
+                  </Link>
                 </div>
-                <button
-                  type="submit"
-                  className="inline-flex h-9 items-center justify-center rounded-[4px] bg-editorial-text px-4 text-xs font-semibold text-editorial-bg transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-editorial-accent"
-                >
-                  Claim
-                </button>
-              </form>
+              </motion.div>
 
-              <div className="flex items-center justify-between text-xs font-mono text-editorial-muted">
-                <Link
-                  href="/auth/signin"
-                  className="text-editorial-text hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-editorial-muted"
-                >
-                  Connect with GitHub →
-                </Link>
-                <a
-                  href="#showcase"
-                  className="text-editorial-muted hover:text-editorial-text transition-colors"
-                >
-                  See example portfolios ↓
-                </a>
-              </div>
+              {/* Verified Features Checklist */}
+              <motion.div variants={heroItemVariants} className="pt-4 border-t border-border grid grid-cols-2 gap-3 text-xs font-mono text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <span className="text-foreground">✓</span>
+                  <span>GitHub repository import</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-foreground">✓</span>
+                  <span>Custom URL and QR code</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-foreground">✓</span>
+                  <span>Bento, Minimal, Modern layouts</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-foreground">✓</span>
+                  <span>Direct visitor inbox</span>
+                </div>
+              </motion.div>
             </div>
-          </div>
-        </div>
 
-        {/* Centerpiece: Real Product Slice */}
-        <div className="w-full">
-          <div className="mb-2 flex items-center justify-between text-[11px] font-mono text-editorial-muted">
-            <span>FIGURE 1.0 — INTERACTIVE BLOCK COMPOSER</span>
-            <span className="hidden sm:inline">TRY TOGGLING AND REORDERING BLOCKS</span>
+            {/* Interactive Slice on the Right (6 cols) */}
+            <motion.div variants={heroItemVariants} className="lg:col-span-6">
+              <InteractiveDemo />
+            </motion.div>
           </div>
-          <BuilderPreview />
-        </div>
+        </motion.div>
       </div>
     </section>
   )
 }
-

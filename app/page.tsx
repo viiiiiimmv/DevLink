@@ -2,26 +2,26 @@ import React from 'react'
 import type { Metadata } from 'next'
 import { Nav } from '@/components/landing/Nav'
 import { Hero } from '@/components/landing/Hero'
-import { ExampleShowcase } from '@/components/landing/ExampleShowcase'
+import { FeatureShowcase } from '@/components/landing/FeatureShowcase'
 import { HowItWorks } from '@/components/landing/HowItWorks'
-import { SyncEngine } from '@/components/landing/SyncEngine'
+import { CollaborationSection } from '@/components/landing/CollaborationSection'
 import { FooterCTA } from '@/components/landing/FooterCTA'
 
 export const metadata: Metadata = {
-  title: 'DevLink — A portfolio that updates itself when you ship code',
+  title: 'DevLink — Create a public developer portfolio from your GitHub repositories',
   description:
-    'Connect your GitHub, arrange your project and writing blocks, and publish a living portfolio to a custom domain with zero maintenance overhead.',
+    'DevLink imports your projects, formats your tech stack and experience into a clean portfolio at your custom link, and connects you with other developers.',
 }
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-editorial-bg text-editorial-text selection:bg-editorial-text selection:text-editorial-bg">
+    <div className="min-h-screen bg-background text-foreground selection:bg-foreground selection:text-background">
       <Nav />
       <main id="main-content">
         <Hero />
-        <ExampleShowcase />
+        <FeatureShowcase />
         <HowItWorks />
-        <SyncEngine />
+        <CollaborationSection />
       </main>
       <FooterCTA />
     </div>

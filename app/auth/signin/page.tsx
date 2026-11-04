@@ -40,6 +40,8 @@ function SignInContent() {
   const [loading, setLoading] = useState<string | null>(null)
   const [providers, setProviders] = useState<Record<string, ClientSafeProvider>>({})
   const [providersLoading, setProvidersLoading] = useState(true)
+  const [agreedToTerms, setAgreedToTerms] = useState(false)
+  const [consentError, setConsentError] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
   const error = searchParams?.get('error') ?? null
@@ -99,18 +101,23 @@ function SignInContent() {
   const enabledProviderIds = providerOrder.filter((providerId) => Boolean(providers[providerId]))
 
   const handleSignIn = async (provider: string) => {
+    if (!agreedToTerms) {
+      setConsentError(true)
+      toast.error('Please accept the Terms of Service and Privacy Policy to continue.')
+      return
+    }
+    setConsentError(false)
     setLoading(provider)
     try {
       const result = await signIn(provider, {
         callbackUrl: from || '/dashboard',
-        redirect: false
+        redirect: false,
       })
-      
+
       if (result?.error) {
         toast.error('Sign in failed. Please try again.')
         setLoading(null)
       } else if (result?.ok) {
-        // Redirect will be handled by NextAuth callback
         toast.success('Signing you in...')
         router.push(from || '/dashboard')
       }
@@ -124,21 +131,21 @@ function SignInContent() {
   return (
     <div className="min-h-screen bg-background text-foreground flex items-center justify-center p-4">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.4, ease: [0.21, 0.47, 0.32, 0.98] }}
       >
         <Card className="w-full max-w-md">
           <CardHeader className="text-center space-y-1">
-            <div className="flex items-center justify-center mb-4">
-              <LogoIcon size={36} />
+            <div className="flex items-center justify-center mb-3">
+              <LogoIcon size={32} />
             </div>
-            <CardTitle className="text-2xl font-bold">Welcome to DevLink</CardTitle>
+            <CardTitle className="text-xl font-bold">Welcome to DevLink</CardTitle>
             <CardDescription>
-              Sign in to create your developer portfolio
+              Sign in to create and manage your developer portfolio
             </CardDescription>
           </CardHeader>
-          
+
           <CardContent className="space-y-4">
             {enabledProviderIds.map((providerId) => {
               const config = providerConfig[providerId]
@@ -163,21 +170,54 @@ function SignInContent() {
             })}
 
             {!providersLoading && enabledProviderIds.length === 0 && (
-              <p className="text-sm text-destructive text-center">
+              <p className="text-xs text-destructive text-center">
                 No authentication providers are configured. Please set OAuth credentials in `.env`.
               </p>
             )}
 
-            <div className="text-center text-sm text-muted-foreground pt-4">
-              <p>
-                By signing in, you agree to our Terms of Service and Privacy Policy
-              </p>
+            {/* Affirmative Consent Line (Unchecked by default) */}
+            <div className="space-y-2 pt-3 border-t border-border">
+              <label className="flex items-start gap-2.5 cursor-pointer text-xs text-muted-foreground select-none">
+                <input
+                  type="checkbox"
+                  checked={agreedToTerms}
+                  onChange={(e) => {
+                    setAgreedToTerms(e.target.checked)
+                    if (e.target.checked) setConsentError(false)
+                  }}
+                  className="mt-0.5 h-3.5 w-3.5 rounded-[3px] border border-border bg-background text-foreground focus:ring-1 focus:ring-ring"
+                />
+                <span>
+                  I have read and agree to the{' '}
+                  <Link
+                    href="/terms"
+                    target="_blank"
+                    className="text-foreground underline underline-offset-2 hover:opacity-80"
+                  >
+                    Terms &amp; Conditions
+                  </Link>{' '}
+                  and acknowledge the{' '}
+                  <Link
+                    href="/privacy"
+                    target="_blank"
+                    className="text-foreground underline underline-offset-2 hover:opacity-80"
+                  >
+                    Privacy Policy
+                  </Link>
+                  .
+                </span>
+              </label>
+              {consentError && (
+                <p className="text-[11px] font-mono text-destructive">
+                  Affirmative consent required: Please check the box to proceed.
+                </p>
+              )}
             </div>
 
-            <div className="text-center pt-4">
+            <div className="text-center pt-2">
               <Link href="/">
-                <Button variant="ghost" className="text-muted-foreground hover:text-foreground">
-                  <ArrowLeft className="h-4 w-4 mr-2" />
+                <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+                  <ArrowLeft className="h-3.5 w-3.5 mr-1.5" />
                   Back to Home
                 </Button>
               </Link>
@@ -191,7 +231,7 @@ function SignInContent() {
 
 export default function SignIn() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div className="min-h-screen bg-background" />}>
       <SignInContent />
     </Suspense>
   )
