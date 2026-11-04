@@ -6,18 +6,34 @@ import SparkForgeBoard from '@/components/sparkforge/board'
 import { Button } from '@/components/ui/button'
 import { SimpleThemeToggle } from '@/components/ui/theme-toggle'
 import { absoluteUrl, SITE_NAME } from '@/lib/seo'
+import { generateCollectionPageSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
-  title: `SparkForge Ideas - ${SITE_NAME}`,
-  description: 'Post ideas, discover collaborators, send sparks, and connect to build together on DevLink.',
+  title: 'SparkForge — Discover Collaborators & Project Ideas',
+  description: 'Post ideas, discover collaborators, send sparks, and connect to build side projects together on DevLink.',
   alternates: {
     canonical: absoluteUrl('/sparkforge'),
   },
   openGraph: {
-    title: `SparkForge Ideas - ${SITE_NAME}`,
-    description: 'Post ideas, discover collaborators, send sparks, and connect to build together on DevLink.',
+    title: `SparkForge — Discover Collaborators & Project Ideas | ${SITE_NAME}`,
+    description: 'Post ideas, discover collaborators, send sparks, and connect to build side projects together on DevLink.',
     url: absoluteUrl('/sparkforge'),
+    siteName: SITE_NAME,
     type: 'website',
+    images: [
+      {
+        url: absoluteUrl('/opengraph-image'),
+        width: 1200,
+        height: 630,
+        alt: `SparkForge — ${SITE_NAME}`,
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `SparkForge — Discover Collaborators & Project Ideas | ${SITE_NAME}`,
+    description: 'Post ideas, discover collaborators, send sparks, and connect to build side projects together on DevLink.',
+    images: [absoluteUrl('/opengraph-image')],
   },
 }
 
@@ -27,6 +43,18 @@ export const revalidate = 0
 export default function SparkForgePage() {
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-background text-foreground">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            generateCollectionPageSchema(
+              'SparkForge',
+              'Post ideas, discover collaborators, send sparks, and connect to build together on DevLink.',
+              '/sparkforge'
+            )
+          ),
+        }}
+      />
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -top-28 left-1/2 h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-blue-500/20 blur-3xl" />
         <div className="absolute top-48 -left-16 h-72 w-72 rounded-full bg-cyan-500/15 blur-3xl" />

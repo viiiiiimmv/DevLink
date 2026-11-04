@@ -238,7 +238,7 @@ function PinContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-background to-indigo-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-background text-foreground flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -247,7 +247,7 @@ function PinContent() {
         <Card className="w-full max-w-md">
           <CardHeader className="text-center space-y-1">
             <div className="flex items-center justify-center mb-4">
-              <Lock className="h-10 w-10 text-blue-600" />
+              <Lock className="h-10 w-10 text-foreground" />
             </div>
             <CardTitle className="text-2xl font-bold">Enter Security PIN</CardTitle>
             <CardDescription>
@@ -282,7 +282,7 @@ function PinContent() {
                 <div className="text-center">
                   <button
                     type="button"
-                    className="text-sm text-blue-600 hover:text-blue-700"
+                    className="text-xs text-muted-foreground hover:text-foreground underline underline-offset-2"
                     onClick={() => setShowRecovery(true)}
                   >
                     Forgot PIN? Use a recovery code

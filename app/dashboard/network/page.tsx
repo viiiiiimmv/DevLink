@@ -412,27 +412,27 @@ export default function NetworkPage() {
       <div className="space-y-6">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight text-[#F8FAFC]">Talent Network</h1>
-            <p className="text-sm text-[#94A3B8]">
-              Discover builders, send <span className="font-medium text-[#F8FAFC]">Link Sparks</span>, and grow your <span className="font-medium text-[#F8FAFC]">Code Circle</span>.
+            <h1 className="text-2xl font-semibold tracking-tight text-foreground">Talent Network</h1>
+            <p className="text-sm text-muted-foreground">
+              Discover builders, send <span className="font-medium text-foreground">Link Sparks</span>, and grow your <span className="font-medium text-foreground">Code Circle</span>.
             </p>
           </div>
-          <Badge variant="secondary" className="w-fit font-mono text-xs border-[#334155] bg-[#1E293B] text-[#94A3B8]">
-            <Sparkles className="mr-1 h-3.5 w-3.5 text-[#06B6D4]" />
+          <Badge variant="secondary" className="w-fit font-mono text-xs border-border bg-muted text-muted-foreground">
+            <Sparkles className="mr-1 h-3.5 w-3.5 text-foreground" />
             {connections.codeCircles.length} in your Code Circle
           </Badge>
         </div>
 
         {latestSparkNotice ? (
-          <Card className="border-[#334155] bg-[#0F172A]">
+          <Card className="border-border bg-card">
             <CardContent className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-start gap-3">
-                <Bell className="mt-0.5 h-4 w-4 text-[#06B6D4]" />
+                <Bell className="mt-0.5 h-4 w-4 text-foreground" />
                 <div>
-                  <p className="text-sm font-semibold text-[#F8FAFC]">
+                  <p className="text-sm font-semibold text-foreground">
                     New Link Spark from {latestSparkNotice.fromName}
                   </p>
-                  <p className="text-xs text-[#94A3B8]">
+                  <p className="text-xs text-muted-foreground">
                     @{latestSparkNotice.fromUsername} · {new Date(latestSparkNotice.at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </p>
                 </div>
@@ -455,11 +455,11 @@ export default function NetworkPage() {
         ) : null}
 
         {sparkSuccessNotice ? (
-          <div className="fixed bottom-6 right-6 z-50 w-[280px] rounded-xl border border-[#334155] bg-[#0F172A]/95 p-3 shadow-2xl backdrop-blur">
+          <div className="fixed bottom-6 right-6 z-50 w-[280px] rounded-xl border border-border bg-card/95 p-3 shadow-2xl backdrop-blur">
             <p className="text-sm font-semibold text-emerald-400">
               {sparkSuccessNotice.state === 'connected' ? 'Code Circle established' : 'Link Spark sent'}
             </p>
-            <p className="mt-1 text-xs text-[#94A3B8]">
+            <p className="mt-1 text-xs text-muted-foreground">
               {sparkSuccessNotice.username
                 ? `${sparkSuccessNotice.name} (@${sparkSuccessNotice.username})`
                 : sparkSuccessNotice.name}

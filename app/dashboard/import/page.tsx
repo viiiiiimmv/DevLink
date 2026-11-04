@@ -384,24 +384,24 @@ export default function ImportPage() {
       <div className="space-y-6">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight text-[#F8FAFC]">Import Data</h1>
-            <p className="text-sm text-[#94A3B8]">
+            <h1 className="text-2xl font-semibold tracking-tight text-foreground">Import Data</h1>
+            <p className="text-sm text-muted-foreground">
               Bring in projects, skills, and experience from your existing profiles.
             </p>
           </div>
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="flex flex-wrap bg-[#0F172A] border border-[#1E293B]">
-            <TabsTrigger value="github" className="gap-2 data-[state=active]:bg-[#1E293B] data-[state=active]:text-[#F8FAFC]">
+          <TabsList className="flex flex-wrap bg-card border border-border">
+            <TabsTrigger value="github" className="gap-2 data-[state=active]:bg-muted data-[state=active]:text-foreground">
               <Github className="h-4 w-4" />
               GitHub
             </TabsTrigger>
-            <TabsTrigger value="linkedin" className="gap-2 data-[state=active]:bg-[#1E293B] data-[state=active]:text-[#F8FAFC]">
+            <TabsTrigger value="linkedin" className="gap-2 data-[state=active]:bg-muted data-[state=active]:text-foreground">
               <Linkedin className="h-4 w-4" />
               LinkedIn
             </TabsTrigger>
-            <TabsTrigger value="resume" className="gap-2 data-[state=active]:bg-[#1E293B] data-[state=active]:text-[#F8FAFC]">
+            <TabsTrigger value="resume" className="gap-2 data-[state=active]:bg-muted data-[state=active]:text-foreground">
               <FileJson className="h-4 w-4" />
               Resume JSON
             </TabsTrigger>
@@ -459,11 +459,11 @@ export default function ImportPage() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {filteredRepos.map((repo) => (
-                        <div key={repo.id} className="rounded-xl border border-[#1E293B] bg-[#1E293B]/40 p-4 space-y-3 transition-colors hover:border-[#334155]">
+                        <div key={repo.id} className="rounded-xl border border-border bg-card p-4 space-y-3 transition-colors hover:border-foreground/30">
                           <div className="flex items-start justify-between gap-2">
                             <div>
-                              <p className="font-semibold text-[#F8FAFC]">{repo.name}</p>
-                              <p className="text-xs text-[#94A3B8]">{repo.description || 'No description'}</p>
+                              <p className="font-semibold text-foreground">{repo.name}</p>
+                              <p className="text-xs text-muted-foreground">{repo.description || 'No description'}</p>
                             </div>
                             <Checkbox
                               checked={selectedRepoIds.has(repo.id)}
@@ -598,17 +598,17 @@ export default function ImportPage() {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="rounded-xl border border-[#1E293B] bg-[#1E293B]/40 p-4 space-y-2">
-                        <p className="font-semibold text-[#F8FAFC]">Basics</p>
-                        <p className="text-sm text-[#94A3B8]">{resumeParsed.name || 'No name found'}</p>
-                        <div className="flex items-center gap-2 text-sm text-[#F8FAFC]">
+                      <div className="rounded-xl border border-border bg-card p-4 space-y-2">
+                        <p className="font-semibold text-foreground">Basics</p>
+                        <p className="text-sm text-muted-foreground">{resumeParsed.name || 'No name found'}</p>
+                        <div className="flex items-center gap-2 text-sm text-foreground">
                           <Checkbox
                             checked={importResumeBasics}
                             onCheckedChange={(checked) => setImportResumeBasics(Boolean(checked))}
                           />
                           Import name & bio
                         </div>
-                        <div className="flex items-center gap-2 text-xs text-[#94A3B8]">
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
                           <Checkbox
                             checked={overwriteResumeBasics}
                             onCheckedChange={(checked) => setOverwriteResumeBasics(Boolean(checked))}
@@ -617,17 +617,17 @@ export default function ImportPage() {
                         </div>
                       </div>
 
-                      <div className="rounded-xl border border-[#1E293B] bg-[#1E293B]/40 p-4 space-y-2">
-                        <p className="font-semibold text-[#F8FAFC]">Skills</p>
-                        <p className="text-sm text-[#94A3B8]">{resumeParsed.skills.length} skills detected</p>
-                        <div className="flex items-center gap-2 text-sm text-[#F8FAFC]">
+                      <div className="rounded-xl border border-border bg-card p-4 space-y-2">
+                        <p className="font-semibold text-foreground">Skills</p>
+                        <p className="text-sm text-muted-foreground">{resumeParsed.skills.length} skills detected</p>
+                        <div className="flex items-center gap-2 text-sm text-foreground">
                           <Checkbox
                             checked={importResumeSkills}
                             onCheckedChange={(checked) => setImportResumeSkills(Boolean(checked))}
                           />
                           Import skills
                         </div>
-                        <div className="flex items-center gap-2 text-xs text-[#94A3B8]">
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
                           <Checkbox
                             checked={overwriteResumeSkills}
                             onCheckedChange={(checked) => setOverwriteResumeSkills(Boolean(checked))}
@@ -636,17 +636,17 @@ export default function ImportPage() {
                         </div>
                       </div>
 
-                      <div className="rounded-xl border border-[#1E293B] bg-[#1E293B]/40 p-4 space-y-2">
-                        <p className="font-semibold text-[#F8FAFC]">Projects</p>
-                        <p className="text-sm text-[#94A3B8]">{resumeParsed.projects.length} projects detected</p>
-                        <div className="flex items-center gap-2 text-sm text-[#F8FAFC]">
+                      <div className="rounded-xl border border-border bg-card p-4 space-y-2">
+                        <p className="font-semibold text-foreground">Projects</p>
+                        <p className="text-sm text-muted-foreground">{resumeParsed.projects.length} projects detected</p>
+                        <div className="flex items-center gap-2 text-sm text-foreground">
                           <Checkbox
                             checked={importResumeProjects}
                             onCheckedChange={(checked) => setImportResumeProjects(Boolean(checked))}
                           />
                           Import projects
                         </div>
-                        <div className="flex items-center gap-2 text-xs text-[#94A3B8]">
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
                           <Checkbox
                             checked={overwriteResumeProjects}
                             onCheckedChange={(checked) => setOverwriteResumeProjects(Boolean(checked))}
@@ -655,17 +655,17 @@ export default function ImportPage() {
                         </div>
                       </div>
 
-                      <div className="rounded-xl border border-[#1E293B] bg-[#1E293B]/40 p-4 space-y-2">
-                        <p className="font-semibold text-[#F8FAFC]">Experience</p>
-                        <p className="text-sm text-[#94A3B8]">{resumeParsed.experiences.length} roles detected</p>
-                        <div className="flex items-center gap-2 text-sm text-[#F8FAFC]">
+                      <div className="rounded-xl border border-border bg-card p-4 space-y-2">
+                        <p className="font-semibold text-foreground">Experience</p>
+                        <p className="text-sm text-muted-foreground">{resumeParsed.experiences.length} roles detected</p>
+                        <div className="flex items-center gap-2 text-sm text-foreground">
                           <Checkbox
                             checked={importResumeExperience}
                             onCheckedChange={(checked) => setImportResumeExperience(Boolean(checked))}
                           />
                           Import experience
                         </div>
-                        <div className="flex items-center gap-2 text-xs text-[#94A3B8]">
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
                           <Checkbox
                             checked={overwriteResumeExperience}
                             onCheckedChange={(checked) => setOverwriteResumeExperience(Boolean(checked))}

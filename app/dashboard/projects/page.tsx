@@ -140,8 +140,8 @@ export default function ProjectsPage() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-semibold leading-8 text-[#F8FAFC]">Projects</h1>
-            <p className="text-xs text-[#94A3B8] mt-1">
+            <h1 className="text-2xl font-semibold leading-8 text-foreground">Projects</h1>
+            <p className="text-xs text-muted-foreground mt-1">
               Showcase featured project work, case studies, and technologies
             </p>
           </div>
@@ -155,11 +155,11 @@ export default function ProjectsPage() {
         {projects.length === 0 ? (
           <Card>
             <CardContent className="flex flex-col items-center justify-center py-12">
-              <div className="w-20 h-20 bg-[#1E293B] border border-[#334155] rounded-full flex items-center justify-center mb-4">
-                <Plus className="h-10 w-10 text-[#6366F1]" />
+              <div className="w-20 h-20 bg-muted border border-border rounded-full flex items-center justify-center mb-4">
+                <Plus className="h-10 w-10 text-foreground" />
               </div>
-              <h3 className="text-lg font-medium text-[#F8FAFC] mb-1">No projects yet</h3>
-              <p className="text-xs text-[#94A3B8] text-center mb-6 max-w-sm">
+              <h3 className="text-lg font-medium text-foreground mb-1">No projects yet</h3>
+              <p className="text-xs text-muted-foreground text-center mb-6 max-w-sm">
                 Start building your portfolio by adding your first project. Showcase your skills and experience.
               </p>
               <Button onClick={handleAddProject} className="flex items-center gap-2">
@@ -178,7 +178,7 @@ export default function ProjectsPage() {
                 transition={{ delay: index * 0.1 }}
               >
                 <Card
-                  className={`h-full hover:border-[#334155] transition-all ${savingOrder && draggedProjectId ? 'opacity-80' : ''}`}
+                  className={`h-full hover:border-border transition-all ${savingOrder && draggedProjectId ? 'opacity-80' : ''}`}
                   onDragOver={(event) => {
                     event.preventDefault()
                   }}
@@ -198,7 +198,7 @@ export default function ProjectsPage() {
                         )}
                         <button
                           type="button"
-                          className="p-1 text-[#94A3B8] hover:text-[#F8FAFC] cursor-grab active:cursor-grabbing"
+                          className="p-1 text-muted-foreground hover:text-foreground cursor-grab active:cursor-grabbing"
                           draggable
                           onDragStart={() => setDraggedProjectId(project.id)}
                           onDragEnd={() => setDraggedProjectId(null)}
@@ -229,14 +229,14 @@ export default function ProjectsPage() {
                       {project.githubUrl && (
                         <Button variant="ghost" size="sm" asChild>
                           <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                            <Github className="h-4 w-4 text-[#CBD5E1]" />
+                            <Github className="h-4 w-4 text-muted-foreground" />
                           </a>
                         </Button>
                       )}
                       {project.liveUrl && (
                         <Button variant="ghost" size="sm" asChild>
                           <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                            <ExternalLink className="h-4 w-4 text-[#06B6D4]" />
+                            <ExternalLink className="h-4 w-4 text-muted-foreground" />
                           </a>
                         </Button>
                       )}
@@ -250,7 +250,7 @@ export default function ProjectsPage() {
                         className="flex-1"
                         onClick={() => handleEditProject(project)}
                       >
-                        <Edit className="h-4 w-4 mr-2 text-[#06B6D4]" />
+                        <Edit className="h-4 w-4 mr-2 text-muted-foreground" />
                         Edit
                       </Button>
                       <Button 

@@ -397,8 +397,8 @@ export default function CustomisePage() {
       <div className="space-y-6">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-semibold leading-8 text-[#F8FAFC]">Customise</h1>
-            <p className="text-xs text-[#94A3B8] mt-1">
+            <h1 className="text-2xl font-semibold leading-8 text-foreground">Customise</h1>
+            <p className="text-xs text-muted-foreground mt-1">
               Choose your profile template and theme, then preview changes live
             </p>
           </div>
@@ -421,7 +421,7 @@ export default function CustomisePage() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <LayoutGrid className="h-5 w-5 text-[#6366F1]" />
+                  <LayoutGrid className="h-5 w-5 text-foreground" />
                   Profile Templates
                 </CardTitle>
                 <CardDescription>
@@ -444,8 +444,8 @@ export default function CustomisePage() {
                       htmlFor={`template-${template.id}`}
                       className={`cursor-pointer group rounded-xl border-2 p-4 transition-all duration-150 ${
                         selectedTemplate === template.id
-                          ? 'border-[#6366F1] bg-[#6366F1]/5 shadow-lg'
-                          : 'border-[#1E293B] bg-[#0F172A] hover:border-[#334155]'
+                          ? 'border-foreground bg-foreground/5 shadow-lg'
+                          : 'border-border bg-card hover:border-border'
                       }`}
                     >
                       <div className="w-full h-20 rounded-lg mb-3">
@@ -799,7 +799,7 @@ export default function CustomisePage() {
             >
               <div
                 ref={previewContainerRef}
-                className="w-full h-[72vh] overflow-auto bg-[#0B0F19]"
+                className="w-full h-[72vh] overflow-auto bg-background"
               >
                 <div className="relative w-full" style={{ height: previewHeight || '72vh' }}>
                   <div

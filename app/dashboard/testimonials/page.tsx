@@ -138,8 +138,8 @@ export default function TestimonialsPage() {
       <div className="space-y-6">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-semibold leading-8 text-[#F8FAFC]">Testimonials</h1>
-            <p className="text-xs text-[#94A3B8] mt-1">
+            <h1 className="text-2xl font-semibold leading-8 text-foreground">Testimonials</h1>
+            <p className="text-xs text-muted-foreground mt-1">
               Collect, curate, and publish recommendations from peers and leaders
             </p>
           </div>
@@ -152,11 +152,11 @@ export default function TestimonialsPage() {
         {testimonials.length === 0 ? (
           <Card>
             <CardContent className="flex flex-col items-center justify-center py-12">
-              <div className="w-20 h-20 bg-[#1E293B] border border-[#334155] rounded-full flex items-center justify-center mb-4">
-                <MessageSquare className="h-10 w-10 text-[#6366F1]" />
+              <div className="w-20 h-20 bg-muted border border-border rounded-full flex items-center justify-center mb-4">
+                <MessageSquare className="h-10 w-10 text-foreground" />
               </div>
-              <h3 className="text-lg font-medium text-[#F8FAFC] mb-1">No testimonials yet</h3>
-              <p className="text-xs text-[#94A3B8] text-center mb-6 max-w-sm">
+              <h3 className="text-lg font-medium text-foreground mb-1">No testimonials yet</h3>
+              <p className="text-xs text-muted-foreground text-center mb-6 max-w-sm">
                 Add quotes from collaborators to build trust with visitors.
               </p>
               <Button onClick={handleAddTestimonial} className="flex items-center gap-2">
@@ -175,7 +175,7 @@ export default function TestimonialsPage() {
                 transition={{ delay: index * 0.05 }}
               >
                 <Card
-                  className={`h-full hover:border-[#334155] transition-all ${savingOrder && draggedTestimonialId ? 'opacity-80' : ''}`}
+                  className={`h-full hover:border-border transition-all ${savingOrder && draggedTestimonialId ? 'opacity-80' : ''}`}
                   onDragOver={(event) => {
                     event.preventDefault()
                   }}
@@ -184,13 +184,13 @@ export default function TestimonialsPage() {
                   <CardHeader>
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex items-start gap-3">
-                        <div className="w-11 h-11 bg-[#6366F1]/10 border border-[#6366F1]/20 rounded-xl flex items-center justify-center flex-shrink-0 text-[#6366F1]">
+                        <div className="w-11 h-11 bg-foreground/10 border border-foreground/20 rounded-xl flex items-center justify-center flex-shrink-0 text-foreground">
                           <MessageSquare className="h-5 w-5" />
                         </div>
                         <div>
                           <CardTitle className="text-lg leading-tight">{testimonial.name}</CardTitle>
                           {(testimonial.role || testimonial.company) && (
-                            <p className="text-xs text-[#94A3B8] mt-0.5">
+                            <p className="text-xs text-muted-foreground mt-0.5">
                               {testimonial.role || 'Contributor'}
                               {testimonial.company ? ` · ${testimonial.company}` : ''}
                             </p>
@@ -200,7 +200,7 @@ export default function TestimonialsPage() {
                       <div className="flex items-center gap-1">
                         <button
                           type="button"
-                          className="p-1 text-[#94A3B8] hover:text-[#F8FAFC] cursor-grab active:cursor-grabbing"
+                          className="p-1 text-muted-foreground hover:text-foreground cursor-grab active:cursor-grabbing"
                           draggable
                           onDragStart={() => setDraggedTestimonialId(testimonial.id)}
                           onDragEnd={() => setDraggedTestimonialId(null)}
@@ -209,7 +209,7 @@ export default function TestimonialsPage() {
                           <GripVertical className="h-4 w-4" />
                         </button>
                         <Button variant="secondary" size="sm" onClick={() => handleEditTestimonial(testimonial)}>
-                          <Edit className="h-4 w-4 text-[#06B6D4]" />
+                          <Edit className="h-4 w-4 text-muted-foreground" />
                         </Button>
                         <Button variant="destructive" size="sm" onClick={() => handleDeleteTestimonial(testimonial.id)} title="Remove Testimonial">
                           <Trash2 className="h-4 w-4" />
@@ -218,13 +218,13 @@ export default function TestimonialsPage() {
                     </div>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <div className="rounded-xl border border-[#334155] bg-[#1E293B]/60 p-4 text-sm text-[#CBD5E1]">
+                    <div className="rounded-xl border border-border bg-muted/60 p-4 text-sm text-muted-foreground">
                       <MarkdownContent content={testimonial.quote} />
                     </div>
                     {testimonial.sourceUrl && (
                       <Button variant="secondary" size="sm" asChild>
                         <a href={testimonial.sourceUrl} target="_blank" rel="noopener noreferrer">
-                          <ExternalLink className="h-4 w-4 mr-2 text-[#06B6D4]" />
+                          <ExternalLink className="h-4 w-4 mr-2 text-muted-foreground" />
                           View Source
                         </a>
                       </Button>

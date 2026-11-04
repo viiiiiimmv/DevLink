@@ -427,17 +427,19 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
     return (
       <Link key={item.name} href={item.href}>
-        <div className={`relative flex items-center text-sm font-medium transition-all duration-150 ${
-          options.collapsed ? 'px-0 py-2.5 justify-center' : 'px-3 py-2 justify-start'
+        <div className={`relative flex items-center transition-colors duration-150 ${
+          options.collapsed 
+            ? 'h-8 w-8 mx-auto justify-center rounded-[4px]' 
+            : 'h-8 px-2.5 justify-start rounded-[4px] text-[13px]'
         } ${
           isActive
-            ? 'bg-foreground/5 border-l-2 border-foreground text-foreground font-medium'
-            : 'bg-transparent border-l-2 border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-[#94A3B8] dark:hover:text-[#E2E8F0] dark:hover:bg-white/[0.03]'
-        } rounded-r-md`}>
-          <item.icon className={`h-4.5 w-4.5 shrink-0 ${options.collapsed ? '' : 'mr-3'} ${isActive ? 'text-foreground' : 'text-muted-foreground'}`} />
+            ? 'bg-muted text-foreground font-medium'
+            : 'bg-transparent text-muted-foreground hover:text-foreground hover:bg-muted/50'
+        }`}>
+          <item.icon className={`h-4 w-4 shrink-0 stroke-[1.75] ${options.collapsed ? '' : 'mr-2.5'} ${isActive ? 'text-foreground' : 'text-muted-foreground'}`} />
           {!options.collapsed ? (
-            <span className="flex items-center gap-2 whitespace-nowrap">
-              <span>{item.name}</span>
+            <span className="flex flex-1 items-center justify-between gap-2 min-w-0">
+              <span className="truncate">{item.name}</span>
               {showUnread ? (
                 <span className="inline-flex min-w-[1.25rem] items-center justify-center rounded-[2px] bg-editorial-accent px-1.5 py-0.5 text-[10px] font-mono font-bold text-editorial-bg">
                   {formatUnreadCount(unreadPulseCount)}
@@ -446,7 +448,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             </span>
           ) : null}
           {options.collapsed && showUnread ? (
-            <span className="absolute right-2 top-1.5 h-1.5 w-1.5 rounded-full bg-editorial-accent" />
+            <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-editorial-accent" />
           ) : null}
         </div>
       </Link>
@@ -610,7 +612,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   }, [currentUserId, notificationSocketConnected, pollNotificationFallback])
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#090D16] text-slate-900 dark:text-[#F8FAFC] transition-colors duration-200">
+    <div className="min-h-screen bg-background text-foreground transition-colors duration-200">
       {/* Mobile sidebar */}
       <div className={`lg:hidden fixed inset-0 z-50 ${sidebarOpen ? '' : 'pointer-events-none'}`}>
         <div 
@@ -624,30 +626,30 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}>
           <div className="flex flex-col w-full bg-card border-r border-border shadow-none">
-            <div className="flex items-center justify-between h-16 px-6 border-b border-slate-200 dark:border-[#1E293B]">
+            <div className="flex items-center justify-between h-14 px-4 border-b border-border">
               <div className="flex items-center">
-                <div className="flex items-center justify-center h-8 w-8 rounded-[4px] bg-foreground/5 border border-border">
-                  <LogoIcon size={22} variant="gradient" />
+                <div className="flex items-center justify-center h-7 w-7 rounded-[4px] bg-foreground/5 border border-border">
+                  <LogoIcon size={18} variant="gradient" />
                 </div>
-                <span className="ml-3 text-lg font-bold tracking-tight text-slate-900 dark:text-[#F8FAFC]">
+                <span className="ml-2.5 text-sm font-semibold tracking-tight text-foreground">
                   DevLink
                 </span>
               </div>
               <button 
                 onClick={() => setSidebarOpen(false)}
-                className="p-1.5 rounded-md text-slate-500 hover:text-slate-900 hover:bg-slate-100 dark:text-[#94A3B8] dark:hover:text-[#F8FAFC] dark:hover:bg-[#1E293B]"
+                className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted"
               >
-                <X className="h-5 w-5" />
+                <X className="h-4 w-4" />
               </button>
             </div>
             
-            <nav className="flex-1 space-y-5 overflow-y-auto px-4 py-5">
+            <nav className="flex-1 space-y-3.5 overflow-y-auto px-3 py-4">
               {navigationGroups.map((group) => (
-                <section key={group.label} className="space-y-1.5">
-                  <p className="px-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-[#94A3B8]">
+                <section key={group.label} className="space-y-0.5">
+                  <p className="px-2.5 py-1 text-[10px] font-mono font-medium uppercase tracking-wider text-muted-foreground/60">
                     {group.label}
                   </p>
-                  <div className="space-y-1">
+                  <div className="space-y-0.5">
                     {group.items.map((item) => renderNavItem(item, { collapsed: false }))}
                   </div>
                 </section>
@@ -668,7 +670,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
       <div
         className={`hidden lg:fixed lg:inset-y-0 lg:z-30 lg:flex lg:flex-col transition-[width] duration-200 ${
-          isDesktopExpanded ? 'lg:w-64' : 'lg:w-16'
+          isDesktopExpanded ? 'lg:w-60' : 'lg:w-14'
         }`}
         onMouseEnter={() => {
           if (isDesktopCollapsed) setIsDesktopHovering(true)
@@ -681,17 +683,17 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           <button
             type="button"
             onClick={handleDesktopLogoClick}
-            className={`flex items-center h-16 border-b border-slate-200 dark:border-[#1E293B] transition-[padding] duration-200 hover:bg-slate-50 dark:hover:bg-[#1E293B]/40 ${
-              isDesktopExpanded ? 'px-6 justify-start' : 'px-0 justify-center'
+            className={`flex items-center h-14 border-b border-border transition-[padding] duration-200 hover:bg-muted/50 ${
+              isDesktopExpanded ? 'px-4 justify-start' : 'px-0 justify-center'
             }`}
             aria-label={isDesktopCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
             title={isDesktopCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
-            <div className="flex items-center justify-center h-8 w-8 rounded-[4px] bg-foreground/5 border border-border shrink-0">
-              <LogoIcon size={22} variant="gradient" />
+            <div className="flex items-center justify-center h-7 w-7 rounded-[4px] bg-foreground/5 border border-border shrink-0">
+              <LogoIcon size={18} variant="gradient" />
             </div>
             {isDesktopExpanded ? (
-              <span className="ml-3 text-lg font-bold tracking-tight text-slate-900 dark:text-[#F8FAFC] whitespace-nowrap">
+              <span className="ml-2.5 text-sm font-semibold tracking-tight text-foreground whitespace-nowrap">
                 DevLink
               </span>
             ) : null}
@@ -700,18 +702,18 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             {isDesktopCollapsed ? 'Sidebar collapsed' : 'Sidebar expanded'}
           </div>
           
-          <nav className={`flex-1 overflow-y-auto py-5 transition-[padding] duration-200 ${isDesktopExpanded ? 'px-4' : 'px-2'}`}>
-            <div className="space-y-4">
+          <nav className={`flex-1 overflow-y-auto py-3.5 transition-[padding] duration-200 ${isDesktopExpanded ? 'px-3' : 'px-1.5'}`}>
+            <div className="space-y-3.5">
               {navigationGroups.map((group, groupIndex) => (
-                <section key={group.label} className="space-y-1.5">
+                <section key={group.label} className="space-y-0.5">
                   {isDesktopExpanded ? (
-                    <p className="px-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-[#94A3B8]">
+                    <p className="px-2.5 py-1 text-[10px] font-mono font-medium uppercase tracking-wider text-muted-foreground/60">
                       {group.label}
                     </p>
                   ) : groupIndex > 0 ? (
-                    <div className="mx-2 border-t border-slate-200 dark:border-[#1E293B]" />
+                    <div className="mx-2 my-1.5 border-t border-border" />
                   ) : null}
-                  <div className="space-y-1">
+                  <div className="space-y-0.5">
                     {group.items.map((item) => renderNavItem(item, { collapsed: !isDesktopExpanded }))}
                   </div>
                 </section>
@@ -722,29 +724,29 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       </div>
 
       {/* Main content */}
-      <div className={`transition-[padding] duration-200 ${isDesktopCollapsed ? 'lg:pl-16' : 'lg:pl-64'}`}>
+      <div className={`transition-[padding] duration-200 ${isDesktopCollapsed ? 'lg:pl-14' : 'lg:pl-60'}`}>
         {/* Top bar */}
-        <div className="sticky top-0 z-10 flex h-16 bg-background border-b border-border">
+        <div className="sticky top-0 z-10 flex h-14 bg-background border-b border-border">
           <button
             type="button"
-            className="px-4 border-r border-slate-200 dark:border-[#1E293B] text-slate-500 hover:text-slate-900 dark:text-[#94A3B8] dark:hover:text-[#F8FAFC] focus:outline-none lg:hidden"
+            className="px-3.5 border-r border-border text-muted-foreground hover:text-foreground focus:outline-none lg:hidden"
             onClick={() => setSidebarOpen(true)}
           >
-            <Menu className="h-6 w-6" />
+            <Menu className="h-5 w-5" />
           </button>
 
           <div className="flex flex-1 justify-between px-4 lg:px-6">
             <div className="flex items-center">
               <div className="sm:hidden">
-                <p className="text-sm font-semibold text-slate-900 dark:text-[#F8FAFC]">
+                <p className="text-sm font-semibold text-foreground">
                   {activeNavigationContext.item.name}
                 </p>
               </div>
               <div className="hidden sm:flex sm:flex-col sm:py-2">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-[#94A3B8]">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
                   {activeNavigationContext.groupLabel}
                 </p>
-                <p className="text-sm font-semibold text-slate-900 dark:text-[#F8FAFC]">
+                <p className="text-sm font-semibold text-foreground">
                   {activeNavigationContext.item.name}
                 </p>
               </div>
@@ -760,18 +762,18 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               ) : null}
               <Link href={`/${username ?? ''}`} target="_blank">
                 <Button variant="secondary" size="sm" className="flex items-center gap-2">
-                  <Eye className="h-4 w-4 text-[#06B6D4]" />
+                  <Eye className="h-4 w-4 text-foreground" />
                   <span className="hidden sm:inline">View Portfolio</span>
-                  <ExternalLink className="h-3 w-3 text-[#94A3B8]" />
+                  <ExternalLink className="h-3 w-3 text-muted-foreground" />
                 </Button>
               </Link>
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="relative h-9 w-9 rounded-full p-0 border border-slate-300 dark:border-[#334155]">
+                  <Button variant="ghost" className="relative h-9 w-9 rounded-full p-0 border border-border">
                     <Avatar className="h-8 w-8">
                       <AvatarImage src={userImage} />
-                      <AvatarFallback className="bg-slate-200 dark:bg-[#1E293B] text-slate-800 dark:text-[#F8FAFC] text-xs font-semibold">
+                      <AvatarFallback className="bg-muted text-foreground text-xs font-semibold">
                         {session?.user?.name?.charAt(0)?.toUpperCase() || 'U'}
                       </AvatarFallback>
                     </Avatar>
@@ -780,8 +782,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 <DropdownMenuContent className="w-56" align="end">
                   <div className="flex items-center justify-start gap-2 p-2">
                     <div className="flex flex-col space-y-1 leading-none">
-                      <p className="font-medium text-sm text-slate-900 dark:text-[#F8FAFC]">{session?.user?.name}</p>
-                      <p className="w-[200px] truncate text-xs text-slate-500 dark:text-[#94A3B8]">
+                      <p className="font-medium text-sm text-foreground">{session?.user?.name}</p>
+                      <p className="w-[200px] truncate text-xs text-muted-foreground">
                         {session?.user?.email}
                       </p>
                     </div>
@@ -789,24 +791,24 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
                     <Link href="/dashboard/profile">
-                      <User className="mr-2 h-4 w-4 text-[#94A3B8]" />
+                      <User className="mr-2 h-4 w-4 text-muted-foreground" />
                       Profile
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link href="/dashboard/customise">
-                      <Palette className="mr-2 h-4 w-4 text-[#94A3B8]" />
+                      <Palette className="mr-2 h-4 w-4 text-muted-foreground" />
                       Customise
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link href="/dashboard/settings">
-                      <Settings className="mr-2 h-4 w-4 text-[#94A3B8]" />
+                      <Settings className="mr-2 h-4 w-4 text-muted-foreground" />
                       Settings
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleSignOut} className="text-[#EF4444] hover:text-[#EF4444] focus:text-[#EF4444]">
+                  <DropdownMenuItem onClick={handleSignOut} className="text-destructive hover:text-destructive focus:text-destructive">
                     <LogOut className="mr-2 h-4 w-4" />
                     Sign out
                   </DropdownMenuItem>

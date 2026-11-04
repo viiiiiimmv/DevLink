@@ -74,10 +74,10 @@ export function CollaborationSection() {
             <div className="pt-2">
               <motion.div {...(shouldReduceMotion ? {} : buttonInteraction)}>
                 <Link
-                  href="/discover"
+                  href="/auth/signin"
                   className="inline-flex h-9 items-center justify-center rounded-[4px] border border-border bg-background px-4 text-xs font-mono text-foreground hover:bg-muted/50 transition-colors"
                 >
-                  Explore Discover directory →
+                  Sign in to browse directory →
                 </Link>
               </motion.div>
             </div>
@@ -119,10 +119,10 @@ export function CollaborationSection() {
             <div className="pt-2">
               <motion.div {...(shouldReduceMotion ? {} : buttonInteraction)}>
                 <Link
-                  href="/sparkforge"
+                  href="/auth/signin"
                   className="inline-flex h-9 items-center justify-center rounded-[4px] border border-border bg-background px-4 text-xs font-mono text-foreground hover:bg-muted/50 transition-colors"
                 >
-                  Visit SparkForge board →
+                  Sign in to join SparkForge →
                 </Link>
               </motion.div>
             </div>

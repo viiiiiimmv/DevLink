@@ -6,8 +6,20 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: '*',
-        allow: '/',
-        disallow: ['/dashboard/', '/api/'],
+        allow: [
+          '/',
+          '/discover',
+          '/sparkforge',
+          '/privacy',
+          '/terms',
+          '/auth/signin',
+        ],
+        disallow: [
+          '/dashboard/',
+          '/api/',
+          '/auth/pin',
+          '/auth/error',
+        ],
       },
     ],
     sitemap: absoluteUrl('/sitemap.xml'),

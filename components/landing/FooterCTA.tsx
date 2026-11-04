@@ -34,14 +34,6 @@ export function FooterCTA() {
                   Create your portfolio
                 </Link>
               </motion.div>
-              <motion.div {...(shouldReduceMotion ? {} : buttonInteraction)}>
-                <Link
-                  href="/discover"
-                  className="inline-flex h-10 items-center justify-center rounded-[4px] border border-border bg-card px-4 text-xs font-mono text-muted-foreground transition-colors hover:text-foreground hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                >
-                  Browse portfolios
-                </Link>
-              </motion.div>
             </div>
           </div>
         </div>
@@ -59,11 +51,8 @@ export function FooterCTA() {
             </div>
 
             <nav className="flex flex-wrap items-center gap-6 text-xs font-mono text-muted-foreground" aria-label="Footer Navigation">
-              <Link href="/discover" className="hover:text-foreground transition-colors">
-                Discover
-              </Link>
-              <Link href="/sparkforge" className="hover:text-foreground transition-colors">
-                SparkForge
+              <Link href="/" className="hover:text-foreground transition-colors">
+                Home
               </Link>
               <Link href="/auth/signin" className="hover:text-foreground transition-colors">
                 Sign in
@@ -74,16 +63,20 @@ export function FooterCTA() {
               <Link href="/terms" className="hover:text-foreground transition-colors">
                 Terms &amp; Conditions
               </Link>
+              <a
+                href="https://github.com/viiiiiimmv/devlink"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-foreground transition-colors"
+              >
+                GitHub ↗
+              </a>
             </nav>
           </div>
 
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs font-mono text-muted-foreground">
             <div>
               © {new Date().getFullYear()} DevLink Technologies. All rights reserved.
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-              <span>All systems operational</span>
             </div>
           </div>
         </div>

@@ -116,7 +116,7 @@ export default function TestimonialAvatarUpload({
   return (
     <div className={`space-y-3 ${className}`}>
       <div className="flex items-center gap-4">
-        <div className="relative h-20 w-20 overflow-hidden rounded-full border-2 border-[#334155] bg-[#1E293B] shadow-inner shrink-0">
+        <div className="relative h-20 w-20 overflow-hidden rounded-full border-2 border-border bg-muted shadow-inner shrink-0">
           {preview ? (
             <Image
               src={preview}
@@ -125,14 +125,14 @@ export default function TestimonialAvatarUpload({
               className="object-cover"
             />
           ) : (
-            <div className="flex h-full w-full items-center justify-center text-[#94A3B8]">
+            <div className="flex h-full w-full items-center justify-center text-muted-foreground">
               <User className="h-8 w-8" />
             </div>
           )}
 
           {uploading && (
-            <div className="absolute inset-0 bg-[#090D16]/85 backdrop-blur-xs flex items-center justify-center p-1">
-              <div className="text-[10px] text-[#F8FAFC] font-medium">{uploadProgress}%</div>
+            <div className="absolute inset-0 bg-background/85 backdrop-blur-xs flex items-center justify-center p-1">
+              <div className="text-[10px] text-foreground font-medium">{uploadProgress}%</div>
             </div>
           )}
 
@@ -148,7 +148,7 @@ export default function TestimonialAvatarUpload({
           )}
         </div>
 
-        <div className="text-xs text-[#94A3B8]">
+        <div className="text-xs text-muted-foreground">
           Upload reviewer or client photo for credential and social proof.
         </div>
       </div>
@@ -158,27 +158,27 @@ export default function TestimonialAvatarUpload({
         onDrop={handleDrop}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
-        className={`border-[1.5px] border-dashed rounded-[12px] p-4 text-center transition-all duration-150 cursor-pointer ${
+        className={`border-[1.5px] border-dashed rounded-[4px] p-4 text-center transition-all duration-150 cursor-pointer ${
           dragOver
-            ? 'border-[#6366F1] bg-[#6366F1]/5'
-            : 'border-slate-300 dark:border-[#475569] bg-slate-50/70 dark:bg-[#0F172A] hover:border-[#6366F1] hover:bg-[#6366F1]/5'
+            ? 'border-foreground bg-foreground/10'
+            : 'border-border bg-card hover:border-foreground hover:bg-foreground/5'
         }`}
         onClick={() => fileInputRef.current?.click()}
       >
-        <Upload className="mx-auto h-5 w-5 text-slate-400 dark:text-[#94A3B8] mb-1.5" />
-        <p className="text-sm font-medium text-slate-800 dark:text-[#F8FAFC]">
+        <Upload className="mx-auto h-5 w-5 text-slate-400 dark:text-muted-foreground mb-1.5" />
+        <p className="text-sm font-medium text-foreground dark:text-foreground">
           {dragOver ? 'Drop avatar here' : 'Click to upload or drag and drop'}
         </p>
-        <p className="text-xs text-slate-500 dark:text-[#94A3B8] mt-1">
+        <p className="text-xs text-muted-foreground dark:text-muted-foreground mt-1">
           PNG, JPG, GIF up to 5MB
         </p>
 
         {/* Upload Status Bar */}
         {uploading && (
           <div className="mt-3 w-full">
-            <div className="w-full h-1.5 bg-[#1E293B] rounded-full overflow-hidden">
+            <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
               <div
-                className="h-full bg-[#6366F1] transition-all duration-200"
+                className="h-full bg-foreground transition-all duration-200"
                 style={{ width: `${uploadProgress}%` }}
               />
             </div>

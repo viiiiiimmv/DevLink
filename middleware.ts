@@ -1,148 +1,140 @@
-import { withAuth } from 'next-auth/middleware'
 import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+import { getToken } from 'next-auth/jwt'
 
-export default withAuth(
-  function middleware(req) {
-    const token = req.nextauth.token
-    const isAuth = !!token
-    const isAuthPage = req.nextUrl.pathname.startsWith('/auth')
-    const isPinPage = req.nextUrl.pathname.startsWith('/auth/pin')
-    const isDashboard = req.nextUrl.pathname.startsWith('/dashboard')
-    const isSetup = req.nextUrl.pathname === '/dashboard/setup'
-    const isHomePage = req.nextUrl.pathname === '/' || req.nextUrl.pathname === ''
-    const needsOnboarding = token?.onboardingCompleted === false
-    const pinEnabled = token?.pinEnabled === true
-    const pinVerified = token?.pinVerified === true
-    
-    // Debug logging (development only)
-    if (process.env.NODE_ENV === 'development') {
-      console.log('Middleware - Path:', req.nextUrl.pathname)
-      console.log('Middleware - Is authenticated:', isAuth)
-      console.log('Middleware - Has username:', !!token?.username)
-      console.log('Middleware - Token username:', token?.username)
-    }
+// Strictly allowed public pages reachable without an authenticated session
+const PUBLIC_PAGES = new Set([
+  '/',
+  '/auth/signin',
+  '/privacy',
+  '/terms',
+])
 
-    // Handle authenticated users
-    if (isAuth) {
-      if (pinEnabled && !pinVerified && !isPinPage) {
-        let from = req.nextUrl.pathname
-        if (req.nextUrl.search) {
-          from += req.nextUrl.search
-        }
-        return NextResponse.redirect(
-          new URL(`/auth/pin?from=${encodeURIComponent(from)}`, req.url)
-        )
-      }
+// Technical asset prefixes and technical auth endpoints that must remain accessible
+const TECHNICAL_PATH_PREFIXES = [
+  '/_next',
+  '/api/auth', // NextAuth OAuth handlers, session, CSRF
+]
 
-      // Route users who still need onboarding to setup flow
-      if (needsOnboarding && !isSetup) {
-        if (process.env.NODE_ENV === 'development') {
-          console.log('Middleware - Redirecting user to onboarding setup')
-        }
-        return NextResponse.redirect(new URL('/dashboard/setup', req.url))
-      }
+const TECHNICAL_EXACT_PATHS = new Set([
+  '/robots.txt',
+  '/sitemap.xml',
+  '/opengraph-image',
+  '/favicon.ico',
+  '/favicon.png',
+  '/favicon.svg',
+  '/logo.png',
+  '/logo-dark.png',
+  '/logo-2x.png',
+  '/logo.svg',
+])
 
-      // If user is authenticated and tries to access home page, redirect to dashboard
-      if (isHomePage) {
-        if (token?.username) {
-          if (process.env.NODE_ENV === 'development') {
-            console.log('Middleware - Redirecting authenticated user from home to dashboard')
-          }
-          return NextResponse.redirect(new URL('/dashboard', req.url))
-        } else {
-          if (process.env.NODE_ENV === 'development') {
-            console.log('Middleware - Redirecting authenticated user from home to setup')
-          }
-          return NextResponse.redirect(new URL('/dashboard/setup', req.url))
-        }
-      }
-      
-      // If user is authenticated and tries to access auth pages, redirect to dashboard
-      if (isAuthPage && !isPinPage) {
-        if (token?.username) {
-          if (process.env.NODE_ENV === 'development') {
-            console.log('Middleware - Redirecting authenticated user to dashboard')
-          }
-          return NextResponse.redirect(new URL('/dashboard', req.url))
-        } else {
-          if (process.env.NODE_ENV === 'development') {
-            console.log('Middleware - Redirecting authenticated user to setup')
-          }
-          return NextResponse.redirect(new URL('/dashboard/setup', req.url))
-        }
-      }
-
-      // Handle dashboard access for authenticated users
-      if (isDashboard) {
-        const hasUsername = !!token?.username
-
-        // If user doesn't have username and not on setup page, redirect to setup
-        if (!hasUsername && !isSetup) {
-          if (process.env.NODE_ENV === 'development') {
-            console.log('Middleware - Redirecting user without username to setup')
-          }
-          return NextResponse.redirect(new URL('/dashboard/setup', req.url))
-        }
-
-        // If user has username, onboarding is complete, and is on setup page, redirect to dashboard
-        if (hasUsername && isSetup && !needsOnboarding) {
-          if (process.env.NODE_ENV === 'development') {
-            console.log('Middleware - Redirecting user with username away from setup')
-          }
-          return NextResponse.redirect(new URL('/dashboard', req.url))
-        }
-      }
-    }
-
-    // Handle unauthenticated users
-    if (!isAuth) {
-      if (isPinPage) {
-        let from = req.nextUrl.pathname
-        if (req.nextUrl.search) {
-          from += req.nextUrl.search
-        }
-        return NextResponse.redirect(
-          new URL(`/auth/signin?from=${encodeURIComponent(from)}`, req.url)
-        )
-      }
-
-      // Redirect unauthenticated users trying to access protected routes
-      if (isDashboard) {
-        let from = req.nextUrl.pathname
-        if (req.nextUrl.search) {
-          from += req.nextUrl.search
-        }
-        if (process.env.NODE_ENV === 'development') {
-          console.log('Middleware - Redirecting unauthenticated user to signin')
-        }
-        return NextResponse.redirect(
-          new URL(`/auth/signin?from=${encodeURIComponent(from)}`, req.url)
-        )
-      }
-    }
-
-    return NextResponse.next()
-  },
-  {
-    callbacks: {
-      authorized: ({ token }) => {
-        // Allow access if token exists or if it's a public route
-        return true // Let the middleware function handle the logic
-      },
-    },
+function isTechnicalEndpoint(pathname: string): boolean {
+  if (TECHNICAL_EXACT_PATHS.has(pathname)) return true
+  for (const prefix of TECHNICAL_PATH_PREFIXES) {
+    if (pathname === prefix || pathname.startsWith(prefix + '/')) return true
   }
-)
+  return false
+}
+
+function sanitizeCallbackPath(pathname: string, search: string): string {
+  // Validate path to prevent open redirects: must be a same-origin relative path starting with single '/'
+  if (pathname.startsWith('/') && !pathname.startsWith('//') && !pathname.startsWith('/\\')) {
+    return pathname + (search || '')
+  }
+  return '/dashboard'
+}
+
+export async function middleware(req: NextRequest) {
+  const { pathname, search } = req.nextUrl
+
+  // 1. Allow technical assets, SEO files, and OAuth auth endpoints
+  if (isTechnicalEndpoint(pathname)) {
+    return NextResponse.next()
+  }
+
+  // 2. Retrieve session token securely using NextAuth secret
+  let token = null
+  try {
+    token = await getToken({
+      req,
+      secret: process.env.NEXTAUTH_SECRET || process.env.AUTH_SECRET,
+    })
+  } catch (err) {
+    // If token parsing fails or session is corrupted, treat as unauthenticated
+    token = null
+  }
+
+  const isAuthenticated = !!token
+
+  // 3. Handle Public Pages
+  if (PUBLIC_PAGES.has(pathname)) {
+    // If an authenticated user opens the login page, redirect them to the main app page
+    if (pathname === '/auth/signin' && isAuthenticated) {
+      const destination = token?.onboardingCompleted === false ? '/dashboard/setup' : '/dashboard'
+      return NextResponse.redirect(new URL(destination, req.url))
+    }
+    return NextResponse.next()
+  }
+
+  // 4. Everything else: Default is DENY (Authentication Required)
+  if (!isAuthenticated) {
+    // For protected API endpoints, return 401 Unauthorized
+    if (pathname.startsWith('/api/')) {
+      return NextResponse.json(
+        { error: 'Unauthorized: Authentication session required' },
+        { status: 401 }
+      )
+    }
+
+    // For all protected pages, redirect to login with validated callback parameter
+    const safeFrom = sanitizeCallbackPath(pathname, search)
+    const signinUrl = new URL(`/auth/signin?from=${encodeURIComponent(safeFrom)}`, req.url)
+    const response = NextResponse.redirect(signinUrl)
+
+    // Clear any invalid session cookie if present to prevent redirect loops
+    if (req.cookies.has('next-auth.session-token') || req.cookies.has('__Secure-next-auth.session-token')) {
+      response.cookies.delete('next-auth.session-token')
+      response.cookies.delete('__Secure-next-auth.session-token')
+    }
+
+    return response
+  }
+
+  // 5. Authenticated Session Enforcement (PIN & Onboarding)
+  const isPinPage = pathname.startsWith('/auth/pin')
+  const isSetupPage = pathname === '/dashboard/setup'
+  const isDashboard = pathname.startsWith('/dashboard')
+
+  // Check PIN verification if PIN security is enabled
+  if (token?.pinEnabled === true && token?.pinVerified !== true) {
+    if (!isPinPage) {
+      const safeFrom = sanitizeCallbackPath(pathname, search)
+      return NextResponse.redirect(
+        new URL(`/auth/pin?from=${encodeURIComponent(safeFrom)}`, req.url)
+      )
+    }
+    return NextResponse.next()
+  }
+
+  // If user completed PIN and tries to visit PIN page again
+  if (isPinPage && (token?.pinEnabled !== true || token?.pinVerified === true)) {
+    return NextResponse.redirect(new URL('/dashboard', req.url))
+  }
+
+  // Onboarding enforcement for users who haven't completed setup
+  if (token?.onboardingCompleted === false && !isSetupPage && isDashboard) {
+    return NextResponse.redirect(new URL('/dashboard/setup', req.url))
+  }
+
+  return NextResponse.next()
+}
 
 export const config = {
   matcher: [
     /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - public folder
+     * Match all request paths except static Next.js assets
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|public).*)',
+    '/((?!_next/static|_next/image).*)',
   ],
 }

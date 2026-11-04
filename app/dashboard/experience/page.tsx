@@ -164,8 +164,8 @@ export default function ExperiencePage() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-semibold leading-8 text-[#F8FAFC]">Experience</h1>
-            <p className="text-xs text-[#94A3B8] mt-1">
+            <h1 className="text-2xl font-semibold leading-8 text-foreground">Experience</h1>
+            <p className="text-xs text-muted-foreground mt-1">
               Maintain your work timeline and career achievements
             </p>
           </div>
@@ -179,11 +179,11 @@ export default function ExperiencePage() {
         {experiences.length === 0 ? (
           <Card>
             <CardContent className="flex flex-col items-center justify-center py-12">
-              <div className="w-20 h-20 bg-[#1E293B] border border-[#334155] rounded-full flex items-center justify-center mb-4">
-                <Briefcase className="h-10 w-10 text-[#6366F1]" />
+              <div className="w-20 h-20 bg-muted border border-border rounded-full flex items-center justify-center mb-4">
+                <Briefcase className="h-10 w-10 text-foreground" />
               </div>
-              <h3 className="text-lg font-medium text-[#F8FAFC] mb-1">No experience added yet</h3>
-              <p className="text-xs text-[#94A3B8] text-center mb-6 max-w-sm">
+              <h3 className="text-lg font-medium text-foreground mb-1">No experience added yet</h3>
+              <p className="text-xs text-muted-foreground text-center mb-6 max-w-sm">
                 Add your work experience to showcase your professional journey and skills.
               </p>
               <Button onClick={handleAddExperience} className="flex items-center gap-2">
@@ -202,7 +202,7 @@ export default function ExperiencePage() {
                 transition={{ delay: index * 0.1 }}
               >
                 <Card
-                  className={`hover:border-[#334155] transition-all ${savingOrder && draggedExperienceId ? 'opacity-80' : ''}`}
+                  className={`hover:border-border transition-all ${savingOrder && draggedExperienceId ? 'opacity-80' : ''}`}
                   onDragOver={(event) => {
                     event.preventDefault()
                   }}
@@ -211,16 +211,16 @@ export default function ExperiencePage() {
                   <CardHeader>
                     <div className="flex items-start justify-between">
                       <div className="flex items-start gap-4">
-                        <div className="w-11 h-11 bg-[#6366F1]/10 border border-[#6366F1]/20 rounded-xl flex items-center justify-center flex-shrink-0 text-[#6366F1]">
+                        <div className="w-11 h-11 bg-foreground/10 border border-foreground/20 rounded-xl flex items-center justify-center flex-shrink-0 text-foreground">
                           <Briefcase className="h-5 w-5" />
                         </div>
                         <div className="flex-1">
                           <CardTitle className="text-lg">{experience.position}</CardTitle>
-                          <p className="text-sm font-medium text-[#CBD5E1] mt-0.5">
+                          <p className="text-sm font-medium text-muted-foreground mt-0.5">
                             {experience.company}
                           </p>
-                          <div className="flex items-center gap-1.5 mt-2 text-xs text-[#94A3B8]">
-                            <Calendar className="h-3.5 w-3.5 text-[#06B6D4]" />
+                          <div className="flex items-center gap-1.5 mt-2 text-xs text-muted-foreground">
+                            <Calendar className="h-3.5 w-3.5 text-muted-foreground" />
                             {formatExperienceDuration(experience.startDate, experience.endDate, experience.isCurrentlyWorking)}
                           </div>
                         </div>
@@ -228,7 +228,7 @@ export default function ExperiencePage() {
                       <div className="flex items-center gap-2">
                         <button
                           type="button"
-                          className="p-1 text-[#94A3B8] hover:text-[#F8FAFC] cursor-grab active:cursor-grabbing"
+                          className="p-1 text-muted-foreground hover:text-foreground cursor-grab active:cursor-grabbing"
                           draggable
                           onDragStart={() => setDraggedExperienceId(experience.id)}
                           onDragEnd={() => setDraggedExperienceId(null)}
@@ -241,7 +241,7 @@ export default function ExperiencePage() {
                           size="sm"
                           onClick={() => handleEditExperience(experience)}
                         >
-                          <Edit className="h-4 w-4 text-[#06B6D4]" />
+                          <Edit className="h-4 w-4 text-muted-foreground" />
                         </Button>
                         <Button 
                           variant="destructive" 
@@ -255,7 +255,7 @@ export default function ExperiencePage() {
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-sm text-[#CBD5E1] mb-4">
+                    <p className="text-sm text-muted-foreground mb-4">
                       {experience.description}
                     </p>
 
@@ -267,7 +267,7 @@ export default function ExperiencePage() {
                             href={experience.linkedinPostUrl} 
                             target="_blank" 
                             rel="noopener noreferrer"
-                            className="flex items-center gap-2 text-[#06B6D4] hover:text-[#06B6D4]/80 text-xs font-mono"
+                            className="flex items-center gap-2 text-foreground hover:text-foreground/80 text-xs font-mono"
                           >
                             <Linkedin className="h-3.5 w-3.5" />
                             View LinkedIn Post

@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input'
 import { SimpleThemeToggle } from '@/components/ui/theme-toggle'
 import { db } from '@/lib/db'
 import { absoluteUrl, clampText, SITE_NAME } from '@/lib/seo'
+import { generateCollectionPageSchema } from '@/lib/schema'
 
 const PAGE_SIZE = 12
 
@@ -36,16 +37,31 @@ type DiscoverProfile = {
 }
 
 export const metadata: Metadata = {
-  title: `Discover Developers - ${SITE_NAME}`,
-  description: 'Browse published developer portfolios and discover new talent on DevLink.',
+  title: 'Discover Developers',
+  description: 'Browse published developer portfolios, explore code, and discover new engineering talent on DevLink.',
   alternates: {
     canonical: absoluteUrl('/discover'),
   },
   openGraph: {
-    title: `Discover Developers - ${SITE_NAME}`,
-    description: 'Browse published developer portfolios and discover new talent on DevLink.',
+    title: `Discover Developers — ${SITE_NAME}`,
+    description: 'Browse published developer portfolios, explore code, and discover new engineering talent on DevLink.',
     url: absoluteUrl('/discover'),
+    siteName: SITE_NAME,
     type: 'website',
+    images: [
+      {
+        url: absoluteUrl('/opengraph-image'),
+        width: 1200,
+        height: 630,
+        alt: `Discover Developers — ${SITE_NAME}`,
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Discover Developers — ${SITE_NAME}`,
+    description: 'Browse published developer portfolios, explore code, and discover new engineering talent on DevLink.',
+    images: [absoluteUrl('/opengraph-image')],
   },
 }
 
@@ -99,6 +115,18 @@ export default async function DiscoverPage({ searchParams }: DiscoverPageProps) 
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-background text-foreground">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            generateCollectionPageSchema(
+              'Discover Developers',
+              'Browse published developer portfolios and discover new engineering talent on DevLink.',
+              '/discover'
+            )
+          ),
+        }}
+      />
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -top-28 left-1/2 h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl" />
         <div className="absolute top-48 -left-16 h-72 w-72 rounded-full bg-blue-500/15 blur-3xl" />

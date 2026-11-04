@@ -216,8 +216,8 @@ export default function ProfilePage() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-semibold leading-8 text-[#F8FAFC]">Profile Settings</h1>
-            <p className="text-xs text-[#94A3B8] mt-1">
+            <h1 className="text-2xl font-semibold leading-8 text-foreground">Profile Settings</h1>
+            <p className="text-xs text-muted-foreground mt-1">
               Update your profile information, media, and social links
             </p>
           </div>
@@ -227,7 +227,7 @@ export default function ProfilePage() {
             className="flex items-center gap-2"
           >
             {saving ? (
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
+              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-foreground" />
             ) : (
               <Save className="h-4 w-4" />
             )}

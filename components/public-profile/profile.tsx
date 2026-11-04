@@ -642,7 +642,7 @@ export default function PublicProfile({
                       border: `1px solid ${themeColors.primary}`
                     }}
                   >
-                    Template: Bento Grid
+                    @{safeProfile.username || 'developer'}
                   </div>
                 </div>
                 {renderBio(
@@ -907,7 +907,7 @@ export default function PublicProfile({
                   'mt-3 text-zinc-300 leading-relaxed'
                 )}
                 <p className="mt-2 text-xs text-zinc-500">
-                  theme={safeProfile.theme} template=terminal user={safeProfile.username || 'developer'}
+                  user: @{safeProfile.username || 'developer'}
                 </p>
               </section>
 
@@ -1120,7 +1120,7 @@ export default function PublicProfile({
                   backgroundColor: `rgba(${themeColors.secondaryRgb}, 0.2)`
                 }}
               >
-                Glass Template
+                @{safeProfile.username || 'developer'}
               </div>
             </div>
 
@@ -1138,8 +1138,8 @@ export default function PublicProfile({
                 <p className="text-2xl font-black mt-1">{safeProfile.skills.length}</p>
               </div>
               <div className="rounded-xl border border-white/20 bg-white/10 p-3">
-                <p className="text-xs uppercase tracking-[0.2em] text-white/70">Template</p>
-                <p className="text-lg font-bold mt-1 capitalize">{templateId}</p>
+                <p className="text-xs uppercase tracking-[0.2em] text-white/70">Certifications</p>
+                <p className="text-2xl font-black mt-1">{safeProfile.certifications.length}</p>
               </div>
             </div>
           </section>

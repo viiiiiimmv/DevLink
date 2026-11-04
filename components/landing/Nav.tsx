@@ -14,32 +14,26 @@ export function Nav() {
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-8">
           <Logo href="/" iconSize={20} textClassName="text-sm font-semibold tracking-tight text-foreground" />
-          <nav className="hidden items-center gap-6 text-xs text-muted-foreground md:flex" aria-label="Main Navigation">
+          <nav className="hidden items-center gap-6 text-xs text-muted-foreground sm:flex" aria-label="Main Navigation">
             <Link
-              href="/discover"
+              href="/privacy"
               className="transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-[2px]"
             >
-              Discover
+              Privacy Policy
             </Link>
             <Link
-              href="/sparkforge"
+              href="/terms"
               className="transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-[2px]"
             >
-              SparkForge
+              Terms &amp; Conditions
             </Link>
-            <a
-              href="#how-it-works"
-              className="transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-[2px]"
-            >
-              How it works
-            </a>
           </nav>
         </div>
 
         <div className="flex items-center gap-3">
           <Link
             href="/auth/signin"
-            className="hidden text-xs text-muted-foreground transition-colors hover:text-foreground sm:inline-block focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-[2px]"
+            className="text-xs text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-[2px]"
           >
             Sign in
           </Link>

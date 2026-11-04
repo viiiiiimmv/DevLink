@@ -1,19 +1,14 @@
-'use client'
+import type { Metadata } from 'next'
+import DashboardClientShell from './DashboardClientShell'
 
-import { usePathname } from 'next/navigation'
-import DashboardLayout from '@/components/dashboard/layout'
-
-type DashboardRouteLayoutProps = {
-  children: React.ReactNode
+export const metadata: Metadata = {
+  title: 'Dashboard',
+  robots: {
+    index: false,
+    follow: false,
+  },
 }
 
-export default function DashboardRouteLayout({ children }: DashboardRouteLayoutProps) {
-  const pathname = usePathname()
-
-  // Keep onboarding setup outside the dashboard shell.
-  if (pathname?.startsWith('/dashboard/setup')) {
-    return <>{children}</>
-  }
-
-  return <DashboardLayout>{children}</DashboardLayout>
+export default function DashboardRouteLayout({ children }: { children: React.ReactNode }) {
+  return <DashboardClientShell>{children}</DashboardClientShell>
 }

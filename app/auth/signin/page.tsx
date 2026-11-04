@@ -100,6 +100,15 @@ function SignInContent() {
 
   const enabledProviderIds = providerOrder.filter((providerId) => Boolean(providers[providerId]))
 
+  const sanitizeCallbackUrl = (url: string | null): string => {
+    if (!url) return '/dashboard'
+    // Must be a relative path starting with single '/' and no protocol or double slash
+    if (url.startsWith('/') && !url.startsWith('//') && !url.startsWith('/\\')) {
+      return url
+    }
+    return '/dashboard'
+  }
+
   const handleSignIn = async (provider: string) => {
     if (!agreedToTerms) {
       setConsentError(true)
@@ -108,9 +117,10 @@ function SignInContent() {
     }
     setConsentError(false)
     setLoading(provider)
+    const targetUrl = sanitizeCallbackUrl(from)
     try {
       const result = await signIn(provider, {
-        callbackUrl: from || '/dashboard',
+        callbackUrl: targetUrl,
         redirect: false,
       })
 
@@ -119,7 +129,7 @@ function SignInContent() {
         setLoading(null)
       } else if (result?.ok) {
         toast.success('Signing you in...')
-        router.push(from || '/dashboard')
+        router.push(targetUrl)
       }
     } catch (error) {
       console.error('Sign in error:', error)

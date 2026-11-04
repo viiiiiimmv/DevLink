@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
@@ -11,56 +11,46 @@ import { Button } from '@/components/ui/button'
 function ErrorPageContent() {
   const searchParams = useSearchParams()
   const error = searchParams?.get('error') ?? null
-  
+
   const getErrorMessage = (error: string | null) => {
     switch (error) {
       case 'Configuration':
         return {
-          title: 'Server Configuration Error',
-          description: 'There is a problem with the server configuration. Please try again later.',
+          title: 'Configuration Error',
+          description: 'There is a problem with the server authentication configuration. Please try again later.',
         }
       case 'AccessDenied':
         return {
           title: 'Access Denied',
-          description: 'You do not have permission to sign in.',
+          description: 'You do not have permission to access this resource or sign in.',
         }
       case 'Verification':
         return {
-          title: 'Unable to Sign In',
-          description: 'The sign in link is no longer valid. It may have been used already or it may have expired.',
+          title: 'Verification Expired',
+          description: 'The sign-in link is no longer valid. It may have expired or already been used.',
         }
       case 'OAuthSignin':
       case 'OAuthCallback':
       case 'OAuthCreateAccount':
       case 'EmailCreateAccount':
         return {
-          title: 'OAuth Error',
-          description: 'Error with the OAuth provider. Please try signing in again.',
+          title: 'Authentication Error',
+          description: 'An error occurred with the authentication provider. Please try signing in again.',
         }
       case 'OAuthAccountNotLinked':
         return {
-          title: 'Account Already Exists',
+          title: 'Account Exists',
           description: 'An account with this email already exists with a different provider. Please sign in with your original provider.',
-        }
-      case 'EmailSignin':
-        return {
-          title: 'Unable to Send Email',
-          description: 'The email could not be sent. Please try again.',
-        }
-      case 'CredentialsSignin':
-        return {
-          title: 'Sign In Failed',
-          description: 'Check that you entered the correct details.',
         }
       case 'SessionRequired':
         return {
           title: 'Session Required',
-          description: 'You must be signed in to view this page.',
+          description: 'You must be signed in with an active session to access this page.',
         }
       default:
         return {
-          title: 'Something Went Wrong',
-          description: 'An unexpected error occurred. Please try signing in again.',
+          title: 'Authentication Error',
+          description: 'An unexpected authentication error occurred. Please try signing in again.',
         }
     }
   }
@@ -68,41 +58,41 @@ function ErrorPageContent() {
   const errorInfo = getErrorMessage(error)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-background to-indigo-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-background text-foreground flex items-center justify-center p-4">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.35 }}
       >
         <Card className="w-full max-w-md">
-          <CardHeader className="text-center space-y-4">
+          <CardHeader className="text-center space-y-3">
             <div className="flex items-center justify-center">
-              <AlertCircle className="h-12 w-12 text-red-600" />
+              <AlertCircle className="h-10 w-10 text-destructive" />
             </div>
-            <CardTitle className="text-2xl font-bold text-red-600">
+            <CardTitle className="text-xl font-bold text-foreground">
               {errorInfo.title}
             </CardTitle>
-            <CardDescription className="text-muted-foreground">
+            <CardDescription className="text-muted-foreground text-xs leading-relaxed">
               {errorInfo.description}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="text-center space-y-4">
-              <Link href="/auth/signin">
-                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
-                  Try Signing In Again
+            <div className="space-y-2 pt-2">
+              <Link href="/auth/signin" className="w-full block">
+                <Button className="w-full" variant="default">
+                  Return to Sign In
                 </Button>
               </Link>
-              <Link href="/">
+              <Link href="/" className="w-full block">
                 <Button variant="ghost" className="w-full text-muted-foreground hover:text-foreground">
-                  <ArrowLeft className="h-4 w-4 mr-2" />
+                  <ArrowLeft className="h-3.5 w-3.5 mr-1.5" />
                   Back to Home
                 </Button>
               </Link>
             </div>
             {error && (
-              <div className="text-center text-xs text-muted-foreground mt-4">
-                Error code: {error}
+              <div className="text-center text-[11px] font-mono text-muted-foreground border-t border-border pt-3">
+                Error identifier: {error}
               </div>
             )}
           </CardContent>
@@ -114,7 +104,7 @@ function ErrorPageContent() {
 
 export default function ErrorPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div className="min-h-screen bg-background" />}>
       <ErrorPageContent />
     </Suspense>
   )

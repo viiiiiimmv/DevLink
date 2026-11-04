@@ -116,7 +116,7 @@ export default function ProjectImageUpload({
   return (
     <div className={`space-y-3 ${className}`}>
       {/* Image Preview Box */}
-      <div className="relative w-full aspect-video overflow-hidden rounded-xl border border-[#334155] bg-[#1E293B] shadow-inner">
+      <div className="relative w-full aspect-video overflow-hidden rounded-[4px] border border-border bg-muted shadow-inner">
         {preview ? (
           <Image
             src={preview}
@@ -125,18 +125,18 @@ export default function ProjectImageUpload({
             className="object-cover"
           />
         ) : (
-          <div className="flex h-full w-full flex-col items-center justify-center text-[#94A3B8]">
+          <div className="flex h-full w-full flex-col items-center justify-center text-muted-foreground">
             <ImageIcon className="h-10 w-10 mb-2 opacity-60" />
-            <span className="text-xs text-[#94A3B8]">No project preview image uploaded</span>
+            <span className="text-xs text-muted-foreground">No project preview image uploaded</span>
           </div>
         )}
 
         {uploading && (
-          <div className="absolute inset-0 bg-[#090D16]/85 backdrop-blur-xs flex flex-col items-center justify-center p-6">
-            <div className="text-xs font-medium text-[#F8FAFC] mb-2">Uploading project asset...</div>
-            <div className="w-48 h-1.5 bg-[#1E293B] rounded-full overflow-hidden">
+          <div className="absolute inset-0 bg-background/85 backdrop-blur-xs flex flex-col items-center justify-center p-6">
+            <div className="text-xs font-medium text-foreground mb-2">Uploading project asset...</div>
+            <div className="w-48 h-1.5 bg-muted rounded-full overflow-hidden">
               <div
-                className="h-full bg-[#6366F1] transition-all duration-200"
+                className="h-full bg-foreground transition-all duration-200"
                 style={{ width: `${uploadProgress}%` }}
               />
             </div>
@@ -160,31 +160,31 @@ export default function ProjectImageUpload({
         onDrop={handleDrop}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
-        className={`border-[1.5px] border-dashed rounded-[12px] p-5 text-center transition-all duration-150 cursor-pointer ${
+        className={`border-[1.5px] border-dashed rounded-[4px] p-5 text-center transition-all duration-150 cursor-pointer ${
           dragOver
-            ? 'border-[#6366F1] bg-[#6366F1]/5'
-            : 'border-slate-300 dark:border-[#475569] bg-slate-50/70 dark:bg-[#0F172A] hover:border-[#6366F1] hover:bg-[#6366F1]/5'
+            ? 'border-foreground bg-foreground/10'
+            : 'border-border bg-card hover:border-foreground hover:bg-foreground/5'
         }`}
         onClick={() => fileInputRef.current?.click()}
       >
-        <Upload className="mx-auto h-6 w-6 text-slate-400 dark:text-[#94A3B8] mb-2" />
-        <p className="text-sm font-medium text-slate-800 dark:text-[#F8FAFC]">
+        <Upload className="mx-auto h-6 w-6 text-slate-400 dark:text-muted-foreground mb-2" />
+        <p className="text-sm font-medium text-foreground dark:text-foreground">
           {dragOver ? 'Drop your image here' : 'Click to upload or drag and drop'}
         </p>
-        <p className="text-xs text-slate-500 dark:text-[#94A3B8] mt-1">
+        <p className="text-xs text-muted-foreground dark:text-muted-foreground mt-1">
           PNG, JPG, GIF up to 5MB
         </p>
 
         {/* Upload Status Bar */}
         {uploading && (
           <div className="mt-3 w-full">
-            <div className="flex justify-between text-xs text-[#94A3B8] mb-1">
+            <div className="flex justify-between text-xs text-muted-foreground mb-1">
               <span>Uploading to Cloudinary...</span>
-              <span className="font-mono text-[#06B6D4]">{uploadProgress}%</span>
+              <span className="font-mono text-foreground">{uploadProgress}%</span>
             </div>
-            <div className="w-full h-1.5 bg-[#1E293B] rounded-full overflow-hidden">
+            <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
               <div
-                className="h-full bg-[#6366F1] transition-all duration-200"
+                className="h-full bg-foreground transition-all duration-200"
                 style={{ width: `${uploadProgress}%` }}
               />
             </div>

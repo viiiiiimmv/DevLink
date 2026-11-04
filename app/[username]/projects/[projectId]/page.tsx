@@ -7,7 +7,8 @@ import { ArrowLeft, ExternalLink, Github } from 'lucide-react'
 import { authOptions } from '@/lib/auth'
 import { db } from '@/lib/db'
 import MarkdownContent from '@/components/MarkdownContent'
-import { absoluteUrl, clampText } from '@/lib/seo'
+import { absoluteUrl, clampText, SITE_NAME } from '@/lib/seo'
+import { generateProjectSchema } from '@/lib/schema'
 
 type ProjectRouteParams = {
   username: string
@@ -126,8 +127,9 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   const description = getProjectDescription(project)
 
   return {
-    title: `${project.title} - ${profile.name}`,
+    title: `${project.title} — ${profile.name}`,
     description,
+    keywords: ['developer project', 'case study', ...(project.technologies || [])],
     alternates: {
       canonical: projectUrl,
     },
@@ -136,6 +138,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
       description,
       url: projectUrl,
       type: 'article',
+    siteName: SITE_NAME,
       images: typeof project.image === 'string' && project.image.trim().length > 0
         ? [{ url: project.image }]
         : undefined,
@@ -194,6 +197,12 @@ export default async function ProjectCaseStudyPage({ params }: ProjectPageProps)
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(generateProjectSchema(profile, project)),
+        }}
+      />
       <main className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
         <div className="mb-8">
           <Link

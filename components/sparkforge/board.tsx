@@ -138,10 +138,10 @@ const toStatusClassName = (status: IdeaStatus): string => {
   }
 
   if (status === 'in_progress') {
-    return 'border-[#06B6D4]/30 bg-[#06B6D4]/10 text-[#06B6D4] font-mono text-xs'
+    return 'border-foreground/30 bg-foreground/10 text-foreground font-mono text-xs'
   }
 
-  return 'border-[#334155] bg-[#1E293B] text-[#94A3B8] font-mono text-xs'
+  return 'border-border bg-secondary text-muted-foreground font-mono text-xs'
 }
 
 export default function SparkForgeBoard() {
@@ -628,27 +628,27 @@ export default function SparkForgeBoard() {
 
   return (
     <div className="space-y-6">
-      <Card className="border-[#1E293B] bg-gradient-to-br from-[#0F172A] via-[#0F172A] to-[#1E293B]/60 shadow-xl">
+      <Card className="border-border bg-card shadow-none">
         <CardContent className="space-y-4 p-6 sm:p-7">
           <div className="flex flex-wrap items-center gap-2">
-            <Badge className="bg-[#6366F1] text-white hover:bg-[#4F46E5] font-mono text-xs">
+            <Badge className="bg-foreground text-background hover:bg-foreground/90 font-mono text-xs">
               <Lightbulb className="mr-1 h-3.5 w-3.5" />
               SparkForge
             </Badge>
-            <Badge variant="secondary" className="border-[#334155] bg-[#1E293B] text-[#06B6D4] font-mono text-xs">
+            <Badge variant="secondary" className="border-border bg-secondary text-foreground font-mono text-xs">
               {totalIdeas} ideas live
             </Badge>
           </div>
 
           <div className="space-y-2">
-            <h1 className="text-3xl font-semibold tracking-tight text-[#F8FAFC] sm:text-4xl">Find people to build your next project with.</h1>
-            <p className="max-w-3xl text-sm text-[#94A3B8] sm:text-base">
+            <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">Find people to build your next project with.</h1>
+            <p className="max-w-3xl text-sm text-muted-foreground sm:text-base">
               Post your concept, discover what others are building, send sparks, and move to chat or direct contact.
             </p>
           </div>
 
           <div className="flex flex-wrap gap-3">
-            <Button onClick={openCreateForm} className="bg-[#6366F1] text-white hover:bg-[#4F46E5]">
+            <Button onClick={openCreateForm} className="bg-foreground text-background hover:bg-foreground/90">
               <Plus className="mr-2 h-4 w-4" />
               Post an idea
             </Button>
@@ -660,11 +660,11 @@ export default function SparkForgeBoard() {
       </Card>
 
       {sparkNotice ? (
-        <div className="fixed bottom-6 right-6 z-50 w-[280px] rounded-xl border border-[#334155] bg-[#0F172A]/95 p-3 shadow-2xl backdrop-blur">
+        <div className="fixed bottom-6 right-6 z-50 w-[280px] rounded-xl border border-border bg-card/95 p-3 shadow-2xl backdrop-blur">
           <p className="text-sm font-semibold text-emerald-400">
             {sparkNotice.state === 'connected' ? 'Code Circle established' : 'Spark sent'}
           </p>
-          <p className="mt-1 text-xs text-[#94A3B8]">
+          <p className="mt-1 text-xs text-muted-foreground">
             {sparkNotice.username ? `${sparkNotice.name} (@${sparkNotice.username})` : sparkNotice.name}
           </p>
         </div>
@@ -871,8 +871,8 @@ export default function SparkForgeBoard() {
                   onClick={() => setActiveTag((previous) => previous === tag ? '' : tag)}
                   className={`rounded-full border px-2.5 py-1 font-mono text-xs transition-colors ${
                     activeTag === tag
-                      ? 'border-[#6366F1] bg-[#6366F1]/20 text-[#6366F1]'
-                      : 'border-[#334155] bg-[#1E293B] text-[#94A3B8] hover:border-[#06B6D4] hover:text-[#F8FAFC]'
+                      ? 'border-foreground bg-foreground/10 text-foreground'
+                      : 'border-border bg-secondary text-muted-foreground hover:border-foreground hover:text-foreground'
                   }`}
                 >
                   #{tag}
@@ -948,7 +948,7 @@ export default function SparkForgeBoard() {
                         key={`${idea.id}-tag-${tag}`}
                         type="button"
                         onClick={() => setActiveTag(tag)}
-                        className="rounded-full border border-[#334155] bg-[#1E293B] px-2 py-0.5 font-mono text-xs text-[#94A3B8] hover:border-[#06B6D4] hover:text-[#F8FAFC]"
+                        className="rounded-full border border-border bg-muted px-2 py-0.5 font-mono text-xs text-muted-foreground hover:border-foreground hover:text-foreground"
                       >
                         #{tag}
                       </button>

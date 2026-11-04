@@ -352,8 +352,8 @@ export default function SettingsPage() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-semibold leading-8 text-[#F8FAFC]">Settings</h1>
-            <p className="text-xs text-[#94A3B8] mt-1">
+            <h1 className="text-2xl font-semibold leading-8 text-foreground">Settings</h1>
+            <p className="text-xs text-muted-foreground mt-1">
               Manage your account credentials, security controls, and portfolio configurations
             </p>
           </div>
@@ -370,7 +370,7 @@ export default function SettingsPage() {
             <CardContent>
               <div className="space-y-4">
                 <div className="flex items-center space-x-2">
-                  <span className="font-mono text-xs text-[#94A3B8]">{siteUrl}/</span>
+                  <span className="font-mono text-xs text-muted-foreground">{siteUrl}/</span>
                   <div className="flex-1 relative">
                     <Input
                       value={username}
@@ -380,7 +380,7 @@ export default function SettingsPage() {
                     />
                     {checkingUsername && (
                       <div className="absolute right-3 top-3">
-                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#6366F1]" />
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-foreground" />
                       </div>
                     )}
                     {!checkingUsername && usernameAvailable === true && (
@@ -403,15 +403,15 @@ export default function SettingsPage() {
                   </Button>
                 </div>
                 <div className="text-sm">
-                  <p className="text-xs text-[#94A3B8] mb-2">
+                  <p className="text-xs text-muted-foreground mb-2">
                     Choose a unique username for your portfolio. Username must start with a letter and contain only lowercase letters and numbers.
                   </p>
                   {username && username !== profileData?.username && (
                     <div className="space-y-2">
-                      <p className="text-xs text-[#94A3B8]">
+                      <p className="text-xs text-muted-foreground">
                         New portfolio URL will be:
                       </p>
-                      <p className="font-mono text-xs font-medium text-[#06B6D4] bg-[#06B6D4]/10 border border-[#06B6D4]/25 px-2.5 py-1 rounded-md inline-block">
+                      <p className="font-mono text-xs font-medium text-foreground bg-muted border border-border px-2.5 py-1 rounded-md inline-block">
                         {siteUrl}/{username}
                       </p>
                       {usernameAvailable === true && (

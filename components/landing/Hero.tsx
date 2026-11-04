@@ -91,10 +91,10 @@ export function Hero() {
                   </Link>
                   <span className="text-border">/</span>
                   <Link
-                    href="/discover"
+                    href="/auth/signin"
                     className="hover:text-foreground transition-colors"
                   >
-                    Browse developer portfolios
+                    Sign in to your account
                   </Link>
                 </div>
               </motion.div>

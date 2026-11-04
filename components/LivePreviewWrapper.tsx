@@ -28,10 +28,10 @@ export default function LivePreviewWrapper({
 }: LivePreviewWrapperProps) {
   return (
     <div
-      className={`flex flex-col rounded-xl border border-[#1E293B] bg-[#0B0F19] overflow-hidden shadow-2xl transition-all ${className}`}
+      className={`flex flex-col rounded-xl border border-border bg-card overflow-hidden shadow-2xl transition-all ${className}`}
     >
       {/* Top Header Bar */}
-      <div className="flex h-10 w-full items-center justify-between border-b border-[#1E293B] bg-[#0F172A] px-4 select-none shrink-0">
+      <div className="flex h-10 w-full items-center justify-between border-b border-border bg-muted/50 px-4 select-none shrink-0">
         <div className="flex items-center gap-2.5">
           {/* Subtle Window Dots */}
           <div className="flex items-center gap-1.5">
@@ -41,7 +41,7 @@ export default function LivePreviewWrapper({
           </div>
 
           {/* Technical Slug / URL Badge */}
-          <div className="hidden sm:flex items-center gap-1.5 ml-2 px-2.5 py-0.5 rounded-md bg-[#1E293B]/70 border border-[#334155]/60 text-[12px] font-mono text-[#06B6D4]">
+          <div className="hidden sm:flex items-center gap-1.5 ml-2 px-2.5 py-0.5 rounded-md bg-card border border-border text-[12px] font-mono text-foreground">
             <span className="opacity-50">https://</span>
             <span className="font-medium">{urlSlug}</span>
           </div>
@@ -65,7 +65,7 @@ export default function LivePreviewWrapper({
       </div>
 
       {/* Pane Content Window */}
-      <div className="relative flex-1 w-full overflow-hidden bg-[#0B0F19]">
+      <div className="relative flex-1 w-full overflow-hidden bg-card">
         {children}
       </div>
     </div>

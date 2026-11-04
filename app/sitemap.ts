@@ -13,7 +13,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: absoluteUrl('/'),
       lastModified: now,
       changeFrequency: 'weekly',
-      priority: 1,
+      priority: 1.0,
     },
     {
       url: absoluteUrl('/discover'),
@@ -33,13 +33,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly',
       priority: 0.4,
     },
+    {
+      url: absoluteUrl('/privacy'),
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.3,
+    },
+    {
+      url: absoluteUrl('/terms'),
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.3,
+    },
   ]
 
   try {
     await connectDB()
     const profiles = await Profile.find(
       { isPublished: true },
-      { username: 1, updatedAt: 1, 'projects.id': 1 }
+      { username: 1, updatedAt: 1, 'projects.id': 1, contactCta: 1 }
     ).lean()
 
     const dynamicEntries: MetadataRoute.Sitemap = []
@@ -59,6 +71,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.8,
       })
 
+      // Project detail pages
       const projects = Array.isArray(profile.projects) ? profile.projects : []
       for (const project of projects) {
         if (typeof project?.id !== 'string' || project.id.trim().length === 0) {
@@ -70,6 +83,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           lastModified,
           changeFrequency: 'weekly',
           priority: 0.7,
+        })
+      }
+
+      // Contact page for profile
+      if (profile.contactCta?.enabled !== false) {
+        dynamicEntries.push({
+          url: absoluteUrl(`/contact/${normalizedUsername}`),
+          lastModified,
+          changeFrequency: 'monthly',
+          priority: 0.5,
         })
       }
     }

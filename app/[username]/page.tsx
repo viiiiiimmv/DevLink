@@ -1,9 +1,10 @@
 import { notFound } from 'next/navigation'
-import { Metadata } from 'next'
+import type { Metadata } from 'next'
 import { getServerSession } from 'next-auth/next'
 import { db } from '@/lib/db'
 import PublicProfile from '@/components/public-profile/profile'
-import { absoluteUrl, clampText } from '@/lib/seo'
+import { absoluteUrl, clampText, SITE_NAME } from '@/lib/seo'
+import { generateProfilePageSchema } from '@/lib/schema'
 import { authOptions } from '@/lib/auth'
 
 // Force dynamic rendering to always fetch fresh data
@@ -21,7 +22,7 @@ type ProfilePageProps = {
 const getProfileDescription = (name: string, bio: string) =>
   bio?.trim()
     ? clampText(bio, 160)
-    : `Explore ${name}'s developer portfolio with projects, skills, and experience.`
+    : `Explore ${name}'s developer portfolio with projects, skills, and experience on ${SITE_NAME}.`
 
 export async function generateMetadata({ params }: ProfilePageProps): Promise<Metadata> {
   const { username } = await params
@@ -48,82 +49,41 @@ export async function generateMetadata({ params }: ProfilePageProps): Promise<Me
     }
   }
 
+  const displayName = profile.name?.trim() || profile.username
   const profilePath = `/${encodeURIComponent(profile.username)}`
   const profileUrl = absoluteUrl(profilePath)
   const ogImageUrl = absoluteUrl(`${profilePath}/opengraph-image`)
-  const description = getProfileDescription(profile.name, profile.bio || '')
+  const description = getProfileDescription(displayName, profile.bio || '')
 
   return {
-    title: `${profile.name} - Developer Portfolio`,
+    title: `${displayName} — Developer Portfolio`,
     description,
-    keywords: ['developer', 'portfolio', 'projects', ...profile.skills],
+    keywords: ['developer portfolio', 'software engineer', ...(profile.skills || [])],
     alternates: {
       canonical: profileUrl,
     },
     openGraph: {
-      title: `${profile.name} - Developer Portfolio`,
+      title: `${displayName} — Developer Portfolio`,
       description,
       url: profileUrl,
+      siteName: SITE_NAME,
       type: 'profile',
       images: [
         {
           url: ogImageUrl,
           width: 1200,
           height: 630,
-          alt: `${profile.name} portfolio preview`,
+          alt: `${displayName} portfolio preview`,
         },
       ],
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${profile.name} - Developer Portfolio`,
+      title: `${displayName} — Developer Portfolio`,
       description,
       images: [ogImageUrl],
     },
   }
-}
-
-function buildStructuredData(profile: any) {
-  const profileUrl = absoluteUrl(`/${encodeURIComponent(profile.username)}`)
-  const sameAs = [
-    profile.socialLinks?.github,
-    profile.socialLinks?.linkedin,
-    profile.socialLinks?.twitter,
-    profile.socialLinks?.website,
-  ].filter((url): url is string => typeof url === 'string' && url.trim().length > 0)
-
-  const personSchema: Record<string, unknown> = {
-    '@context': 'https://schema.org',
-    '@type': 'Person',
-    name: profile.name,
-    identifier: profile.username,
-    description: getProfileDescription(profile.name, profile.bio || ''),
-    url: profileUrl,
-    knowsAbout: Array.isArray(profile.skills) ? profile.skills : [],
-    mainEntityOfPage: profileUrl,
-  }
-
-  const profileImage = profile.profilePhoto?.url || profile.profileImage
-  if (typeof profileImage === 'string' && profileImage.trim().length > 0) {
-    personSchema.image = profileImage
-  }
-  if (sameAs.length > 0) {
-    personSchema.sameAs = sameAs
-  }
-
-  const webPageSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'WebPage',
-    name: `${profile.name} - Developer Portfolio`,
-    url: profileUrl,
-    description: getProfileDescription(profile.name, profile.bio || ''),
-    about: {
-      '@type': 'Person',
-      name: profile.name,
-    },
-  }
-
-  return [personSchema, webPageSchema]
 }
 
 export default async function ProfilePage({ params }: ProfilePageProps) {
@@ -154,7 +114,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
     })) ?? [],
   }
 
-  const structuredData = buildStructuredData(fixedProfile)
+  const structuredData = generateProfilePageSchema(fixedProfile)
 
   return (
     <>
