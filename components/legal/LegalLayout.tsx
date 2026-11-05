@@ -199,7 +199,7 @@ export function LegalLayout({ doc, currentPath }: LegalLayoutProps) {
       <footer className="border-t border-border py-8 bg-card text-muted-foreground text-xs font-mono">
         <div className="mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 max-w-7xl px-4 sm:px-6 lg:px-8">
           <div>
-            © {new Date().getFullYear()} DevLink Technologies. All rights reserved.
+            © {new Date().getFullYear()} VIII.III.MMV LABS. All rights reserved.
           </div>
           <div className="flex items-center gap-4">
             <Link href="/" className="hover:text-foreground transition-colors">

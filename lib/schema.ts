@@ -25,11 +25,11 @@ export function generateOrganizationSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: SITE_NAME,
+    name: 'VIII.III.MMV LABS',
+    alternateName: SITE_NAME,
     url: siteUrl,
     logo: absoluteUrl('/logo.svg'),
     description: SITE_DESCRIPTION,
-    sameAs: ['https://github.com/sh1v-x/DevLink'],
   }
 }
 

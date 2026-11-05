@@ -63,20 +63,12 @@ export function FooterCTA() {
               <Link href="/terms" className="hover:text-foreground transition-colors">
                 Terms &amp; Conditions
               </Link>
-              <a
-                href="https://github.com/viiiiiimmv/devlink"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-foreground transition-colors"
-              >
-                GitHub ↗
-              </a>
             </nav>
           </div>
 
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs font-mono text-muted-foreground">
             <div>
-              © {new Date().getFullYear()} DevLink Technologies. All rights reserved.
+              © {new Date().getFullYear()} VIII.III.MMV LABS. All rights reserved.
             </div>
           </div>
         </div>

@@ -23,7 +23,7 @@ export const PRIVACY_POLICY: LegalDocument = {
       title: '1. Data Fiduciary and Contact Details',
       content: [
         'The Data Fiduciary responsible for determining the purposes and means of processing your personal data is:',
-        'Entity Name: [DevLink Technologies / Legal Entity Name]',
+        'Entity Name: VIII.III.MMV LABS',
         'Registered Address: [Office / Building Name, Street Address, City, State, PIN Code, India]',
         'Official Email: [privacy@devlink.me]',
         'For any inquiries or privacy-related questions, you may reach out directly to our designated team at the email above.',
@@ -234,7 +234,7 @@ export const TERMS_AND_CONDITIONS: LegalDocument = {
       id: 'acceptance',
       title: '1. Acceptance of Terms',
       content: [
-        'By signing in, accessing, or using DevLink, you enter into a legally binding agreement with DevLink Technologies ("[DevLink]", "we", "us", or "our"). If you do not agree with any part of these Terms, you must not access or use the Platform.',
+        'By signing in, accessing, or using DevLink, you enter into a legally binding agreement with VIII.III.MMV LABS ("[DevLink]", "we", "us", or "our"). If you do not agree with any part of these Terms, you must not access or use the Platform.',
       ],
     },
     {
@@ -322,7 +322,7 @@ export const TERMS_AND_CONDITIONS: LegalDocument = {
       content: [
         'If you have any questions or feedback regarding these Terms, please contact us at:',
         'Email: [legal@devlink.me]',
-        'Address: [DevLink Technologies, Office Address, City, State, PIN Code, India]',
+        'Address: [VIII.III.MMV LABS, Office Address, City, State, PIN Code, India]',
       ],
     },
   ],
